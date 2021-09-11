@@ -1,14 +1,14 @@
-name = "sph_code"
+name = "SPH"
 
 [build]
 auto-executables = false
-auto-tests = false
-auto-examples = false
+auto-tests       = false
+auto-examples    = false
 
 [library]
 include-dir = "src"
 
 [[executable]]
-name = "sph"
-source-dir = "app"
-main = "sph.f"
+name        = "sph"
+source-dir  = "app"
+main        = "sph.f"
