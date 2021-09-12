@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VisualStudioProject ProjectCreator="Intel Fortran" Keyword="Console Application" Version="11.0" ProjectIdGuid="{82DCD477-4A83-4DA1-BC7E-5F83D0DBB24A}">
+	<Platforms>
+		<Platform Name="Win32"/></Platforms>
+	<Configurations>
+		<Configuration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" WarnInterfaces="true" Traceback="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemConsole"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" SubSystem="subSystemConsole"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+	<Files>
+		<Filter Name="Header Files" Filter="fi;fd"/>
+		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
+		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
+		<File RelativePath=".\src\art_heat.f"/>
+		<File RelativePath=".\src\art_visc.f"/>
+		<File RelativePath=".\src\av_vel.f"/>
+		<File RelativePath=".\src\density.f"/>
+		<File RelativePath=".\src\direct_find.f"/>
+		<File RelativePath=".\src\eos.f"/>
+		<File RelativePath=".\src\external_force.f"/>
+		<File RelativePath=".\src\grid_geom.f"/>
+		<File RelativePath=".\src\hsml.f"/>
+		<File RelativePath=".\src\init_grid.f"/>
+		<File RelativePath=".\src\input.f"/>
+		<File RelativePath=".\src\internal_force.f"/>
+		<File RelativePath=".\src\kernel.f"/>
+		<File RelativePath=".\src\link_list.f"/>
+		<File RelativePath=".\src\output.f"/>
+		<File RelativePath=".\src\param.inc"/>
+		<File RelativePath=".\src\single_step.f"/>
+		<File RelativePath=".\app\sph.f"/>
+		<File RelativePath=".\src\time_elapsed.f90"/>
+		<File RelativePath=".\src\time_integration.f"/>
+		<File RelativePath=".\src\time_print.f90"/>
+		<File RelativePath=".\src\virt_part.f"/>
+		<File RelativePath=".\src\viscosity.f"/></Filter></Files>
+	<Globals/></VisualStudioProject>

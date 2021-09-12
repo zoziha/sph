@@ -2,3 +2,9 @@ build/
 *.o
 *.a
 *.x
+
+# `vs` files
+
+Debug/*
+Release/*
+*.pdb

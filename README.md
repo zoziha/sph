@@ -35,6 +35,10 @@ fpm build
 fpm run
 ```
 
+### 其它构建系统
+
+除了make和fpm，本项目还支持cmake和visual studio进行构建。
+
 ## 链接
 
 + [spheric/SPH Codes](https://spheric-sph.org/sph-projects-and-codes)

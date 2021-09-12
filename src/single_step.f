@@ -69,8 +69,8 @@ c     and optimzing smoothing length
         call link_list(itimestep, ntotal+nvirt,hsml(1),x,niac,pair_i,
      &       pair_j,w,dwdx,ns)
       else if (nnps.eq.3) then 
-        call tree_search(itimestep, ntotal+nvirt,hsml,x,niac,pair_i,
-     &       pair_j,w,dwdx,ns)
+c        call tree_search(itimestep, ntotal+nvirt,hsml,x,niac,pair_i,
+c     &       pair_j,w,dwdx,ns)
       endif         
                         
 c---  Density approximation or change rate
