@@ -1,5 +1,7 @@
 # 交流研讨
 
+SPH代码：[SPH-code](https://github.com/zoziha/SPH)（初始阶段）;  SPH WIKI文档：[SPH-wiki](https://github.com/zoziha/SPH/tree/SPH-wiki)（初始阶段）
+
 ## 概要
 
 聚集性讨论SPH问题，解决学习过程中的信息不对称，降低学习成本。
