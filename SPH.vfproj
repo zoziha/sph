@@ -27,7 +27,8 @@
 		<Filter Name="Header Files" Filter="fi;fd"/>
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
-		<File RelativePath=".\src\sph_kind.f90"/>
+		<File RelativePath=".\src\sph_kind.F90"/>
+		<File RelativePath=".\src\param.f90"/>
 		<File RelativePath=".\src\art_heat.f90"/>
 		<File RelativePath=".\src\art_visc.f90"/>
 		<File RelativePath=".\src\av_vel.f90"/>

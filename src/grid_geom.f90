@@ -11,8 +11,8 @@
 subroutine grid_geom(i, x, ngridx, maxgridx, mingridx, dgeomx, xgcell)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: i, ngridx(dim), xgcell(3)
     real(rk) :: x(dim), maxgridx(dim), mingridx(dim), dgeomx(dim)

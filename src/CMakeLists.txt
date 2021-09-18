@@ -1,5 +1,6 @@
 set(SRC
   sph_kind.F90
+  param.f90
   art_heat.f90
   art_visc.f90
   av_vel.f90

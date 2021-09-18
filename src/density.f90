@@ -15,8 +15,8 @@
 subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: ntotal, niac, pair_i(max_interaction), pair_j(max_interaction), itype(maxn)
     real(rk) :: hsml(maxn), mass(maxn), w(max_interaction), rho(maxn)
@@ -91,8 +91,8 @@ end subroutine sum_density
 subroutine con_density(ntotal, mass, niac, pair_i, pair_j, dwdx, vx, itype, x, rho, drhodt)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: ntotal, niac, pair_i(max_interaction), pair_j(max_interaction), itype(maxn)
     real(rk) :: mass(maxn), dwdx(dim, max_interaction), vx(dim, maxn), x(dim, maxn), rho(maxn), drhodt(maxn)

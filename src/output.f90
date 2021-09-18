@@ -16,8 +16,8 @@ subroutine output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
 
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: itype(maxn), ntotal
     real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), u(maxn), c(maxn), hsml(maxn)

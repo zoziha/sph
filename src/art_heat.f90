@@ -19,8 +19,8 @@
 subroutine art_heat(ntotal, hsml, mass, x, vx, niac, rho, u, c, pair_i, pair_j, w, dwdx, dedt)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: ntotal, niac, pair_i(max_interaction), pair_j(max_interaction)
     real(rk) :: hsml(maxn), mass(maxn), x(dim, maxn), vx(dim, maxn), rho(maxn), &

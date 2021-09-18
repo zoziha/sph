@@ -15,8 +15,8 @@
 subroutine ext_force(ntotal, mass, x, niac, pair_i, pair_j, itype, hsml, dvxdt)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: ntotal, itype(maxn), niac, pair_i(max_interaction), pair_j(max_interaction)
     real(rk) :: mass(maxn), x(dim, maxn), hsml(maxn), dvxdt(dim, maxn)

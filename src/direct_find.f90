@@ -18,8 +18,8 @@
 subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, countiac)
    
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: itimestep, ntotal, niac, pair_i(max_interaction), pair_j(max_interaction), countiac(maxn)
     real(rk) :: hsml(maxn), x(dim, maxn), w(max_interaction), dwdx(dim, max_interaction)

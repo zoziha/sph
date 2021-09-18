@@ -26,8 +26,8 @@
 subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, tdsdt, dx, dvx, du, ds, drho, itype, av)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: itimestep, ntotal, itype(maxn)
     real(rk) :: dt, hsml(maxn), mass(maxn), x(dim, maxn), vx(dim, maxn), u(maxn), &

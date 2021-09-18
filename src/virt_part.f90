@@ -16,9 +16,9 @@
 subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, itype)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
-    
+
     integer  :: itimestep, ntotal, nvirt, itype(maxn)
     real(rk) :: hsml(maxn), mass(maxn), x(dim, maxn), vx(dim, maxn), rho(maxn), u(maxn), p(maxn)
     integer  :: i, j, d, im, mp

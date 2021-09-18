@@ -1,9 +1,9 @@
+!>     including file for parameters and constants used
+!>     in the entire sph software packages.
 
-!---------------------------------------------------------
-!     including file for parameters and constants used
-!     in the entire sph software packages.
-!---------------------------------------------------------
+module parameter
 
+    use sph_kind, only: rk
 !     dim : dimension of the problem (1, 2 or 3)
     integer :: dim
     parameter(dim=2)
@@ -77,7 +77,7 @@
 !     nor_density =  .true. : density normalization by using cspm,
 !                    .false.: no normalization.
     logical :: summation_density, average_velocity, config_input, virtual_part, vp_input, visc, ex_force, &
-        heat_artificial, visc_artificial, self_gravity, nor_density
+               heat_artificial, visc_artificial, self_gravity, nor_density
     parameter(summation_density=.true.)
     parameter(average_velocity=.true.)
     parameter(config_input=.false.)
@@ -117,3 +117,5 @@
     logical :: shocktube, shearcavity
     parameter(shocktube=.false.)
     parameter(shearcavity=.true.)
+
+end module parameter

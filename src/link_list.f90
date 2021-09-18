@@ -15,8 +15,8 @@
 subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, countiac)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     !     parameter used for sorting grid cells in the link list algorithm
     !     maxngx  : maximum number of sorting grid cells in x-direction

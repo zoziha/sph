@@ -13,8 +13,8 @@
 subroutine kernel(r, dx, hsml, w, dwdx)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     real(rk) :: r, dx(dim), hsml, w, dwdx(dim)
     integer  :: i, j, d

@@ -15,8 +15,8 @@
 subroutine init_grid(ntotal, hsml, grid, ngridx, ghsmlx, maxgridx, mingridx, dgeomx)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     !     parameter used for sorting grid cells in the link list algorithm
     !     maxngx  : maximum number of sorting grid cells in x-direction

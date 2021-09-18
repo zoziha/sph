@@ -9,8 +9,8 @@
 subroutine viscosity(ntotal, itype, x, rho, eta)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: ntotal, i, itype(maxn)
     real(rk) :: x(dim, maxn), rho(maxn), eta(maxn)

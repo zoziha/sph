@@ -18,8 +18,8 @@
 program sph
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include '../src/param.inc'
 
     integer  :: ntotal, itype(maxn), maxtimestep, d, m, i, yesorno
     real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), &

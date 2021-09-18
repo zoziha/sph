@@ -14,8 +14,8 @@
 subroutine av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: ntotal, niac, pair_i(max_interaction), pair_j(max_interaction)
     real(rk) :: mass(maxn), w(max_interaction), vx(dim, maxn), rho(maxn), av(dim, maxn)

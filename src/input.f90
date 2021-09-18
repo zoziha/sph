@@ -13,8 +13,8 @@
 subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: itype(maxn), ntotal
     real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), p(maxn), u(maxn), hsml(maxn), rho(maxn)
@@ -86,8 +86,8 @@ end subroutine input
 subroutine shock_tube(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: itype(maxn), ntotal
     real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), u(maxn), hsml(maxn)
@@ -147,8 +147,8 @@ subroutine shear_cavity(x, vx, mass, rho, p, u, itype, hsml, ntotal)
     !     ntotal-- total particle number                               [out]
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: itype(maxn), ntotal
     real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), u(maxn), hsml(maxn)

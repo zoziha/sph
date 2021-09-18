@@ -14,8 +14,8 @@
 subroutine h_upgrade(dt, ntotal, mass, vx, rho, niac, pair_i, pair_j, dwdx, hsml)
 
     use sph_kind, only: rk
+    use parameter
     implicit none
-    include 'param.inc'
 
     integer  :: ntotal, niac, pair_i(max_interaction), pair_j(max_interaction)
     real(rk) :: mass(maxn), vx(dim, maxn), rho(maxn), dwdx(dim, max_interaction), hsml(maxn)
