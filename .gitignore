@@ -8,3 +8,4 @@ build/
 Debug/*
 Release/*
 *.pdb
+.vscode

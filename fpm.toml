@@ -11,4 +11,4 @@ include-dir = "src"
 [[executable]]
 name        = "sph"
 source-dir  = "app"
-main        = "sph.f"
+main        = "sph.f90"
