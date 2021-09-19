@@ -47,7 +47,6 @@
 		<File RelativePath=".\src\param.inc"/>
 		<File RelativePath=".\src\single_step.f90"/>
 		<File RelativePath=".\app\sph.f90"/>
-		<File RelativePath=".\src\time_elapsed.f90"/>
 		<File RelativePath=".\src\time_integration.f90"/>
 		<File RelativePath=".\src\time_print.f90"/>
 		<File RelativePath=".\src\virt_part.f90"/>

@@ -20,7 +20,6 @@ set(SRC
   time_integration.f90
   virt_part.f90
   viscosity.f90
-  time_elapsed.f90
   time_print.f90
 )
 

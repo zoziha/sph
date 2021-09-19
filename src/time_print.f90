@@ -15,7 +15,7 @@ subroutine time_print
     integer, parameter :: output = 6
 
     ! . local scalars.
-    character(len=8) :: datstr
+    character(len=8)  :: datstr
     character(len=10) :: timstr
 
     ! . Get the current date and time.

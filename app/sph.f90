@@ -27,25 +27,25 @@ program sph
     real(rk) :: s1, s2
 
     call time_print
-    call time_elapsed(s1)
+    call cpu_time(s1)
 
-    if (shocktube) dt = 0.005
+    if (shocktube)   dt = 0.005
     if (shearcavity) dt = 5.e-5
     call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 1   write (*, *) '  ***************************************************'
     write (*, *) '          please input the maximal time steps '
     write (*, *) '  ***************************************************'
-    read (*, *) maxtimestep
+    read  (*, *) maxtimestep
     call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
     call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
     write (*, *) '  ***************************************************'
     write (*, *) 'are you going to run more time steps ? (0=no, 1=yes)'
     write (*, *) '  ***************************************************'
-    read (*, *) yesorno
+    read  (*, *) yesorno
     if (yesorno /= 0) goto 1
     call time_print
-    call time_elapsed(s2)
-    write (*, *) '        elapsed cpu time = ', s2 - s1
+    call cpu_time(s2)
+    write (*, *) '        elapsed cpu time (seconds) = ', s2 - s1
     write (*, *) 'all finish!'
 
 end program sph
