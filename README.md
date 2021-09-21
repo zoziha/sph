@@ -1,44 +1,42 @@
-# 光滑粒子流体动力学（SPH）
+# Smoothed Particle Hydrodynamics（SPH）([中文文档](./README_CN.md))
 
-一份社区驱动的开源光滑粒子流体动力学（SPH）代码，起始代码版本源自课本《光滑粒子流体动力学--一种无网格粒子法》。
+A community-driven open source smoothed particle hydrodynamics (SPH) code, the starting code version is derived from the textbook "Smooth Particle hydrodynamics - A Meshfree Particle Method".
 
-| 项目 | 描述 |
+| Term | Info |
 | --- | --- |
-| 版本 | 0.0.1 |
-| 许可证 | Public Domain |
-| 版权 | Copyright (c) 2021 SPH 贡献者 |
+| Version | 0.0.1 |
+| License | Public Domain |
+| Copyright | Copyright (c) 2021 SPH Contributors |
 
-## 开始
+## Start
 
-### 获取代码
+### Get the Code
 
 ```sh
 git clone https://github.com/zoziha/SPH.git
 cd SPH
 ```
 
-### 使用Make构建代码
+### Build with CMake
 
-本项目支持Make工具构建代码：
+This project supports CMake tool to build code:
 
 ```sh
+mkdir build && cd build
+cmake -G "MSYS Makefiles" ..
 make
 ```
 
-### 使用[fortran-lang/fpm](https://github.com/fortran-lang/fpm)构建代码
+### Build with [fortran-lang/fpm](https://github.com/fortran-lang/fpm)
 
-FPM是社区驱动的Fortran语言的包管理器和代码构建工具，适用于c/c++/fortran代码的构建。  
-你可以通过提供的`fpm.toml`构建代码：
+FPM is a community-driven Fortran language package manager and code build system, suitable for c/c++/fortran code construction.
+You can build the code with the provided `fpm.toml`:
 
 ```sh
 fpm build
 fpm run
 ```
 
-### 其它构建系统
-
-除了make和fpm，本项目还支持cmake和visual studio进行构建。
-
-## 链接
+## Links
 
 + [spheric/SPH Codes](https://spheric-sph.org/sph-projects-and-codes)

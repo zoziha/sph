@@ -50,7 +50,7 @@ subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, 
     do k = 1, niac
         i = pair_i(k)
         j = pair_j(k)
-        mhsml = (hsml(i) + hsml(j))/2.
+        mhsml = (hsml(i) + hsml(j))/2._rk
         vr = 0._rk
         rr = 0._rk
         do d = 1, dim
@@ -70,9 +70,9 @@ subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, 
 
             !     calculate piv_ij = (-alpha muv_ij c_ij + beta muv_ij^2) / rho_ij
 
-            mc = 0.5_rk*(c(i) + c(j))
+            mc   = 0.5_rk*(c(i) + c(j))
             mrho = 0.5_rk*(rho(i) + rho(j))
-            piv = (beta*muv - alpha*mc)*muv/mrho
+            piv  = (beta*muv - alpha*mc)*muv/mrho
 
             !     calculate sph sum for artificial viscous force
 

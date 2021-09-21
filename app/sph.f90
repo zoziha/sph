@@ -29,8 +29,8 @@ program sph
     call time_print
     call cpu_time(s1)
 
-    if (shocktube)   dt = 0.005
-    if (shearcavity) dt = 5.e-5
+    if (shocktube)   dt = 0.005_rk
+    if (shearcavity) dt = 5.e-5_rk
     call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 1   write (*, *) '  ***************************************************'
     write (*, *) '          please input the maximal time steps '

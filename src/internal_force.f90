@@ -1,8 +1,8 @@
-!>   subroutine to calculate the internal forces on the right hand side
-!>   of the navier-stokes equations, i.e. the pressure gradient and the
-!>   gradient of the viscous stress tensor, used by the time integration.
-!>   moreover the entropy production due to viscous dissipation, tds/dt,
-!>   and the change of internal energy per mass, de/dt, are calculated.
+!> Subroutine to calculate the internal forces on the right hand side
+!>  of the navier-stokes equations, i.e. the pressure gradient and the
+!>  gradient of the viscous stress tensor, used by the time integration.
+!>  moreover the entropy production due to viscous dissipation, tds/dt,
+!>  and the change of internal energy per mass, de/dt, are calculated.
 !>
 !>     itimestep: current timestep number                            [in]
 !>     dt     :   time step                                          [in]
@@ -53,7 +53,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
         tyz(i) = 0._rk
         vcc(i) = 0._rk
         tdsdt(i) = 0._rk
-        dedt(i) = 0._rk
+         dedt(i) = 0._rk
         do d = 1, dim
             dvxdt(d, i) = 0._rk
         end do
@@ -112,7 +112,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
 
             !     calculate sph sum for vc,c = dvx/dx + dvy/dy + dvz/dz:
 
-            hvcc = 0.
+            hvcc = 0._rk
             do d = 1, dim
                 hvcc = hvcc + dvx(d)*dwdx(d, k)
             end do
@@ -164,7 +164,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
 
                 !     pressure part
 
-                h = -(p(i) + p(j))*dwdx(d, k)
+                h  = -(p(i) + p(j))*dwdx(d, k)
                 he = he + (vx(d, j) - vx(d, i))*h
 
                 !     viscous force
@@ -195,7 +195,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
                         !     z-coordinate of acceleration
 
                         h = h + (eta(i)*txz(i) + eta(j)*txz(j))*dwdx(1, k) + (eta(i)*tyz(i) + eta(j)*tyz(j))*dwdx(2, k) &
-                            + (eta(i)*tzz(i) + eta(j)*tzz(j))*dwdx(3, k)
+                              + (eta(i)*tzz(i) + eta(j)*tzz(j))*dwdx(3, k)
                     end if
                 end if
                 h = h*rhoij

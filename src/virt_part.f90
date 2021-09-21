@@ -44,9 +44,9 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
 
         nvirt = 0
         mp    = 40
-        xl    = 1.0e-3
+        xl    = 1.0e-3_rk
         dx    = xl/mp
-        v_inf = 1.e-3
+        v_inf = 1.e-3_rk
 
         !     monaghan type virtual particle on the upper side
 
@@ -55,7 +55,7 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
             x(1, ntotal + nvirt)  = (i - 1)*dx/2
             x(2, ntotal + nvirt)  = xl
             vx(1, ntotal + nvirt) = v_inf
-            vx(2, ntotal + nvirt) = 0.
+            vx(2, ntotal + nvirt) = 0._rk
         end do
 
         !     monaghan type virtual particle on the lower side
@@ -63,19 +63,19 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
         do i = 1, 2*mp + 1
             nvirt = nvirt + 1
             x(1, ntotal + nvirt)  = (i - 1)*dx/2
-            x(2, ntotal + nvirt)  = 0.
-            vx(1, ntotal + nvirt) = 0.
-            vx(2, ntotal + nvirt) = 0.
+            x(2, ntotal + nvirt)  = 0._rk
+            vx(1, ntotal + nvirt) = 0._rk
+            vx(2, ntotal + nvirt) = 0._rk
         end do
 
         !     monaghan type virtual particle on the left side
 
         do i = 1, 2*mp - 1
             nvirt = nvirt + 1
-            x(1, ntotal + nvirt)  = 0.
+            x(1, ntotal + nvirt)  = 0._rk
             x(2, ntotal + nvirt)  = i*dx/2
-            vx(1, ntotal + nvirt) = 0.
-            vx(2, ntotal + nvirt) = 0.
+            vx(1, ntotal + nvirt) = 0._rk
+            vx(2, ntotal + nvirt) = 0._rk
         end do
 
         !     monaghan type virtual particle on the right side
@@ -84,15 +84,15 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
             nvirt = nvirt + 1
             x(1, ntotal + nvirt)  = xl
             x(2, ntotal + nvirt)  = i*dx/2
-            vx(1, ntotal + nvirt) = 0.
-            vx(2, ntotal + nvirt) = 0.
+            vx(1, ntotal + nvirt) = 0._rk
+            vx(2, ntotal + nvirt) = 0._rk
         end do
 
         do i = 1, nvirt
-            rho(ntotal + i)   = 1000.
+            rho(ntotal + i)   = 1000._rk
             mass(ntotal + i)  = rho(ntotal + i)*dx*dx
-            p(ntotal + i)     = 0.
-            u(ntotal + i)     = 357.1
+            p(ntotal + i)     = 0._rk
+            u(ntotal + i)     = 357.1_rk
             itype(ntotal + i) = -2
             hsml(ntotal + i)  = dx
         end do

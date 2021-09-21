@@ -114,8 +114,7 @@ subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, 
                                     dwdx(d, niac) = tdwdx(d)
                                 end do
                             else
-                                print *, ' >>> error <<< : too many interactions'
-                                stop
+                                error stop ' >>> error <<< : too many interactions'
                             end if
                         end if
                         j = celldata(j)
@@ -131,16 +130,16 @@ subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, 
     sumiac = 0
     maxiac = 0
     miniac = 1000
-    noiac = 0
+    noiac  = 0
     do i = 1, ntotal
         sumiac = sumiac + countiac(i)
         if (countiac(i) > maxiac) then
             maxiac = countiac(i)
-            maxp = i
+            maxp   = i
         end if
         if (countiac(i) < miniac) then
             miniac = countiac(i)
-            minp = i
+            minp   = i
         end if
         if (countiac(i) == 0) noiac = noiac + 1
     end do

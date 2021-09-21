@@ -19,7 +19,7 @@ subroutine viscosity(ntotal, itype, x, rho, eta)
         if (abs(itype(i)) == 1) then
             eta(i) = 0._rk
         else if (abs(itype(i)) == 2) then
-            eta(i) = 1.0e-3
+            eta(i) = 1.0e-3_rk
         end if
     end do
 

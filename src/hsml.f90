@@ -1,4 +1,4 @@
-!>     subroutine to evolve smoothing length
+!> Subroutine to evolve smoothing length.
 !>
 !>     dt     : time step                                            [in]
 !>     ntotal : number of particles                                  [in]
@@ -52,15 +52,15 @@ subroutine h_upgrade(dt, ntotal, mass, vx, rho, niac, pair_i, pair_j, dwdx, hsml
 
         do i = 1, ntotal
             dhsml(i) = (hsml(i)/dim)*vcc(i)
-            hsml(i) = hsml(i) + dt*dhsml(i)
+             hsml(i) = hsml(i) + dt*dhsml(i)
             if (hsml(i) <= 0) hsml(i) = hsml(i) - dt*dhsml(i)
         end do
 
     else if (sle == 1) then
 
-        fac = 2.0
+        fac = 2.0_rk
         do i = 1, ntotal
-            hsml(i) = fac*(mass(i)/rho(i))**(1./dim)
+            hsml(i) = fac*(mass(i)/rho(i))**(1._rk/dim)
         end do
 
     end if

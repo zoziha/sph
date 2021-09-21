@@ -39,34 +39,34 @@ subroutine kernel(r, dx, hsml, w, dwdx)
             stop
         end if
         if (q >= 0 .and. q <= 1._rk) then
-            w = factor*(2./3.-q*q + q**3/2.)
+            w = factor*(2._rk/3._rk-q*q + q**3._rk/2._rk)
             do d = 1, dim
-                dwdx(d) = factor*(-2.+3./2.*q)/hsml**2*dx(d)
+                dwdx(d) = factor*(-2._rk+3._rk/2._rk*q)/hsml**2*dx(d)
             end do
         else if (q > 1._rk .and. q <= 2) then
-            w = factor*1._rk/6._rk*(2.-q)**3
+            w = factor*1._rk/6._rk*(2._rk-q)**3
             do d = 1, dim
-                dwdx(d) = -factor*1._rk/6._rk*3.*(2.-q)**2/hsml*(dx(d)/r)
+                dwdx(d) = -factor*1._rk/6._rk*3.*(2._rk-q)**2/hsml*(dx(d)/r)
             end do
         else
-            w = 0.
+            w = 0._rk
             do d = 1, dim
-                dwdx(d) = 0.
+                dwdx(d) = 0._rk
             end do
         end if
 
     else if (skf == 2) then
 
-        factor = 1._rk/(hsml**dim*pi**(dim/2.))
+        factor = 1._rk/(hsml**dim*pi**(dim/2._rk))
         if (q >= 0 .and. q <= 3) then
             w = factor*exp(-q*q)
             do d = 1, dim
-                dwdx(d) = w*(-2.*dx(d)/hsml/hsml)
+                dwdx(d) = w*(-2._rk*dx(d)/hsml/hsml)
             end do
         else
-            w = 0.
+            w = 0._rk
             do d = 1, dim
-                dwdx(d) = 0.
+                dwdx(d) = 0._rk
             end do
         end if
 
@@ -98,9 +98,9 @@ subroutine kernel(r, dx, hsml, w, dwdx)
                 dwdx(d) = factor*(-5*(3 - q)**4)/hsml*(dx(d)/r)
             end do
         else
-            w = 0.
+            w = 0._rk
             do d = 1, dim
-                dwdx(d) = 0.
+                dwdx(d) = 0._rk
             end do
         end if
 

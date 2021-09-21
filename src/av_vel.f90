@@ -25,11 +25,11 @@ subroutine av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
     !     epsilon --- a small constants chosen by experience, may lead to instability.
     !     for example, for the 1 dimensional shock tube problem, the e <= 0.3
 
-    epsilon = 0.3
+    epsilon = 0.3_rk
 
     do i = 1, ntotal
         do d = 1, dim
-            av(d, i) = 0.
+            av(d, i) = 0._rk
         end do
     end do
 
@@ -37,7 +37,7 @@ subroutine av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
         i = pair_i(k)
         j = pair_j(k)
         do d = 1, dim
-            dvx(d) = vx(d, i) - vx(d, j)
+            dvx(d)   = vx(d, i) - vx(d, j)
             av(d, i) = av(d, i) - 2*mass(j)*dvx(d)/(rho(i) + rho(j))*w(k)
             av(d, j) = av(d, j) + 2*mass(i)*dvx(d)/(rho(i) + rho(j))*w(k)
         end do

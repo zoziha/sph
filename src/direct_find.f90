@@ -41,10 +41,10 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
     do i = 1, ntotal - 1
         do j = i + 1, ntotal
             dxiac(1) = x(1, i) - x(1, j)
-            driac = dxiac(1)*dxiac(1)
+            driac    = dxiac(1)*dxiac(1)
             do d = 2, dim
                 dxiac(d) = x(d, i) - x(d, j)
-                driac = driac + dxiac(d)*dxiac(d)
+                driac    = driac + dxiac(d)*dxiac(d)
             end do
             mhsml = (hsml(i) + hsml(j))/2.
             if (sqrt(driac) < scale_k*mhsml) then

@@ -1,6 +1,6 @@
-!>     subroutine to calculate the external forces, e.g. gravitational forces.
-!>     the forces from the interactions with boundary virtual particles
-!>     are also calculated here as external forces.
+!> Subroutine to calculate the external forces, e.g. gravitational forces.
+!>  the forces from the interactions with boundary virtual particles
+!>  are also calculated here as external forces.
 !>
 !>     here as the external force.
 !>     ntotal  : number of particles                                 [in]
@@ -38,16 +38,16 @@ subroutine ext_force(ntotal, mass, x, niac, pair_i, pair_j, itype, hsml, dvxdt)
     end if
 
     !     boundary particle force and penalty anti-penetration force.
-    rr0 = 1.25e-5
-    dd = 1.e-2
-    p1 = 12
-    p2 = 4
+    rr0 = 1.25e-5_rk
+    dd  = 1.e-2_rk
+    p1  = 12
+    p2  = 4
 
     do k = 1, niac
         i = pair_i(k)
         j = pair_j(k)
         if (itype(i) > 0 .and. itype(j) < 0) then
-            rr = 0.
+            rr = 0._rk
             do d = 1, dim
                 dx(d) = x(d, i) - x(d, j)
                 rr = rr + dx(d)*dx(d)

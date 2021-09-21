@@ -157,13 +157,13 @@ subroutine shear_cavity(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
     !     giving mass and smoothing length as well as other data.
 
-    m = 41
-    n = 41
+    m  = 41
+    n  = 41
     mp = m - 1
     np = n - 1
     ntotal = mp*np
-    xl = 1.e-3
-    yl = 1.e-3
+    xl = 1.e-3_rk
+    yl = 1.e-3_rk
     dx = xl/mp
     dy = yl/np
 
@@ -176,14 +176,14 @@ subroutine shear_cavity(x, vx, mass, rho, p, u, itype, hsml, ntotal)
     end do
 
     do i = 1, mp*np
-        vx(1, i) = 0.
-        vx(2, i) = 0.
-        rho(i) = 1000.
-        mass(i) = dx*dy*rho(i)
-        p(i) = 0.
-        u(i) = 357.1
+        vx(1, i) = 0._rk
+        vx(2, i) = 0._rk
+        rho(i)   = 1000._rk
+        mass(i)  = dx*dy*rho(i)
+        p(i)     = 0._rk
+        u(i)     = 357.1_rk
         itype(i) = 2
-        hsml(i) = dx
+        hsml(i)  = dx
     end do
 
 end subroutine shear_cavity

@@ -38,12 +38,12 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
                 exdvxdt(dim, maxn), ardvxdt(dim, maxn), avdudt(maxn), ahdudt(maxn), c(maxn), eta(maxn)
 
     do i = 1, ntotal
-        avdudt(i) = 0.
-        ahdudt(i) = 0.
+        avdudt(i) = 0._rk
+        ahdudt(i) = 0._rk
         do d = 1, dim
-            indvxdt(d, i) = 0.
-            ardvxdt(d, i) = 0.
-            exdvxdt(d, i) = 0.
+            indvxdt(d, i) = 0._rk
+            ardvxdt(d, i) = 0._rk
+            exdvxdt(d, i) = 0._rk
         end do
     end do
 
@@ -101,7 +101,8 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
     !---  convert velocity, force, and energy to f and dfdt
 
     do i = 1, ntotal
-        do d = 1, dim; dvx(d, i) = indvxdt(d, i) + exdvxdt(d, i) + ardvxdt(d, i)
+        do d = 1, dim
+            dvx(d, i) = indvxdt(d, i) + exdvxdt(d, i) + ardvxdt(d, i)
         end do
         du(i) = du(i) + avdudt(i) + ahdudt(i)
     end do

@@ -68,8 +68,8 @@ subroutine art_heat(ntotal, hsml, mass, x, vx, niac, rho, u, c, pair_i, pair_j, 
         end do
         mui  = g1*hsml(i)*c(i) + g2*hsml(i)**2*(abs(vcc(i)) - vcc(i))
         muj  = g1*hsml(j)*c(j) + g2*hsml(j)**2*(abs(vcc(j)) - vcc(j))
-        muij = 0.5*(mui + muj)
-        h = muij/(mrho*(rr + 0.01*mhsml**2))*rdwdx
+        muij = 0.5_rk*(mui + muj)
+        h = muij/(mrho*(rr + 0.01_rk*mhsml**2))*rdwdx
         dedt(i) = dedt(i) + mass(j)*h*(u(i) - u(j))
         dedt(j) = dedt(j) + mass(i)*h*(u(j) - u(i))
 
