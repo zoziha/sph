@@ -27,27 +27,28 @@
 		<Filter Name="Header Files" Filter="fi;fd"/>
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
-		<File RelativePath=".\src\art_heat.f"/>
-		<File RelativePath=".\src\art_visc.f"/>
-		<File RelativePath=".\src\av_vel.f"/>
-		<File RelativePath=".\src\density.f"/>
-		<File RelativePath=".\src\direct_find.f"/>
-		<File RelativePath=".\src\eos.f"/>
-		<File RelativePath=".\src\external_force.f"/>
-		<File RelativePath=".\src\grid_geom.f"/>
-		<File RelativePath=".\src\hsml.f"/>
-		<File RelativePath=".\src\init_grid.f"/>
-		<File RelativePath=".\src\input.f"/>
-		<File RelativePath=".\src\internal_force.f"/>
-		<File RelativePath=".\src\kernel.f"/>
-		<File RelativePath=".\src\link_list.f"/>
-		<File RelativePath=".\src\output.f"/>
+		<File RelativePath=".\src\sph_kind.F90"/>
+		<File RelativePath=".\src\param.f90"/>
+		<File RelativePath=".\src\art_heat.f90"/>
+		<File RelativePath=".\src\art_visc.f90"/>
+		<File RelativePath=".\src\av_vel.f90"/>
+		<File RelativePath=".\src\density.f90"/>
+		<File RelativePath=".\src\direct_find.f90"/>
+		<File RelativePath=".\src\eos.f90"/>
+		<File RelativePath=".\src\external_force.f90"/>
+		<File RelativePath=".\src\grid_geom.f90"/>
+		<File RelativePath=".\src\hsml.f90"/>
+		<File RelativePath=".\src\init_grid.f90"/>
+		<File RelativePath=".\src\input.f90"/>
+		<File RelativePath=".\src\internal_force.f90"/>
+		<File RelativePath=".\src\kernel.f90"/>
+		<File RelativePath=".\src\link_list.f90"/>
+		<File RelativePath=".\src\output.f90"/>
 		<File RelativePath=".\src\param.inc"/>
-		<File RelativePath=".\src\single_step.f"/>
-		<File RelativePath=".\app\sph.f"/>
-		<File RelativePath=".\src\time_elapsed.f90"/>
-		<File RelativePath=".\src\time_integration.f"/>
+		<File RelativePath=".\src\single_step.f90"/>
+		<File RelativePath=".\app\sph.f90"/>
+		<File RelativePath=".\src\time_integration.f90"/>
 		<File RelativePath=".\src\time_print.f90"/>
-		<File RelativePath=".\src\virt_part.f"/>
-		<File RelativePath=".\src\viscosity.f"/></Filter></Files>
+		<File RelativePath=".\src\virt_part.f90"/>
+		<File RelativePath=".\src\viscosity.f90"/></Filter></Files>
 	<Globals/></VisualStudioProject>
