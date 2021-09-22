@@ -1,5 +1,7 @@
 # 交流研讨
 
+SPH代码：[SPH-code](https://github.com/zoziha/SPH)（初始阶段）；SPH WIKI文档：[SPH-wiki](https://github.com/zoziha/SPH/tree/SPH-wiki)（初始阶段）  
+QQ群：[667316027](https://jq.qq.com/?_wv=1027&k=ln654SHj)【光滑粒子流体动力学】。
 ## 概要
 
 聚集性讨论SPH问题，解决学习过程中的信息不对称，降低学习成本。
@@ -23,9 +25,12 @@
 
 [2021年9月.md](./群聊日志/2021年9月.md)
 
-### 示例
+### 资源链接
 
 [一维例子.md](./示例/一维例子.md)
+
+[SPH Tutorial, SPlisHSPlasH PDFs](https://interactivecomputergraphics.github.io/SPH-Tutorial/)  
+第一个课程PPT(Introduction, Foundations, Neighborhood Search)是比较好的！
 
 ## 版权
 
