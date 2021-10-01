@@ -20,6 +20,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
     use sph_kind, only: rk
     use parameter
+    use output_m, only: output_all
     implicit none
 
     integer  :: itype(maxn), ntotal, maxtimestep
@@ -123,7 +124,13 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
         time = time + dt
 
         if (mod(itimestep, save_step) == 0) then
+
+            !> 覆盖输出最后的保存时间步的求解信息（局限）
             call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
+
+            !> 输出每个保存时间步的求解信息（拓展）
+            call output_all(x, vx, mass, rho, p, u, c, itype, hsml, ntotal, itimestep/save_step)
+
         end if
 
         if (mod(itimestep, print_step) == 0) then
