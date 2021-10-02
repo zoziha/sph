@@ -21,6 +21,8 @@ set(SRC
   virt_part.f90
   viscosity.f90
   time_print.f90
+  utils/utils.f90
+  io/output_m.f90
 )
 
 set(
