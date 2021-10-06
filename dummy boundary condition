@@ -1,0 +1,61 @@
+!============================================================================================
+! Dummy boundary condition 
+! "A generalized wall boundary condition for smoothed particle hydrodynamics" is refered
+! This subroutine is used to adaptively calculate repulsive forces exerted on fluid particles.
+! The no-slip boundary condtion mentioned in the refered paper can be achieved easily by 
+! replacing the velocity used in the physical viscosity calculation, which is not shown here.
+! Oct 06, 2021 by Xi Yang @ DUT 
+!--------------------------------------------------------------------------------------------
+
+subroutine dummy_boundary_condition
+
+ use fluid_common !contains all variables
+ implicit none
+ integer i,j,k,n
+ real(8) a_wg_x,a_wg_z,dot
+ real(8), dimension(npmax) ::pfw, sum_w, gpa !npmax is the defalut maximum particles` number
+
+ pfw=0
+ sum_w=0
+ gpa=0
+
+do k=1, niac
+    i = pair_i(k)
+    j = pair_j(k)
+    drx= xp(i) - xp(j)
+    drz= zp(i) - zp(j)
+    dux= up(i) - up(j)
+    duz= wp(i) - wp(j)
+    rr = dsqrt(drx*drx  + drz*drz)
+    call kernel
+
+if(i<=nb .and. j>nb) then !nb is the number of fictious particles
+
+    pfw(i)=pfw(i)+p(j)*w !w is the value of kernel function
+    sum_w(i)=sum_w(i)+w
+    a_wg_x=-ax(i)  !the prescribed wall velocity is supposed to be used rather than the one calculated by the N-S Eq
+    a_wg_z=g-az(i) !g is the gravity accleration
+    dot= a_wg_x*drx+a_wg_z*drz
+    gpa(i)= dot*rhop(j)*w+gpa(i)
+
+elseif(i>nb .and. j<=nb) then
+    
+    pfw(j)=pfw(j)+p(i)*w
+    sum_w(j)=sum_w(j)+w
+    a_wg_x=-ax(j)
+    a_wg_z=g-az(j)
+    dot= -a_wg_x*drx-a_wg_z*drz
+    gpa(j)= dot*rhop(i)*w+gpa(j)
+
+endif
+enddo
+
+do i=1,nb
+    if(abs(sum_w(i))>1.0E-8) then
+         p(i)=(pfw(i)+gpa(i))/sum_w(i)
+    else
+         p(i)=0.0
+    endif
+         rhop(i)=rho0*(7*p(i)/rho0/cs**2+1)**(1.0/7.0) !calculate density of boundary particle by inversing the EoS, rho0 is the initial density.
+enddo
+end subroutine
