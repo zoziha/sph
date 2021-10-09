@@ -32,7 +32,9 @@ QQ群：[667316027](https://jq.qq.com/?_wv=1027&k=ln654SHj)【光滑粒子流体
 
 ### 链接
 
-[zoziha/SPH-Homework](https://zoziha.github.io/SPH-homework/)
+[zoziha/SPH-Homework](https://zoziha.github.io/SPH-homework/)<br>
+[SPH Tutorial, SPlisHSPlasH PDFs](https://interactivecomputergraphics.github.io/SPH-Tutorial/)  
+第一个课程PPT(Introduction, Foundations, Neighborhood Search)是比较好的！
 
 ## 版权
 
