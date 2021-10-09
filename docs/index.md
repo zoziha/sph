@@ -24,10 +24,15 @@ QQ群：[667316027](https://jq.qq.com/?_wv=1027&k=ln654SHj)【光滑粒子流体
 ### 群聊摘要
 
 [2021年9月.md](./群聊日志/2021年9月.md)
+[2021年10月.md](./群聊日志/2021年10月.md)
 
-### 示例
+### 资源链接
 
 [一维例子.md](./示例/一维例子.md)
+
+### 链接
+
+[zoziha/SPH-Homework](https://zoziha.github.io/SPH-homework/)
 
 ## 版权
 
