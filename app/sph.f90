@@ -45,7 +45,7 @@ program sph
     if (yesorno /= 0) goto 1
     call time_print
     call cpu_time(s2)
-    write (*, *) '        elapsed cpu time (seconds) = ', s2 - s1
+    write (*, "(A,F10.1)") '        elapsed cpu time (seconds) = ', s2 - s1
     write (*, *) 'all finish!'
 
 end program sph
