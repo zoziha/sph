@@ -18,7 +18,7 @@ contains
         read (*, *) steps
 
         do i = 1, steps
-            print *, "正在输出第", i, "个时间步"
+            print "(a, i0, a)", "正在输出第", i, "个时间步。"
             call output_to_paraview_vtk_one_step(i)
         end do
 

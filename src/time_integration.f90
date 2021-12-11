@@ -23,15 +23,13 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
     use output_m, only: output_all
     implicit none
 
-    integer  :: itype(maxn), ntotal, maxtimestep
+    integer :: itype(maxn), ntotal, maxtimestep
     real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), u(maxn), c(maxn), s(maxn), e(maxn), hsml(maxn), dt
-    integer  :: i, j, k, itimestep, d, current_ts, nstart
+    integer :: i, j, k, itimestep, d, nstart = 0  !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
     real(rk) :: x_min(dim, maxn), v_min(dim, maxn), u_min(maxn), rho_min(maxn), dx(dim, maxn), dvx(dim, maxn), &
                 du(maxn), drho(maxn), av(dim, maxn), ds(maxn), t(maxn), tdsdt(maxn)
-    real(rk) :: time, temp_rho, temp_u
-
-    !> 初始化时间：0.
-    time = 0.0_rk
+    real(rk) :: temp_rho, temp_u, &
+                time = 0.0_rk    !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
 
     do i = 1, ntotal
         do d = 1, dim
@@ -39,13 +37,13 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
         end do
     end do
 
-    do itimestep = nstart + 1, nstart + maxtimestep
+    do itimestep = nstart + 1, nstart + maxtimestep    !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
 
-        current_ts = current_ts + 1
         if (mod(itimestep, print_step) == 0) then
-            write (*, *) '______________________________________________'
-            write (*, *) '  current number of time step =', itimestep, '     current time=', time + dt
-            write (*, *) '______________________________________________'
+            write (*, *) '----------------------------------------------'
+            write (*, *) '  current number of time step =', itimestep
+            write (*, *) '  current time =', time
+            write (*, *) '----------------------------------------------'
         end if
 
         !     if not first time step, then update thermal energy, density and
@@ -69,7 +67,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
                 do d = 1, dim
                     v_min(d, i) = vx(d, i)
-                       vx(d, i) = vx(d, i) + (dt/2.)*dvx(d, i)
+                    vx(d, i) = vx(d, i) + (dt/2.)*dvx(d, i)
                 end do
             end do
 
@@ -95,7 +93,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
                 do d = 1, dim
                     vx(d, i) = vx(d, i) + (dt/2.)*dvx(d, i) + av(d, i)
-                     x(d, i) = x(d, i) + dt*vx(d, i)
+                    x(d, i) = x(d, i) + dt*vx(d, i)
                 end do
             end do
 
@@ -115,7 +113,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
                 do d = 1, dim
                     vx(d, i) = v_min(d, i) + dt*dvx(d, i) + av(d, i)
-                     x(d, i) = x(d, i) + dt*vx(d, i)
+                    x(d, i) = x(d, i) + dt*vx(d, i)
                 end do
             end do
 
@@ -141,7 +139,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
     end do
 
-    nstart = current_ts
+    nstart = nstart + maxtimestep
 
 101 format(1x, 3(2x, a12))
 100 format(1x, 3(2x, e12.6))
