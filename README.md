@@ -1,30 +1,23 @@
 # Smoothed Particle Hydrodynamics（SPH）([中文文档](./README_CN.md))
 
+[![fpm](https://github.com/zoziha/SPH/workflows/fpm/badge.svg)](https://github.com/zoziha/SPH/actions)
+[![msys2-fpm](https://github.com/zoziha/SPH/workflows/msys2-fpm/badge.svg)](https://github.com/zoziha/SPH/actions)
+
 A community-driven open source smoothed particle hydrodynamics (SPH) code, the starting code version is derived from the textbook "Smooth Particle hydrodynamics - A Meshfree Particle Method".
 
 | Item | Info |
-| --- | --- |
-| Version | 0.0.1 |
+| :-: | :-: |
+| Version | 0.0.2 |
 | License | Public Domain |
 | Copyright | Copyright (c) 2021 SPH Contributors |
 
-## Start
+## Get Started
 
 ### Get the Code
 
 ```sh
 git clone https://github.com/zoziha/SPH.git
 cd SPH
-```
-
-### Build with CMake
-
-This project supports CMake tool to build code:
-
-```sh
-mkdir build && cd build
-cmake -G "MSYS Makefiles" ..
-make
 ```
 
 ### Build with [fortran-lang/fpm](https://github.com/fortran-lang/fpm)
@@ -34,7 +27,10 @@ You can build the code with the provided `fpm.toml`:
 
 ```sh
 fpm build
-fpm run
+# SPH main program
+fpm run sph
+# SPH post-processing program for ParaView
+fpm run vtk
 ```
 
 ## Links

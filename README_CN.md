@@ -1,10 +1,13 @@
 # 光滑粒子流体动力学（SPH）
 
+[![fpm](https://github.com/zoziha/SPH/workflows/fpm/badge.svg)](https://github.com/zoziha/SPH/actions)
+[![msys2-fpm](https://github.com/zoziha/SPH/workflows/msys2-fpm/badge.svg)](https://github.com/zoziha/SPH/actions)
+
 一份社区驱动的开源光滑粒子流体动力学（SPH）代码，起始代码版本源自课本《光滑粒子流体动力学--一种无网格粒子法》。
 
 | 项目 | 描述 |
-| --- | --- |
-| 版本 | 0.0.1 |
+| :-: | :-: |
+| 版本 | 0.0.2 |
 | 许可证 | Public Domain |
 | 版权 | Copyright (c) 2021 SPH 贡献者 |
 
@@ -17,16 +20,6 @@ git clone https://github.com/zoziha/SPH.git
 cd SPH
 ```
 
-### 使用CMake构建代码
-
-本项目支持CMake工具构建代码：
-
-```sh
-mkdir build && cd build
-cmake -G "MSYS Makefiles" ..
-make
-```
-
 ### 使用[fortran-lang/fpm](https://github.com/fortran-lang/fpm)构建代码
 
 FPM是社区驱动的Fortran语言的包管理器和代码构建工具，适用于c/c++/fortran代码的构建。  
@@ -34,12 +27,15 @@ FPM是社区驱动的Fortran语言的包管理器和代码构建工具，适用�
 
 ```sh
 fpm build
-fpm run
+# 运行SPH主程序
+fpm run sph
+# 运行后处理程序，生成vtk给ParaView使用
+fpm run vtk
 ```
 
 ### 其它构建系统
 
-除了CMake和fpm，本项目还支持visual studio进行构建。
+除了fpm，本项目将有可能支持visual studio进行构建。
 
 ## 链接
 

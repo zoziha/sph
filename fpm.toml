@@ -1,4 +1,6 @@
 name = "SPH"
+version = "VERSION"
+maintainer = "左志华"
 
 [build]
 auto-executables = false
