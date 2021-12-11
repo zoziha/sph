@@ -2,7 +2,7 @@
 
 A community-driven open source smoothed particle hydrodynamics (SPH) code, the starting code version is derived from the textbook "Smooth Particle hydrodynamics - A Meshfree Particle Method".
 
-| Term | Info |
+| Item | Info |
 | --- | --- |
 | Version | 0.0.1 |
 | License | Public Domain |
