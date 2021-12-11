@@ -6,6 +6,8 @@ project(
   VERSION "0.0.1"
 )
 
+set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ")
+
 # Collect source of the project
 add_subdirectory("src")
 
