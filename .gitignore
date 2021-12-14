@@ -9,6 +9,7 @@ Debug/*
 Release/*
 *.pdb
 .vscode
+.vs/*
 
 # data
 example/data/all/*

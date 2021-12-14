@@ -46,7 +46,7 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
                 dxiac(d) = x(d, i) - x(d, j)
                 driac    = driac + dxiac(d)*dxiac(d)
             end do
-            mhsml = (hsml(i) + hsml(j))/2.
+            mhsml = (hsml(i) + hsml(j))/2.0_rk
             if (sqrt(driac) < scale_k*mhsml) then
                 if (niac < max_interaction) then
 

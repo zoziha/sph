@@ -27,8 +27,6 @@
 		<Filter Name="Header Files" Filter="fi;fd"/>
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
-		<File RelativePath=".\src\sph_kind.F90"/>
-		<File RelativePath=".\src\param.f90"/>
 		<File RelativePath=".\src\art_heat.f90"/>
 		<File RelativePath=".\src\art_visc.f90"/>
 		<File RelativePath=".\src\av_vel.f90"/>
@@ -44,11 +42,15 @@
 		<File RelativePath=".\src\kernel.f90"/>
 		<File RelativePath=".\src\link_list.f90"/>
 		<File RelativePath=".\src\output.f90"/>
-		<File RelativePath=".\src\param.inc"/>
+		<File RelativePath=".\src\io\output_m.f90"/>
+		<File RelativePath=".\src\param.f90"/>
+		<File RelativePath=".\src\io\paraview_interface.f90"/>
 		<File RelativePath=".\src\single_step.f90"/>
 		<File RelativePath=".\app\sph.f90"/>
+		<File RelativePath=".\src\sph_kind.F90"/>
 		<File RelativePath=".\src\time_integration.f90"/>
 		<File RelativePath=".\src\time_print.f90"/>
+		<File RelativePath=".\src\utils\utils.f90"/>
 		<File RelativePath=".\src\virt_part.f90"/>
 		<File RelativePath=".\src\viscosity.f90"/></Filter></Files>
 	<Globals/></VisualStudioProject>
