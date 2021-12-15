@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject ProjectCreator="Intel Fortran" Keyword="Console Application" Version="11.0" ProjectIdGuid="{82DCD477-4A83-4DA1-BC7E-5F83D0DBB24A}">
 	<Platforms>
-		<Platform Name="Win32"/></Platforms>
+		<Platform Name="Win32"/>
+		<Platform Name="x64"/></Platforms>
 	<Configurations>
 		<Configuration Name="Debug|Win32">
 				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" WarnInterfaces="true" Traceback="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
@@ -22,35 +23,55 @@
 				<Tool Name="VFPreLinkEventTool"/>
 				<Tool Name="VFPreBuildEventTool"/>
 				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" WarnInterfaces="true" Traceback="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemConsole"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
+				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
+		<Configuration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" SubSystem="subSystemConsole"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
 	<Files>
 		<Filter Name="Header Files" Filter="fi;fd"/>
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
-		<File RelativePath=".\src\art_heat.f90"/>
-		<File RelativePath=".\src\art_visc.f90"/>
-		<File RelativePath=".\src\av_vel.f90"/>
-		<File RelativePath=".\src\density.f90"/>
-		<File RelativePath=".\src\direct_find.f90"/>
-		<File RelativePath=".\src\eos.f90"/>
-		<File RelativePath=".\src\external_force.f90"/>
-		<File RelativePath=".\src\grid_geom.f90"/>
-		<File RelativePath=".\src\hsml.f90"/>
-		<File RelativePath=".\src\init_grid.f90"/>
-		<File RelativePath=".\src\input.f90"/>
-		<File RelativePath=".\src\internal_force.f90"/>
-		<File RelativePath=".\src\kernel.f90"/>
-		<File RelativePath=".\src\link_list.f90"/>
-		<File RelativePath=".\src\output.f90"/>
-		<File RelativePath=".\src\io\output_m.f90"/>
-		<File RelativePath=".\src\param.f90"/>
-		<File RelativePath=".\src\io\paraview_interface.f90"/>
+		<File RelativePath=".\src\single_step\art_heat.f90"/>
+		<File RelativePath=".\src\single_step\art_visc.f90"/>
+		<File RelativePath=".\src\single_step\av_vel.f90"/>
+		<File RelativePath=".\src\single_step\density.f90"/>
+		<File RelativePath=".\src\single_step\nnps\direct_find.f90"/>
+		<File RelativePath=".\src\single_step\eos.f90"/>
+		<File RelativePath=".\src\single_step\external_force.f90"/>
+		<File RelativePath=".\src\single_step\nnps\grid_geom.f90"/>
+		<File RelativePath=".\src\single_step\hsml.f90"/>
+		<File RelativePath=".\src\single_step\nnps\init_grid.f90"/>
+		<File RelativePath=".\src\input\input.f90"/>
+		<File RelativePath=".\src\single_step\internal_force.f90"/>
+		<File RelativePath=".\src\kernel\kernel.f90"/>
+		<File RelativePath=".\src\single_step\nnps\link_list.f90"/>
+		<File RelativePath=".\src\output\output.f90"/>
+		<File RelativePath=".\src\output\output_m.f90"/>
+		<File RelativePath=".\src\utils\param.f90"/>
+		<File RelativePath=".\src\output\paraview_interface.f90"/>
 		<File RelativePath=".\src\single_step.f90"/>
 		<File RelativePath=".\app\sph.f90"/>
 		<File RelativePath=".\src\sph_kind.F90"/>
 		<File RelativePath=".\src\time_integration.f90"/>
-		<File RelativePath=".\src\time_print.f90"/>
+		<File RelativePath=".\src\output\time_print.f90"/>
 		<File RelativePath=".\src\utils\utils.f90"/>
-		<File RelativePath=".\src\virt_part.f90"/>
-		<File RelativePath=".\src\viscosity.f90"/></Filter></Files>
+		<File RelativePath=".\src\single_step\virt_part.f90"/>
+		<File RelativePath=".\src\single_step\viscosity.f90"/></Filter></Files>
 	<Globals/></VisualStudioProject>

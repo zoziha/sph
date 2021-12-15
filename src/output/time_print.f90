@@ -11,8 +11,8 @@
 subroutine time_print
 
     use sph_kind, only: rk
+    use, intrinsic :: iso_fortran_env, only: stdout => output_unit
     implicit none
-    integer, parameter :: output = 6
 
     ! . local scalars.
     character(len=8)  :: datstr
@@ -22,13 +22,13 @@ subroutine time_print
     call date_and_time(datstr, timstr)
 
     ! . Write out the date and time.
-    write (output, "(/A)") "                  Date = "//datstr(7:8)//"/"// &
+    write (stdout, "(/A)") "                  Date = "//datstr(7:8)//"/"// &
         datstr(5:6)//"/"// &
         datstr(1:4)
-    write (output, "(A)") "                  Time = "//timstr(1:2)//":"// &
+    write (stdout, "(A)") "                  Time = "//timstr(1:2)//":"// &
         timstr(3:4)//":"// &
         timstr(5:10)
-    write (output, *)
+    write (stdout, *)
 
 end subroutine time_print
 

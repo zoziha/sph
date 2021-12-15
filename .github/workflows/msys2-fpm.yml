@@ -38,5 +38,6 @@ jobs:
             
       - name: fpm build
         run: |
+          gfortran --version
           fpm build
           

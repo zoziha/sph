@@ -42,13 +42,13 @@ program sph
     call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
     
     write (*, *) '  ***************************************************'
-    write (*, *) 'are you going to run more time steps ? (0=no, 1=yes)'
+    write (*, *) ' are you going to run more time steps ? (0=no, 1=yes)'
     write (*, *) '  ***************************************************'
     read  (*, *) yesorno
     if (yesorno /= 0) goto 1
     call time_print
     call cpu_time(s2)
-    write (*, "(A,F10.1)") '        elapsed cpu time (seconds) = ', s2 - s1
+    write (*, "(A,F0.1)") '        elapsed cpu time (seconds) = ', s2 - s1
     write (*, *) 'all finish!'
 
 end program sph

@@ -117,7 +117,7 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
     if (mod(itimestep, print_step) == 0) then
         if (int_stat) then
             print *, ' >> statistics: virtual boundary particles:'
-            print *, '          number of virtual particles:', nvirt
+            print *, '    number of virtual particles:', nvirt
         end if
     end if
     
