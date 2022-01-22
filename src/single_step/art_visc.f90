@@ -1,31 +1,55 @@
+!> 计算人工粘度的子程序。详见 Monaghan (1992), Hernquist 和 Katz (1989) 或第 4 章中的论述。
 !>     subroutine to calculate the artificial viscosity (monaghan, 1992)
-!>     see equ.(4.66) equ.(4.62)
-!>
-!>     ntotal : number of particles (including virtual particles)    [in]
-!>     hsml   : smoothing length                                     [in]
-!>     mass   : particle masses                                      [in]
-!>     x      : coordinates of all particles                         [in]
-!>     vx     : velocities of all particles                          [in]
-!>     niac   : number of interaction pairs                          [in]
-!>     rho    : density                                              [in]
-!>     c      : temperature                                          [in]
-!>     pair_i : list of first partner of interaction pair            [in]
-!>     pair_j : list of second partner of interaction pair           [in]
-!>     w      : kernel for all interaction pairs                     [in]
-!>     dwdx   : derivative of kernel with respect to x, y and z      [in]
-!>     dvxdt  : acceleration with respect to x, y and z             [out]
-!>     dedt   : change of specific internal energy                  [out]
-
 subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, dwdx, dvxdt, dedt)
 
     use sph_kind, only: rk
     use parameter
     implicit none
 
-    integer  :: ntotal, niac, pair_i(max_interaction), pair_j(max_interaction)
-    real(rk) :: hsml(maxn), mass(maxn), x(dim, maxn), vx(dim, maxn), rho(maxn), c(maxn), w(max_interaction), &
-                dwdx(dim, max_interaction), dvxdt(dim, maxn), dedt(maxn)
-    integer  :: i, j, k, d
+    !> 在模拟中所使用的粒子总数
+    !> number of particles in simulation
+    integer, intent(in) :: ntotal
+    !> 光滑长度
+    !> smoothing length
+    real(rk), intent(in) :: hsml(maxn)
+    !> 粒子的质量
+    !> particle masses
+    real(rk), intent(in) :: mass(maxn)
+    !> 粒子的坐标
+    !> particle coordinates
+    real(rk), intent(in) :: x(dim, maxn)
+    !> 粒子的速度
+    !> particle velocities
+    real(rk), intent(in) :: vx(dim, maxn)
+    !> 相互作用对的数目
+    !> number of interaction pairs
+    integer, intent(in) :: niac
+    !> 密度
+    !> density
+    real(rk), intent(in) :: rho(maxn)
+    !> 温度
+    !> temperature
+    real(rk), intent(in) :: c(maxn)
+    !> 相互作用对的第一个粒子
+    !> first partner of interaction pair
+    integer, intent(in) :: pair_i(max_interaction)
+    !> 相互作用对的第二个粒子
+    !> second partner of interaction pair
+    integer, intent(in) :: pair_j(max_interaction)
+    !> 相互作用对的核函数
+    !> kernel for all interaction pairs
+    real(rk), intent(in) :: w(max_interaction)
+    !> 相互作用对的核函数的导数
+    !> derivative of kernel with respect to x, y and z
+    real(rk), intent(in) :: dwdx(dim, max_interaction)
+    !> 相互作用对的加速度
+    !> acceleration with respect to x, y and z
+    real(rk), intent(out) :: dvxdt(dim, maxn)
+    !> 改变特定内部能量
+    !> change of specific internal energy
+    real(rk), intent(out) :: dedt(maxn)
+
+    integer :: i, j, k, d
     real(rk) :: dx, dvx(dim), alpha, beta, etq, piv, muv, vr, rr, h, mc, mrho, mhsml
 
     !     parameter for the artificial viscosity:
@@ -36,7 +60,7 @@ subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, 
     parameter(beta=1._rk)
 
     !     parameter to avoid singularities
-    parameter(etq =0.1_rk)
+    parameter(etq=0.1_rk)
 
     do i = 1, ntotal
         do d = 1, dim
@@ -70,9 +94,9 @@ subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, 
 
             !     calculate piv_ij = (-alpha muv_ij c_ij + beta muv_ij^2) / rho_ij
 
-            mc   = 0.5_rk*(c(i) + c(j))
+            mc = 0.5_rk*(c(i) + c(j))
             mrho = 0.5_rk*(rho(i) + rho(j))
-            piv  = (beta*muv - alpha*mc)*muv/mrho
+            piv = (beta*muv - alpha*mc)*muv/mrho
 
             !     calculate sph sum for artificial viscous force
 

@@ -8,7 +8,7 @@ A community-driven open source smoothed particle hydrodynamics (SPH) code, the s
 | Item | Info |
 | :-: | :-: |
 | Version | 0.0.2 |
-| License | Public Domain |
+| License | BSD 3-Clause  |
 | Copyright | Copyright (c) 2021 SPH Contributors |
 
 ## Get Started
@@ -28,7 +28,7 @@ You can build the code with the provided `fpm.toml`:
 ```sh
 fpm build
 # SPH main program
-fpm run sph
+fpm run sph --profile release
 # SPH post-processing program for ParaView
 fpm run vtk
 ```

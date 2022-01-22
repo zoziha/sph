@@ -1,26 +1,44 @@
+!> 更新光滑长度
 !> Subroutine to evolve smoothing length.
-!>
-!>     dt     : time step                                            [in]
-!>     ntotal : number of particles                                  [in]
-!>     mass   : particle masses                                      [in]
-!>     vx     : velocities of all particles                          [in]
-!>     rho    : density                                              [in]
-!>     niac   : number of interaction pairs                          [in]
-!>     pair_i : list of first partner of interaction pair            [in]
-!>     pair_j : list of second partner of interaction pair           [in]
-!>     dwdx   : derivative of kernel with respect to x, y and z      [in]
-!>     hsml   : smoothing length                                 [in/out]
-
 subroutine h_upgrade(dt, ntotal, mass, vx, rho, niac, pair_i, pair_j, dwdx, hsml)
 
     use sph_kind, only: rk
     use parameter
     implicit none
 
-    integer  :: ntotal, niac, pair_i(max_interaction), pair_j(max_interaction)
-    real(rk) :: mass(maxn), vx(dim, maxn), rho(maxn), dwdx(dim, max_interaction), hsml(maxn)
-    integer  :: i, j, k, d
-    real(rk) :: dt, fac, dvx(dim), hvcc, vcc(maxn), dhsml(maxn)
+    !> 时间步长
+    !> Time step
+    real(rk), intent(in) :: dt
+    !> 在模拟中所使用的粒子总数
+    !> number of particles in simulation
+    integer, intent(in) :: ntotal
+    !> 粒子的质量
+    !> particle masses
+    real(rk), intent(in) :: mass(maxn)
+    !> 粒子的速度
+    !> particle velocities
+    real(rk), intent(in) :: vx(dim, maxn)
+    !> 密度
+    !> density
+    real(rk), intent(in) :: rho(maxn)
+    !> 相互作用对的数目
+    !> number of interaction pairs
+    integer, intent(in) :: niac
+    !> 相互作用对的第一个粒子
+    !> first partner of interaction pair
+    integer, intent(in) :: pair_i(max_interaction)
+    !> 相互作用对的第二个粒子
+    !> second partner of interaction pair
+    integer, intent(in) :: pair_j(max_interaction)
+    !> 对应于粒子的每个方向的核函数导数
+    !> derivative of kernel with respect to x, y and z
+    real(rk), intent(in) :: dwdx(dim, max_interaction)
+    !> 光滑长度
+    !> smoothing length
+    real(rk), intent(inout) :: hsml(maxn)
+
+    integer :: i, j, k, d
+    real(rk) :: fac, dvx(dim), hvcc, vcc(maxn), dhsml(maxn)
 
     if (sle == 0) then
 
@@ -52,7 +70,7 @@ subroutine h_upgrade(dt, ntotal, mass, vx, rho, niac, pair_i, pair_j, dwdx, hsml
 
         do i = 1, ntotal
             dhsml(i) = (hsml(i)/dim)*vcc(i)
-             hsml(i) = hsml(i) + dt*dhsml(i)
+            hsml(i) = hsml(i) + dt*dhsml(i)
             if (hsml(i) <= 0) hsml(i) = hsml(i) - dt*dhsml(i)
         end do
 

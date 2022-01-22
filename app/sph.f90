@@ -21,32 +21,41 @@ program sph
     use parameter
     implicit none
 
-    integer  :: ntotal, itype(maxn), maxtimestep, d, m, i, yesorno
+    !> 在模拟中所使用的粒子总数
+    !> number of particles in simulation
+    integer :: ntotal
+    !> 粒子的类型(1: ideal gas; 2: water)
+    !> types of particles
+    integer :: itype(maxn)
+    integer :: maxtimestep
+    integer :: d, m, i, yesorno
     real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), &
                 u(maxn), c(maxn), s(maxn), e(maxn), hsml(maxn), dt
+    !> 时间记录点
+    !> time records
     real(rk) :: s1, s2
 
-    call time_print
+    call time_print()
     call cpu_time(s1)
 
-    if (shocktube)   dt = 0.005_rk
+    if (shocktube) dt = 0.005_rk
     if (shearcavity) dt = 5.e-5_rk
     call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 1   write (*, *) '  ***************************************************'
     write (*, *) '          please input the maximal time steps '
     write (*, *) '  ***************************************************'
-    read  (*, *) maxtimestep
+    read (*, *) maxtimestep
     call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
 
     !> 输出最后一个时间布的求解信息
     call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
-    
+
     write (*, *) '  ***************************************************'
     write (*, *) ' are you going to run more time steps ? (0=no, 1=yes)'
     write (*, *) '  ***************************************************'
-    read  (*, *) yesorno
+    read (*, *) yesorno
     if (yesorno /= 0) goto 1
-    call time_print
+    call time_print()
     call cpu_time(s2)
     write (*, "(A,F0.1)") '        elapsed cpu time (seconds) = ', s2 - s1
     write (*, *) 'all finish!'

@@ -8,7 +8,7 @@
 | 项目 | 描述 |
 | :-: | :-: |
 | 版本 | 0.0.2 |
-| 许可证 | Public Domain |
+| 许可证 | BSD 3-Clause |
 | 版权 | Copyright (c) 2021 SPH 贡献者 |
 
 ## 开始
@@ -28,7 +28,7 @@ FPM是社区驱动的Fortran语言的包管理器和代码构建工具，适用�
 ```sh
 fpm build
 # 运行SPH主程序
-fpm run sph
+fpm run sph --profile release
 # 运行后处理程序，生成vtk给ParaView使用
 fpm run vtk
 ```

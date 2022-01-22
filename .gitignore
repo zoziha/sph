@@ -12,5 +12,7 @@ Release/*
 .vs/*
 
 # data
-example/data/all/*
-example/data/*
+data/all/*
+data/paraview/*
+f_**
+x64/*

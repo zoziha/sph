@@ -7,7 +7,7 @@ contains
 
     subroutine test_utils_to_string
 
-        call check(to_string(12)=="12", msg='to_string(12)=="12" failed.')
+        call check(to_string(12) == "12", msg='to_string(12)=="12" failed.')
 
     end subroutine test_utils_to_string
 

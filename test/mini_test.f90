@@ -5,10 +5,10 @@ module mini_test
 contains
 
     subroutine check(condition, msg)
-        logical,intent(in)           :: condition
+        logical, intent(in) :: condition
         character(len=*), intent(in) :: msg
 
-        if (.not.condition) error stop msg
+        if (.not. condition) error stop msg
 
     end subroutine check
 

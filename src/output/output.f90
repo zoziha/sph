@@ -1,29 +1,47 @@
-!>     subroutine for saving particle information to external disk file
-!>
-!>     x-- coordinates of particles                                  [in]
-!>     vx-- velocities of particles                                  [in]
-!>     mass-- mass of particles                                      [in]
-!>     rho-- dnesities of particles                                  [in]
-!>     p-- pressure  of particles                                    [in]
-!>     u-- internal energy of particles                              [in]
-!>     c-- sound velocity of particles                               [in]
-!>     itype-- types of particles                                    [in]
-!>     hsml-- smoothing lengths of particles                         [in]
-!>     ntotal-- total particle number                                [in]
-
+!> 保存粒子信息到硬盘文件中的子程序
+!> subroutine for saving particle information to external disk file
 subroutine output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
 
     use sph_kind, only: rk
     use parameter
     implicit none
 
-    integer  :: itype(maxn), ntotal
-    real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), u(maxn), c(maxn), hsml(maxn)
-    integer  :: i, d, npart
+    !> 粒子的位置
+    !> coordinates of particles
+    real(rk), intent(in) :: x(dim, maxn)
+    !> 粒子的速度
+    !> velocities of particles
+    real(rk), intent(in) :: vx(dim, maxn)
+    !> 粒子的质量
+    !> mass of particles
+    real(rk), intent(in) :: mass(maxn)
+    !> 粒子的密度
+    !> dnesities of particles
+    real(rk), intent(in) :: rho(maxn)
+    !> 粒子的压力
+    !> pressure  of particles
+    real(rk), intent(in) :: p(maxn)
+    !> 粒子的内部能量
+    !> internal energy of particles
+    real(rk), intent(in) :: u(maxn)
+    !> 粒子的声速
+    !> sound velocity of particles
+    real(rk), intent(in) :: c(maxn)
+    !> 粒子的类型 (1: ideal gas; 2: water; 3: TNT)
+    !> types of particles
+    integer, intent(in) :: itype(maxn)
+    !> 粒子的光滑长度
+    !> smoothing lengths of particles
+    real(rk), intent(in) :: hsml(maxn)
+    !> 粒子的总数
+    !> total particle number
+    integer, intent(in) :: ntotal
 
-    open (1, file='./example/data/f_xv.dat')
-    open (2, file='./example/data/f_state.dat')
-    open (3, file='./example/data/f_other.dat')
+    integer :: i, d, npart
+
+    open (1, file='./data/f_xv.dat')
+    open (2, file='./data/f_state.dat')
+    open (3, file='./data/f_other.dat')
 
     write (1, *) ntotal
     do i = 1, ntotal

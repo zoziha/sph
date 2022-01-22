@@ -1,23 +1,29 @@
-!>   subroutine to calculate the smoothing kernel wij and its
-!>   derivatives dwdxij.
-!>     if skf = 1, cubic spline kernel by w4 - spline (monaghan 1985)
-!>            = 2, gauss kernel   (gingold and monaghan 1981)
-!>            = 3, quintic kernel (morris 1997)
-!>
-!>     r    : distance between particles i and j                     [in]
-!>     dx   : x-, y- and z-distance between i and j                  [in]
-!>     hsml : smoothing length                                       [in]
-!>     w    : kernel for all interaction pairs                      [out]
-!>     dwdx : derivative of kernel with respect to x, y and z       [out]
-
+!> 计算光滑函数 Wij 及其倒数 dWdxij 的子例程
+!> subroutine to calculate the smoothing kernel wij and its
+!> derivatives dwdxij.
 subroutine kernel(r, dx, hsml, w, dwdx)
 
     use sph_kind, only: rk
     use parameter
     implicit none
 
-    real(rk) :: r, dx(dim), hsml, w, dwdx(dim)
-    integer  :: i, j, d
+    !> 粒子 i 和 j 之间的距离
+    !> distance between particles i and j
+    real(rk), intent(in) :: r
+    !> 粒子 i 和 j 之间的坐标差
+    !> x-, y- and z-distance between i and j
+    real(rk), intent(in) :: dx(dim)
+    !> 粒子的光滑长度
+    !> smoothing length
+    real(rk), intent(in) :: hsml
+    !> 给定相互作用对的光滑核函数
+    !> kernel for all interaction pairs
+    real(rk), intent(out) :: w
+    !> 核函数对 x, y, z 的导数
+    !> derivative of kernel with respect to x, y and z
+    real(rk), intent(out) :: dwdx(dim)
+
+    integer :: i, j, d
     real(rk) :: q, dw, factor
 
     q = r/hsml
@@ -39,14 +45,14 @@ subroutine kernel(r, dx, hsml, w, dwdx)
             stop
         end if
         if (q >= 0 .and. q <= 1._rk) then
-            w = factor*(2._rk/3._rk-q*q + q**3._rk/2._rk)
+            w = factor*(2._rk/3._rk - q*q + q**3._rk/2._rk)
             do d = 1, dim
-                dwdx(d) = factor*(-2._rk+3._rk/2._rk*q)/hsml**2*dx(d)
+                dwdx(d) = factor*(-2._rk + 3._rk/2._rk*q)/hsml**2*dx(d)
             end do
         else if (q > 1._rk .and. q <= 2) then
-            w = factor*1._rk/6._rk*(2._rk-q)**3
+            w = factor*1._rk/6._rk*(2._rk - q)**3
             do d = 1, dim
-                dwdx(d) = -factor*1._rk/6._rk*3.*(2._rk-q)**2/hsml*(dx(d)/r)
+                dwdx(d) = -factor*1._rk/6._rk*3.*(2._rk - q)**2/hsml*(dx(d)/r)
             end do
         else
             w = 0._rk
