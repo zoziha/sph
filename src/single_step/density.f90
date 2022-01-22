@@ -1,3 +1,4 @@
+!> 通过应用密度求和法更新密度的子程序。详见第 4 章中的论述。
 !>   subroutine to calculate the density with sph summation algorithm.
 !>   see equ.(4.35)
 !>
@@ -18,9 +19,14 @@ subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
     use parameter
     implicit none
 
-    integer  :: ntotal, niac, pair_i(max_interaction), pair_j(max_interaction), itype(maxn)
+    !> 在模拟中所使用的粒子总数
+    !> number of particles in simulation
+    integer, intent(in) :: ntotal
+    !> 相互作用对的数目
+    integer, intent(in) :: niac
+    integer :: pair_i(max_interaction), pair_j(max_interaction), itype(maxn)
     real(rk) :: hsml(maxn), mass(maxn), w(max_interaction), rho(maxn)
-    integer  :: i, j, k, d
+    integer :: i, j, k, d
     real(rk) :: selfdens, hv(dim), r, wi(maxn)
 
     !     wi(maxn)---integration of the kernel itself
@@ -73,6 +79,7 @@ subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
 
 end subroutine sum_density
 
+!> 通过应用连续密度法更新密度的子程序。详见第 4 章中的论述。
 !>     subroutine to calculate the density with sph continuity approach.
 !>     see equ.(4.34)
 !>
@@ -94,9 +101,14 @@ subroutine con_density(ntotal, mass, niac, pair_i, pair_j, dwdx, vx, itype, x, r
     use parameter
     implicit none
 
-    integer  :: ntotal, niac, pair_i(max_interaction), pair_j(max_interaction), itype(maxn)
+    !> 在模拟中所使用的粒子总数
+    !> number of particles in simulation
+    integer, intent(in) :: ntotal
+    !> 相互作用对的数目
+    integer, intent(in) :: niac
+    integer :: pair_i(max_interaction), pair_j(max_interaction), itype(maxn)
     real(rk) :: mass(maxn), dwdx(dim, max_interaction), vx(dim, maxn), x(dim, maxn), rho(maxn), drhodt(maxn)
-    integer  :: i, j, k, d
+    integer :: i, j, k, d
     real(rk) :: vcc, dvx(dim)
 
     do i = 1, ntotal

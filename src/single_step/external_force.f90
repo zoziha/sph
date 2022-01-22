@@ -1,26 +1,43 @@
+!> 计算外力的子程序，例如重力。
+!> 同时在此程序中也将边界虚粒子施加的相互作用力作为外力来计算。
 !> Subroutine to calculate the external forces, e.g. gravitational forces.
 !>  the forces from the interactions with boundary virtual particles
 !>  are also calculated here as external forces.
-!>
-!>     here as the external force.
-!>     ntotal  : number of particles                                 [in]
-!>     mass    : particle masses                                     [in]
-!>     x       : coordinates of all particles                        [in]
-!>     pair_i : list of first partner of interaction pair            [in]
-!>     pair_j : list of second partner of interaction pair           [in]
-!>     itype   : type of particles                                   [in]
-!>     hsml   : smoothing length                                     [in]
-!>     dvxdt   : acceleration with respect to x, y and z            [out]
-
 subroutine ext_force(ntotal, mass, x, niac, pair_i, pair_j, itype, hsml, dvxdt)
 
     use sph_kind, only: rk
     use parameter
     implicit none
 
-    integer  :: ntotal, itype(maxn), niac, pair_i(max_interaction), pair_j(max_interaction)
-    real(rk) :: mass(maxn), x(dim, maxn), hsml(maxn), dvxdt(dim, maxn)
-    integer  :: i, j, k, d
+    !> 在模拟中所使用的粒子总数
+    !> number of particles in simulation
+    integer, intent(in) :: ntotal
+    !> 粒子的质量
+    !> mass of particles
+    real(rk), intent(in) :: mass(maxn)
+    !> 粒子的坐标
+    !> coordinates of particles
+    real(rk), intent(in) :: x(dim, maxn)
+    !> 各粒子的粒子数
+    !> number of particles in each particle
+    integer, intent(in) :: niac
+    !> 各粒子对的第一个粒子
+    !> first particle of each particle
+    integer, intent(in) :: pair_i(max_interaction)
+    !> 各粒子对的第二个粒子
+    !> second particle of each particle
+    integer, intent(in) :: pair_j(max_interaction)
+    !> 各粒子的类型
+    !> type of particles
+    integer, intent(in) :: itype(maxn)
+    !> 各粒子的光滑长度
+    !> smoothing length of particles
+    real(rk), intent(in) :: hsml(maxn)
+    !> 各粒子的加速度
+    !> acceleration of particles
+    real(rk), intent(out) :: dvxdt(dim, maxn)
+
+    integer :: i, j, k, d
     real(rk) :: dx(dim), rr, f, rr0, dd, p1, p2
 
     do i = 1, ntotal
@@ -39,9 +56,9 @@ subroutine ext_force(ntotal, mass, x, niac, pair_i, pair_j, itype, hsml, dvxdt)
 
     !     boundary particle force and penalty anti-penetration force.
     rr0 = 1.25e-5_rk
-    dd  = 1.e-2_rk
-    p1  = 12
-    p2  = 4
+    dd = 1.e-2_rk
+    p1 = 12
+    p2 = 4
 
     do k = 1, niac
         i = pair_i(k)

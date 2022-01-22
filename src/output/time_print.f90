@@ -1,21 +1,13 @@
-!>===============================================================================
-!>   TIME_PRINT                     Print out the current date and time.
-!>
-!>   Notes:
-!>
-!>   The standard Fortran 90 routine DATE_AND_TIME is used to get the current
-!>   date and time strings.
-!>
-!>===============================================================================
-
-subroutine time_print
+!> 打印当前时间和日期
+!> TIME_PRINT: Print out the current date and time.
+subroutine time_print()
 
     use sph_kind, only: rk
     use, intrinsic :: iso_fortran_env, only: stdout => output_unit
     implicit none
 
     ! . local scalars.
-    character(len=8)  :: datstr
+    character(len=8) :: datstr
     character(len=10) :: timstr
 
     ! . Get the current date and time.

@@ -27,16 +27,16 @@ subroutine init_grid(ntotal, hsml, grid, ngridx, ghsmlx, maxgridx, mingridx, dge
     !     1-dim. problem: maxngx = maxn ,  maxngy = maxngz = 1
     !     2-dim. problem: maxngx = maxngy ~ sqrt(maxn) ,  maxngz = 1
     !     3-dim. problem: maxngx = maxngy = maxngz ~ maxn^(1/3)
-    integer  :: maxngx, maxngy, maxngz
+    integer :: maxngx, maxngy, maxngz
     parameter(maxngx=100, maxngy=100, maxngz=1)
-    integer  :: ntotal, grid(maxngx, maxngy, maxngz), ngridx(dim), ghsmlx(dim)
+    !> 在模拟中所使用的粒子总数
+    !> number of particles in simulation
+    integer, intent(in) :: ntotal
+    integer :: grid(maxngx, maxngy, maxngz), ngridx(dim), ghsmlx(dim)
     real(rk) :: hsml, maxgridx(dim), mingridx(dim), dgeomx(dim)
-    integer  :: i, j, k, d, maxng(dim), ngrid(3)
-    real(rk) :: nppg
-
-    !     averaged number of particles per grid cell
-
-    parameter(nppg=3._rk)
+    integer :: i, j, k, d, maxng(dim), ngrid(3)
+    !> averaged number of particles per grid cell
+    real(rk), parameter :: nppg = 3.0_rk
 
     !     initialize parameters: maximum number of grid cells
 

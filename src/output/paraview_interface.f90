@@ -1,4 +1,5 @@
 !> 将数据导入paraview(简易接口)
+!> Simple interface for paraview
 module paraview_interface
 
     use parameter
@@ -11,6 +12,7 @@ module paraview_interface
 contains
 
     !> 将数据输出为paraview可读的vtk格式
+    !> output data to paraview readable vtk format
     subroutine output_to_paraview_vtk()
         integer :: steps, i
 
@@ -24,17 +26,21 @@ contains
 
     end subroutine output_to_paraview_vtk
 
+    !> 将数据输出为paraview可读的vtk格式 (单步)
+    !> output data to paraview readable vtk format (one step)
     subroutine output_to_paraview_vtk_one_step(i_steps)
         integer, intent(in) :: i_steps
+        !> 在模拟中所使用的粒子总数
+        !> number of particles in simulation
         integer :: ntotal
         integer :: unit_xv, unit_state, unit_other
         integer :: index, i, d
         real(rk), allocatable :: x(:, :), vx(:, :), mass(:), rho(:), p(:), u(:), itype(:), hsml(:)
 
         !> 读入数据:xv, state, other
-        open (newunit=unit_xv, file="example/data/all/f_"//to_string(i_steps)//"xv.dat", status="old")
-        open (newunit=unit_state, file="example/data/all/f_"//to_string(i_steps)//"state.dat", status="old")
-        open (newunit=unit_other, file="example/data/all/f_"//to_string(i_steps)//"other.dat", status="old")
+        open (newunit=unit_xv, file="./data/all/f_"//to_string(i_steps)//"xv.dat", status="old")
+        open (newunit=unit_state, file="./data/all/f_"//to_string(i_steps)//"state.dat", status="old")
+        open (newunit=unit_other, file="./data/all/f_"//to_string(i_steps)//"other.dat", status="old")
 
         read (unit_xv, *) ntotal
         allocate (x(dim, ntotal), vx(dim, ntotal), mass(ntotal), rho(ntotal), p(ntotal), u(ntotal), itype(ntotal), hsml(ntotal))
@@ -50,7 +56,7 @@ contains
         close (unit_other)
 
         !> 输出数据: vtk
-        open (newunit=unit_xv, file="example/data/paraview/sph"//to_string(i_steps)//".vtk", access="stream", &
+        open (newunit=unit_xv, file="./data/paraview/sph"//to_string(i_steps)//".vtk", access="stream", &
               form="formatted")
 
         !> 输出头部和点坐标

@@ -1,0 +1,13 @@
+name = "二维腔内剪切流动"
+src = "data"
+
+[pre-process]
+
+# openmp并行线程控制
+openmp = true
+num_threads = 4
+
+
+[post-process]
+
+vtk = false

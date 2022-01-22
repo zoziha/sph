@@ -1,21 +1,6 @@
-!>      x-- coordinates of particles                       [input/output]
-!>      vx-- velocities of particles                       [input/output]
-!>      mass-- mass of particles                                  [input]
-!>      rho-- dnesities of particles                       [input/output]
-!>      p-- pressure  of particles                         [input/output]
-!>      u-- internal energy of particles                   [input/output]
-!>      c-- sound velocity of particles                          [output]
-!>      s-- entropy of particles, not used here                  [output]
-!>      e-- total energy of particles                            [output]
-!>      itype-- types of particles                               [input]
-!>           =1   ideal gas
-!>           =2   water
-!>           =3   tnt
-!>      hsml-- smoothing lengths of particles              [input/output]
-!>      ntotal-- total particle number                            [input]
-!>      maxtimestep-- maximum timesteps                           [input]
-!>      dt-- timestep                                             [input]
-
+!> 时间步长前进，而且在整个系统中时间步长保持为常量。
+!> 但是时间步长可以是时间和空间 (对应于每个粒子) 的变量。
+!> 相关参考为 Hernquist 和 Katz (1989), Simpson (1995), Monaghan (1992) 等等。
 subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
 
     use sph_kind, only: rk
@@ -23,8 +8,49 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
     use output_m, only: output_all
     implicit none
 
-    integer :: itype(maxn), ntotal, maxtimestep
-    real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), u(maxn), c(maxn), s(maxn), e(maxn), hsml(maxn), dt
+    !> 粒子的坐标
+    !> coordinates of particles
+    real(rk), intent(inout) :: x(dim, maxn)
+    !> 粒子的速度
+    !> velocities of particles
+    real(rk), intent(inout) :: vx(dim, maxn)
+    !> 粒子的质量
+    !> mass of particles
+    real(rk), intent(in) :: mass(maxn)
+    !> 粒子的密度
+    !> dnesities of particles
+    real(rk), intent(inout) :: rho(maxn)
+    !> 粒子的压力
+    !> pressure  of particles
+    real(rk), intent(inout) :: p(maxn)
+    !> 粒子的内部能量
+    !> internal energy of particles
+    real(rk), intent(inout) :: u(maxn)
+    !> 粒子的声速
+    !> sound velocity of particles
+    real(rk), intent(out) :: c(maxn)
+    !> 粒子的熵
+    !> entropy of particles, not used here
+    real(rk), intent(out) :: s(maxn)
+    !> 粒子的总能量
+    !> total energy of particles
+    real(rk), intent(out) :: e(maxn)
+    !> 粒子的类型(1: ideal gas; 2: water; 3: TNT)
+    !> types of particles
+    integer, intent(in) :: itype(maxn)
+    !> 粒子的平滑长度
+    !> smoothing lengths of particles
+    real(rk), intent(inout) :: hsml(maxn)
+    !> 粒子的总数
+    !> total particle number
+    integer, intent(in) :: ntotal
+    !> 最大的时间步长
+    !> maximum timesteps
+    integer, intent(in) :: maxtimestep
+    !> 时间步长
+    !> timestep
+    real(rk), intent(in) :: dt
+
     integer :: i, j, k, itimestep, d, nstart = 0  !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
     real(rk) :: x_min(dim, maxn), v_min(dim, maxn), u_min(maxn), rho_min(maxn), dx(dim, maxn), dvx(dim, maxn), &
                 du(maxn), drho(maxn), av(dim, maxn), ds(maxn), t(maxn), tdsdt(maxn)
@@ -41,8 +67,8 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
         if (mod(itimestep, print_step) == 0) then
             write (*, *) '----------------------------------------------'
-            write (*, *) '  current number of time step =', itimestep
-            write (*, *) '  current time =', time
+            write (*, '(1x,a,i0)') '  current number of time step = ', itimestep
+            write (*, "(1x,a,g0.3)") '  current time = ', time
             write (*, *) '----------------------------------------------'
         end if
 
@@ -142,6 +168,6 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
     nstart = nstart + maxtimestep
 
 101 format(1x, 3(2x, a12))
-100 format(1x, 3(2x, e12.6))
+100 format(1x, 3(2x, es12.5))
 
 end subroutine time_integration

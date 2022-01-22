@@ -1,34 +1,55 @@
+!> 装载虚粒子或通过问题的几何形状产生虚粒子信息的子程序。
 !>   subroutine to determine the information of virtual particles
 !>   here only the monaghan type virtual particles for the 2d shear
 !>   cavity driven problem are generated.
-!>
-!>     itimestep : current time step                                 [in]
-!>     ntotal : number of particles                                  [in]
-!>     nvirt  : number of virtual particles                         [out]
-!>     hsml   : smoothing length                                 [in|out]
-!>     mass   : particle masses                                  [in|out]
-!>     x      : coordinates of all particles                     [in|out]
-!>     vx     : velocities of all particles                      [in|out]
-!>     rho    : density                                          [in|out]
-!>     u      : internal energy                                  [in|out]
-!>     itype   : type of particles                               [in|out]
-
 subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, itype)
 
     use sph_kind, only: rk
     use parameter
     implicit none
 
-    integer  :: itimestep, ntotal, nvirt, itype(maxn)
-    real(rk) :: hsml(maxn), mass(maxn), x(dim, maxn), vx(dim, maxn), rho(maxn), u(maxn), p(maxn)
-    integer  :: i, j, d, im, mp
+    !> 当前时间步
+    !> Current time step
+    integer, intent(in) :: itimestep
+    !> 总粒子数
+    !> Total number of particles
+    integer, intent(in) :: ntotal
+    !> 虚拟粒子数
+    !> Number of virtual particles
+    integer, intent(out) :: nvirt
+    !> 光滑长度
+    !> Smoothing length
+    real(rk), intent(inout) :: hsml(maxn)
+    !> 粒子质量
+    !> Particle masses
+    real(rk), intent(inout) :: mass(maxn)
+    !> 粒子坐标
+    !> Particle coordinates
+    real(rk), intent(inout) :: x(dim, maxn)
+    !> 粒子速度
+    !> Particle velocities
+    real(rk), intent(inout) :: vx(dim, maxn)
+    !> 密度
+    !> Density
+    real(rk), intent(inout) :: rho(maxn)
+    !> 内部能量
+    !> Internal energy
+    real(rk), intent(inout) :: u(maxn)
+    !> 粒子压力
+    !> Particle pressure
+    real(rk), intent(inout) :: p(maxn)
+    !> 粒子类型
+    !> Particle type
+    integer, intent(inout) :: itype(maxn)
+
+    integer :: i, j, d, im, mp
     real(rk) :: xl, dx, v_inf
 
     if (vp_input) then
 
-        open (1, file='./example/data/xv_vp.dat')
-        open (2, file='./example/data/state_vp.dat')
-        open (3, file='./example/data/other_vp.dat')
+        open (1, file='./data/xv_vp.dat')
+        open (2, file='./data/state_vp.dat')
+        open (3, file='./data/other_vp.dat')
         read (1, *) nvirt
         do j = 1, nvirt
             i = ntotal + j
@@ -43,17 +64,17 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
     else
 
         nvirt = 0
-        mp    = 40
-        xl    = 1.0e-3_rk
-        dx    = xl/mp
+        mp = 40
+        xl = 1.0e-3_rk
+        dx = xl/mp
         v_inf = 1.e-3_rk
 
         !     monaghan type virtual particle on the upper side
 
         do i = 1, 2*mp + 1
             nvirt = nvirt + 1
-            x(1, ntotal + nvirt)  = (i - 1)*dx/2
-            x(2, ntotal + nvirt)  = xl
+            x(1, ntotal + nvirt) = (i - 1)*dx/2
+            x(2, ntotal + nvirt) = xl
             vx(1, ntotal + nvirt) = v_inf
             vx(2, ntotal + nvirt) = 0._rk
         end do
@@ -62,8 +83,8 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
 
         do i = 1, 2*mp + 1
             nvirt = nvirt + 1
-            x(1, ntotal + nvirt)  = (i - 1)*dx/2
-            x(2, ntotal + nvirt)  = 0._rk
+            x(1, ntotal + nvirt) = (i - 1)*dx/2
+            x(2, ntotal + nvirt) = 0._rk
             vx(1, ntotal + nvirt) = 0._rk
             vx(2, ntotal + nvirt) = 0._rk
         end do
@@ -72,8 +93,8 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
 
         do i = 1, 2*mp - 1
             nvirt = nvirt + 1
-            x(1, ntotal + nvirt)  = 0._rk
-            x(2, ntotal + nvirt)  = i*dx/2
+            x(1, ntotal + nvirt) = 0._rk
+            x(2, ntotal + nvirt) = i*dx/2
             vx(1, ntotal + nvirt) = 0._rk
             vx(2, ntotal + nvirt) = 0._rk
         end do
@@ -82,27 +103,27 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
 
         do i = 1, 2*mp - 1
             nvirt = nvirt + 1
-            x(1, ntotal + nvirt)  = xl
-            x(2, ntotal + nvirt)  = i*dx/2
+            x(1, ntotal + nvirt) = xl
+            x(2, ntotal + nvirt) = i*dx/2
             vx(1, ntotal + nvirt) = 0._rk
             vx(2, ntotal + nvirt) = 0._rk
         end do
 
         do i = 1, nvirt
-            rho(ntotal + i)   = 1000._rk
-            mass(ntotal + i)  = rho(ntotal + i)*dx*dx
-            p(ntotal + i)     = 0._rk
-            u(ntotal + i)     = 357.1_rk
+            rho(ntotal + i) = 1000._rk
+            mass(ntotal + i) = rho(ntotal + i)*dx*dx
+            p(ntotal + i) = 0._rk
+            u(ntotal + i) = 357.1_rk
             itype(ntotal + i) = -2
-            hsml(ntotal + i)  = dx
+            hsml(ntotal + i) = dx
         end do
 
     end if
 
     if (mod(itimestep, save_step) == 0) then
-        open (1, file='./example/data/xv_vp.dat')
-        open (2, file='./example/data/state_vp.dat')
-        open (3, file='./example/data/other_vp.dat')
+        open (1, file='./data/xv_vp.dat')
+        open (2, file='./data/state_vp.dat')
+        open (3, file='./data/other_vp.dat')
         write (1, *) nvirt
         do i = ntotal + 1, ntotal + nvirt
             write (1, 1001) i, (x(d, i), d=1, dim), (vx(d, i), d=1, dim)
@@ -117,10 +138,10 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
     if (mod(itimestep, print_step) == 0) then
         if (int_stat) then
             print *, ' >> statistics: virtual boundary particles:'
-            print *, '    number of virtual particles:', nvirt
+            print '(1x,a,i0)', '    number of virtual particles: ', nvirt
         end if
     end if
-    
+
 1001 format(1x, i6, 6(2x, e14.8))
 1002 format(1x, i6, 7(2x, e14.8))
 1003 format(1x, i6, 2x, i4, 2x, e14.8)

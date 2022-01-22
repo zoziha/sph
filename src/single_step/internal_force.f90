@@ -1,32 +1,12 @@
+!> 计算SPH相互作用力的子程序。
+!> 内力的计算是通过剪切应力的嵌套 SPH 近似法进行的。
+!> 在此子程序中实现了两种类型的 SPH 粒子近似法。
+!> 详见第 4 章，其他相关参考有 Riffert 等人 (1995), Flebbe 等人 (1994)。
 !> Subroutine to calculate the internal forces on the right hand side
 !>  of the navier-stokes equations, i.e. the pressure gradient and the
 !>  gradient of the viscous stress tensor, used by the time integration.
 !>  moreover the entropy production due to viscous dissipation, tds/dt,
 !>  and the change of internal energy per mass, de/dt, are calculated.
-!>
-!>     itimestep: current timestep number                            [in]
-!>     dt     :   time step                                          [in]
-!>     ntotal : number of particles                                  [in]
-!>     hsml   : smoothing length                                     [in]
-!>     mass   : particle masses                                      [in]
-!>     vx     : velocities of all particles                          [in]
-!>     niac   : number of interaction pairs                          [in]
-!>     rho    : density                                              [in]
-!>     eta    : dynamic viscosity                                    [in]
-!>     pair_i : list of first partner of interaction pair            [in]
-!>     pair_j : list of second partner of interaction pair           [in]
-!>     dwdx   : derivative of kernel with respect to x, y and z      [in]
-!>     itype  : type of particle (material types)                    [in]
-!>     u      : particle internal energy                             [in]
-!>     x      : particle coordinates                                 [in]
-!>     itype  : particle type                                        [in]
-!>     t      : particle temperature                             [in/out]
-!>     c      : particle sound speed                                [out]
-!>     p      : particle pressure                                   [out]
-!>     dvxdt  : acceleration with respect to x, y and z             [out]
-!>     tdsdt  : production of viscous entropy                       [out]
-!>     dedt   : change of specific internal energy                  [out]
-
 subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair_i, pair_j, &
                      dwdx, u, itype, x, t, c, p, dvxdt, tdsdt, dedt)
 
@@ -34,10 +14,71 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
     use parameter
     implicit none
 
-    integer  :: itimestep, ntotal, niac, pair_i(max_interaction), pair_j(max_interaction), itype(maxn)
-    real(rk) :: dt, hsml(maxn), mass(maxn), vx(dim, maxn), rho(maxn), eta(maxn), dwdx(dim, max_interaction), &
-                u(maxn), x(dim, maxn), t(maxn), c(maxn), p(maxn), dvxdt(dim, maxn), tdsdt(maxn), dedt(maxn)
-    integer  :: i, j, k, d
+    !> 当前时间步
+    !> Current time step
+    integer, intent(in) :: itimestep
+    !> 时间步长
+    !> Time step
+    real(rk), intent(in) :: dt
+    !> 粒子数量
+    !> Number of particles
+    integer, intent(in) :: ntotal
+    !> 光滑长度
+    !> Smoothing length
+    real(rk), intent(in) :: hsml(maxn)
+    !> 粒子质量
+    !> Particle masses
+    real(rk), intent(in) :: mass(maxn)
+    !> 粒子速度
+    !> Particle velocities
+    real(rk), intent(in) :: vx(dim, maxn)
+    !> 粒子互动对数
+    !> Number of interaction pairs
+    integer, intent(in) :: niac
+    !> 粒子密度
+    !> Particle density
+    real(rk), intent(in) :: rho(maxn)
+    !> 动态粘性
+    !> Dynamic viscosity
+    real(rk), intent(in) :: eta(maxn)
+    !> 互动对第一个粒子
+    !> First partner of interaction pair
+    integer, intent(in) :: pair_i(max_interaction)
+    !> 互动对第二个粒子
+    !> Second partner of interaction pair
+    integer, intent(in) :: pair_j(max_interaction)
+    !> 核函数对于x, y, z的导数
+    !> Derivative of kernel with respect to x, y and z
+    real(rk), intent(in) :: dwdx(dim, max_interaction)
+    !> 粒子内部能量
+    !> Particle internal energy
+    real(rk), intent(in) :: u(maxn)
+    !> 粒子坐标
+    !> Particle coordinates
+    real(rk), intent(in) :: x(dim, maxn)
+    !> 粒子类型
+    !> Particle type
+    integer, intent(in) :: itype(maxn)
+    !> 粒子温度
+    !> Particle temperature
+    real(rk), intent(inout) :: t(maxn)
+    !> 粒子声速
+    !> Particle sound speed
+    real(rk), intent(out) :: c(maxn)
+    !> 粒子压力
+    !> Particle pressure
+    real(rk), intent(out) :: p(maxn)
+    !> 粒子加速度
+    !> Acceleration with respect to x, y and z
+    real(rk), intent(out) :: dvxdt(dim, maxn)
+    !> 粒子消耗的粘性熵
+    !> Production of viscous entropy
+    real(rk), intent(out) :: tdsdt(maxn)
+    !> 粒子温度变化
+    !> Change of specific internal energy
+    real(rk), intent(out) :: dedt(maxn)
+
+    integer :: i, j, k, d
     real(rk) :: dvx(dim), txx(maxn), tyy(maxn), tzz(maxn), txy(maxn), txz(maxn), tyz(maxn), &
                 vcc(maxn), hxx, hyy, hzz, hxy, hxz, hyz, h, hvcc, he, rhoij
 
@@ -53,7 +94,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
         tyz(i) = 0._rk
         vcc(i) = 0._rk
         tdsdt(i) = 0._rk
-         dedt(i) = 0._rk
+        dedt(i) = 0._rk
         do d = 1, dim
             dvxdt(d, i) = 0._rk
         end do
@@ -164,7 +205,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
 
                 !     pressure part
 
-                h  = -(p(i) + p(j))*dwdx(d, k)
+                h = -(p(i) + p(j))*dwdx(d, k)
                 he = he + (vx(d, j) - vx(d, i))*h
 
                 !     viscous force
@@ -195,7 +236,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
                         !     z-coordinate of acceleration
 
                         h = h + (eta(i)*txz(i) + eta(j)*txz(j))*dwdx(1, k) + (eta(i)*tyz(i) + eta(j)*tyz(j))*dwdx(2, k) &
-                              + (eta(i)*tzz(i) + eta(j)*tzz(j))*dwdx(3, k)
+                            + (eta(i)*tzz(i) + eta(j)*tzz(j))*dwdx(3, k)
                     end if
                 end if
                 h = h*rhoij

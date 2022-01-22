@@ -4,8 +4,8 @@ maintainer = "左志华"
 
 [build]
 auto-executables = false
-auto-tests       = false
-auto-examples    = false
+auto-tests = false
+auto-examples = false
 
 [library]
 include-dir = "src"
@@ -13,7 +13,7 @@ include-dir = "src"
 [[executable]]
 name = "sph"
 main = "sph.f90"
-source-dir  = "app"
+source-dir = "app"
 
 [[executable]]
 name = "vtk"

@@ -27,13 +27,19 @@ subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, 
     !     1-dim. problem: maxngx = maxn ,  maxngy = maxngz = 1
     !     2-dim. problem: maxngx = maxngy ~ sqrt(maxn) ,  maxngz = 1
     !     3-dim. problem: maxngx = maxngy = maxngz ~ maxn^(1/3)
-    integer  :: maxngx, maxngy, maxngz
+    integer :: maxngx, maxngy, maxngz
     parameter(maxngx=100, maxngy=100, maxngz=1)
-    integer  :: itimestep, ntotal, niac, pair_i(max_interaction), pair_j(max_interaction), countiac(maxn)
+    integer :: itimestep
+    !> 在模拟中所使用的粒子总数
+    !> number of particles in simulation
+    integer, intent(in) :: ntotal
+    !> 相互作用对的数目
+    integer, intent(out) :: niac
+    integer :: pair_i(max_interaction), pair_j(max_interaction), countiac(maxn)
     real(rk) :: hsml, x(dim, maxn), w(max_interaction), dwdx(dim, max_interaction)
-    integer  :: i, j, d, scale_k, sumiac, maxiac, noiac, miniac, maxp, minp
-    integer  :: grid(maxngx, maxngy, maxngz), xgcell(3, maxn), gcell(3), xcell, ycell, zcell, celldata(maxn), minxcell(3), &
-                maxxcell(3), dnxgcell(dim), dpxgcell(dim), ngridx(dim), ghsmlx(dim)
+    integer :: i, j, d, scale_k, sumiac, maxiac, noiac, miniac, maxp, minp
+    integer :: grid(maxngx, maxngy, maxngz), xgcell(3, maxn), gcell(3), xcell, ycell, zcell, celldata(maxn), minxcell(3), &
+               maxxcell(3), dnxgcell(dim), dpxgcell(dim), ngridx(dim), ghsmlx(dim)
     real(rk) :: hsml2, dr, r, dx(dim), mingridx(dim), maxgridx(dim), tdwdx(dim), dgeomx(dim)
 
     if (skf == 1) then
@@ -130,16 +136,16 @@ subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, 
     sumiac = 0
     maxiac = 0
     miniac = 1000
-    noiac  = 0
+    noiac = 0
     do i = 1, ntotal
         sumiac = sumiac + countiac(i)
         if (countiac(i) > maxiac) then
             maxiac = countiac(i)
-            maxp   = i
+            maxp = i
         end if
         if (countiac(i) < miniac) then
             miniac = countiac(i)
-            minp   = i
+            minp = i
         end if
         if (countiac(i) == 0) noiac = noiac + 1
     end do

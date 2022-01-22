@@ -1,32 +1,48 @@
-!>     subroutine for loading or generating initial particle information
-!>
-!>     x-- coordinates of particles                                 [out]
-!>     vx-- velocities of particles                                 [out]
-!>     mass-- mass of particles                                     [out]
-!>     rho-- dnesities of particles                                 [out]
-!>     p-- pressure  of particles                                   [out]
-!>     u-- internal energy of particles                             [out]
-!>     itype-- types of particles                                   [out]
-!>     hsml-- smoothing lengths of particles                        [out]
-!>     ntotal-- total particle number                               [out]
-
+!> 装载或产生初始数据的子程序。
+!> subroutine for loading or generating initial particle information
 subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
     use sph_kind, only: rk
     use parameter
     implicit none
 
-    integer  :: itype(maxn), ntotal
-    real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), p(maxn), u(maxn), hsml(maxn), rho(maxn)
-    integer  :: i, d, im
+    !> 粒子的位置
+    !> coordinates of particles
+    real(rk), intent(out) :: x(dim, maxn)
+    !> 粒子的速度
+    !> velocities of particles
+    real(rk), intent(out) :: vx(dim, maxn)
+    !> 粒子的质量
+    !> mass of particles
+    real(rk), intent(out) :: mass(maxn)
+    !> 粒子的密度
+    !> dnesities of particles
+    real(rk), intent(out) :: rho(maxn)
+    !> 粒子的压力
+    !> pressure  of particles
+    real(rk), intent(out) :: p(maxn)
+    !> 粒子的内部能量
+    !> internal energy of particles
+    real(rk), intent(out) :: u(maxn)
+    !> 粒子的类型
+    !> types of particles
+    integer, intent(out) :: itype(maxn)
+    !> 粒子的光滑长度
+    !> smoothing lengths of particles
+    real(rk), intent(out) :: hsml(maxn)
+    !> 在模拟中所使用的粒子总数
+    !> number of particles in simulation
+    integer, intent(out) :: ntotal
 
-    !     load initial particle information from external disk file
+    integer :: i, d, im
+
+    !> load initial particle information from external disk file
 
     if (config_input) then
 
-        open (1, file='./example/data/f_xv.dat')
-        open (2, file='./example/data/f_state.dat')
-        open (3, file='./example/data/f_other.dat')
+        open (1, file='./data/f_xv.dat')
+        open (2, file='./data/f_state.dat')
+        open (3, file='./data/f_other.dat')
 
         write (*, *) '  **************************************************'
         write (*, *) '      loading initial particle configuration...   '
@@ -41,9 +57,9 @@ subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
     else
 
-        open (1, file='./example/data/ini_xv.dat')
-        open (2, file='./example/data/ini_state.dat')
-        open (3, file='./example/data/ini_other.dat')
+        open (1, file='./data/ini_xv.dat')
+        open (2, file='./data/ini_state.dat')
+        open (3, file='./data/ini_other.dat')
 
         if (shocktube) call shock_tube(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
@@ -70,95 +86,126 @@ subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
 end subroutine input
 
-!>     this subroutine is used to generate initial data for the
-!>     1 d noh shock tube problem
-!>     x-- coordinates of particles                                 [out]
-!>     vx-- velocities of particles                                 [out]
-!>     mass-- mass of particles                                     [out]
-!>     rho-- dnesities of particles                                 [out]
-!>     p-- pressure  of particles                                   [out]
-!>     u-- internal energy of particles                             [out]
-!>     itype-- types of particles                                   [out]
-!>          =1   ideal gas
-!>     hsml-- smoothing lengths of particles                        [out]
-!>     ntotal-- total particle number                               [out]
-
+!> 一维振荡管的初始数据。
+!> this subroutine is used to generate initial data for the
+!> 1 d noh shock tube problem
 subroutine shock_tube(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
     use sph_kind, only: rk
     use parameter
     implicit none
 
-    integer  :: itype(maxn), ntotal
-    real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), u(maxn), hsml(maxn)
-    integer  :: i, d
+    !> 粒子的位置
+    !> coordinates of particles
+    real(rk), intent(out) :: x(dim, maxn)
+    !> 粒子的速度
+    !> velocities of particles
+    real(rk), intent(out) :: vx(dim, maxn)
+    !> 粒子的质量
+    !> mass of particles
+    real(rk), intent(out) :: mass(maxn)
+    !> 粒子的密度
+    !> dnesities of particles
+    real(rk), intent(out) :: rho(maxn)
+    !> 粒子的压力
+    !> pressure  of particles
+    real(rk), intent(out) :: p(maxn)
+    !> 粒子的内部能量
+    !> internal energy of particles
+    real(rk), intent(out) :: u(maxn)
+    !> 粒子的类型(1: ideal gas; 2: water)
+    !> types of particles
+    integer, intent(out) :: itype(maxn)
+    !> 粒子的光滑长度
+    !> smoothing lengths of particles
+    real(rk), intent(out) :: hsml(maxn)
+    !> 在模拟中所使用的粒子总数
+    !> number of particles in simulation
+    integer, intent(out) :: ntotal
+
+    integer :: i, d
     real(rk) :: space_x
 
     ntotal = 400
-    space_x = 0.6/80.
+    space_x = 0.6_rk/80._rk
 
     do i = 1, ntotal
-        mass(i) = 0.75/400.
-        hsml(i) = 0.015
+        mass(i) = 0.75_rk/400._rk
+        hsml(i) = 0.015_rk
         itype(i) = 1
         do d = 1, dim
-            x(d, i) = 0.
-            vx(d, i) = 0.
+            x(d, i) = 0._rk
+            vx(d, i) = 0._rk
         end do
     end do
 
     do i = 1, 320
-        x(1, i) = -0.6 + space_x/4.*(i - 1)
+        x(1, i) = -0.6_rk + space_x/4._rk*(i - 1)
     end do
 
     do i = 320 + 1, ntotal
-        x(1, i) = 0.+space_x*(i - 320)
+        x(1, i) = 0._rk + space_x*(i - 320)
     end do
 
     do i = 1, ntotal
-        if (x(1, i) <= 1.e-8) then
-            u(i) = 2.5
-            rho(i) = 1.
-            p(i) = 1.
+        if (x(1, i) <= 1.e-8_rk) then
+            u(i) = 2.5_rk
+            rho(i) = 1._rk
+            p(i) = 1._rk
         end if
-        if (x(1, i) > 1.e-8) then
-            u(i) = 1.795
-            rho(i) = 0.25
-            p(i) = 0.1795
+        if (x(1, i) > 1.e-8_rk) then
+            u(i) = 1.795_rk
+            rho(i) = 0.25_rk
+            p(i) = 0.1795_rk
         end if
     end do
 
 end subroutine shock_tube
 
+!> 二维剪切腔的初始数据。
+!> this subroutine is used to generate initial data for the
+!> 2 d shear driven cavity probem with re = 1
 subroutine shear_cavity(x, vx, mass, rho, p, u, itype, hsml, ntotal)
-
-    !----------------------------------------------------------------------
-    !     this subroutine is used to generate initial data for the
-    !     2 d shear driven cavity probem with re = 1
-    !     x-- coordinates of particles                                 [out]
-    !     vx-- velocities of particles                                 [out]
-    !     mass-- mass of particles                                     [out]
-    !     rho-- dnesities of particles                                 [out]
-    !     p-- pressure  of particles                                   [out]
-    !     u-- internal energy of particles                             [out]
-    !     itype-- types of particles                                   [out]
-    !          =2   water
-    !     h-- smoothing lengths of particles                           [out]
-    !     ntotal-- total particle number                               [out]
 
     use sph_kind, only: rk
     use parameter
     implicit none
 
-    integer  :: itype(maxn), ntotal
-    real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), u(maxn), hsml(maxn)
-    integer  :: i, j, d, m, n, mp, np, k
+    !> 粒子的位置
+    !> coordinates of particles
+    real(rk), intent(out) :: x(dim, maxn)
+    !> 粒子的速度
+    !> velocities of particles
+    real(rk), intent(out) :: vx(dim, maxn)
+    !> 粒子的质量
+    !> mass of particles
+    real(rk), intent(out) :: mass(maxn)
+    !> 粒子的密度
+    !> dnesities of particles
+    real(rk), intent(out) :: rho(maxn)
+    !> 粒子的压力
+    !> pressure  of particles
+    real(rk), intent(out) :: p(maxn)
+    !> 粒子的内部能量
+    !> internal energy of particles
+    real(rk), intent(out) :: u(maxn)
+    !> 粒子的类型(1: ideal gas; 2: water)
+    !> types of particles
+    integer, intent(out) :: itype(maxn)
+    !> 粒子的光滑长度
+    !> smoothing lengths of particles
+    real(rk), intent(out) :: hsml(maxn)
+    !> 在模拟中所使用的粒子总数
+    !> number of particles in simulation
+    integer, intent(out) :: ntotal
+
+    integer :: i, j, d, m, n, mp, np, k
     real(rk) :: xl, yl, dx, dy
 
-    !     giving mass and smoothing length as well as other data.
+    !> giving mass and smoothing length as well as other data.
 
-    m  = 41
-    n  = 41
+    m = 41
+    n = 41
     mp = m - 1
     np = n - 1
     ntotal = mp*np
@@ -170,20 +217,20 @@ subroutine shear_cavity(x, vx, mass, rho, p, u, itype, hsml, ntotal)
     do i = 1, mp
         do j = 1, np
             k = j + (i - 1)*np
-            x(1, k) = (i - 1)*dx + dx/2.
-            x(2, k) = (j - 1)*dy + dy/2.
+            x(1, k) = (i - 1)*dx + dx/2._rk
+            x(2, k) = (j - 1)*dy + dy/2._rk
         end do
     end do
 
     do i = 1, mp*np
         vx(1, i) = 0._rk
         vx(2, i) = 0._rk
-        rho(i)   = 1000._rk
-        mass(i)  = dx*dy*rho(i)
-        p(i)     = 0._rk
-        u(i)     = 357.1_rk
+        rho(i) = 1000._rk
+        mass(i) = dx*dy*rho(i)
+        p(i) = 0._rk
+        u(i) = 357.1_rk
         itype(i) = 2
-        hsml(i)  = dx
+        hsml(i) = dx
     end do
 
 end subroutine shear_cavity
