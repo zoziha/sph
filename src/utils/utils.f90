@@ -5,7 +5,8 @@ module utils
     implicit none
 
 contains
-
+    
+    ! SPDX-Identifier: MIT
     !> 将整数转化为字符串。借鉴了Fortran标准库的to_string。
     !> Change integer to string.
     pure function to_string(x) result(string)

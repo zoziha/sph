@@ -21,19 +21,19 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
     integer, intent(in) :: ntotal
     !> 粒子的平滑长度
     !> smoothing length
-    real(rk), intent(in) :: hsml(maxn)
+    real(rk), intent(inout) :: hsml(maxn)
     !> 粒子的质量
     !> particle masses
-    real(rk), intent(in) :: mass(maxn)
+    real(rk), intent(inout) :: mass(maxn)
     !> 粒子的位置
     !> particle positions
-    real(rk), intent(in) :: x(dim, maxn)
+    real(rk), intent(inout) :: x(dim, maxn)
     !> 粒子的速度
     !> particle velocities
-    real(rk), intent(in) :: vx(dim, maxn)
+    real(rk), intent(inout) :: vx(dim, maxn)
     !> 粒子的内部能量
     !> particle internal energy
-    real(rk), intent(in) :: u(maxn)
+    real(rk), intent(inout) :: u(maxn)
     !> 粒子的熵
     !> particle entropy (not used here)
     real(rk), intent(in) :: s(maxn)
@@ -42,7 +42,7 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
     real(rk), intent(inout) :: rho(maxn)
     !> 粒子的压力
     !> particle pressure
-    real(rk), intent(out) :: p(maxn)
+    real(rk), intent(inout) :: p(maxn)
     !> 粒子的温度
     !> particle temperature
     real(rk), intent(inout) :: t(maxn)
@@ -66,7 +66,7 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
     real(rk), intent(out) :: drho(maxn)
     !> 粒子的类型 (1: ideal gas; 2: water)
     !> particle type
-    integer, intent(in) :: itype(maxn)
+    integer, intent(inout) :: itype(maxn)
     !> 平均速度
     !> monaghan average velocity
     real(rk), intent(out) :: av(dim, maxn)

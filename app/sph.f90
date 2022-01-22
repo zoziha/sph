@@ -31,6 +31,8 @@ program sph
     integer :: d, m, i, yesorno
     real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), &
                 u(maxn), c(maxn), s(maxn), e(maxn), hsml(maxn), dt
+    !> 时间记录点
+    !> time records
     real(rk) :: s1, s2
 
     call time_print()
@@ -53,7 +55,7 @@ program sph
     write (*, *) '  ***************************************************'
     read (*, *) yesorno
     if (yesorno /= 0) goto 1
-    call time_print
+    call time_print()
     call cpu_time(s2)
     write (*, "(A,F0.1)") '        elapsed cpu time (seconds) = ', s2 - s1
     write (*, *) 'all finish!'

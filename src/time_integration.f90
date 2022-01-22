@@ -101,24 +101,25 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
         !---  definition of variables out of the function vector:
 
-        call single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, tdsdt, dx, dvx, du, ds, drho, itype, av)
+        call single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
+            tdsdt, dx, dvx, du, ds, drho, itype, av)
 
         if (itimestep == 1) then
 
             do i = 1, ntotal
-                temp_u = 0._rk
+                temp_u = 0.0_rk
                 if (dim == 1) temp_u = -nsym*p(i)*vx(1, i)/x(1, i)/rho(i)
-                u(i) = u(i) + (dt/2.)*(du(i) + temp_u)
-                if (u(i) < 0) u(i) = 0._rk
+                u(i) = u(i) + (dt/2.0_rk)*(du(i) + temp_u)
+                if (u(i) < 0) u(i) = 0.0_rk
 
                 if (.not. summation_density) then
-                    temp_rho = 0._rk
+                    temp_rho = 0.0_rk
                     if (dim == 1) temp_rho = -nsym*rho(i)*vx(1, i)/x(1, i)
-                    rho(i) = rho(i) + (dt/2.)*(drho(i) + temp_rho)
+                    rho(i) = rho(i) + (dt/2.0_rk)*(drho(i) + temp_rho)
                 end if
 
                 do d = 1, dim
-                    vx(d, i) = vx(d, i) + (dt/2.)*dvx(d, i) + av(d, i)
+                    vx(d, i) = vx(d, i) + (dt/2.0_rk)*dvx(d, i) + av(d, i)
                     x(d, i) = x(d, i) + dt*vx(d, i)
                 end do
             end do
@@ -126,13 +127,13 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
         else
 
             do i = 1, ntotal
-                temp_u = 0._rk
+                temp_u = 0.0_rk
                 if (dim == 1) temp_u = -nsym*p(i)*vx(1, i)/x(1, i)/rho(i)
                 u(i) = u_min(i) + dt*(du(i) + temp_u)
-                if (u(i) < 0) u(i) = 0._rk
+                if (u(i) < 0) u(i) = 0.0_rk
 
                 if (.not. summation_density) then
-                    temp_rho = 0._rk
+                    temp_rho = 0.0_rk
                     if (dim == 1) temp_rho = -nsym*rho(i)*vx(1, i)/x(1, i)
                     rho(i) = rho_min(i) + dt*(drho(i) + temp_rho)
                 end if
