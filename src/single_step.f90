@@ -161,14 +161,13 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
 
     ! 监测粒子的第一个维度的速度改变量
     if (mod(itimestep, print_step) == 0) then
-        write (*, *)
         write (*, 102) '**** information for particle, monitoring particle: ', moni_particle
         write (*, 101) 'internal a ', 'artifical a', 'external a =', 'total a '
         write (*, 100) indvxdt(1, moni_particle), ardvxdt(1, moni_particle), &
             exdvxdt(1, moni_particle), dvx(1, moni_particle)
     end if
 
-102 format(1x,a,i0)
+102 format(/1x,a,i0)
 101 format(1x, 4(2x, a12))
 100 format(1x, 4(2x, es12.5))
 

@@ -14,15 +14,28 @@ contains
     !> 将数据输出为paraview可读的vtk格式
     !> output data to paraview readable vtk format
     subroutine output_to_paraview_vtk()
-        integer :: steps, i
+        integer :: steps, i, nstart
 
-        print *, "请输入时间步数："
-        read (*, *) steps
+        write (*, "(a)", advance="no") "请输入文件的起始编号: "
+        read (*, *) nstart
+        nstart = nstart - 1
+        do
+            write (*, "(a)", advance="no") "请输入文件要处理的时间步数: "
+            read (*, *) steps
 
-        do i = 1, steps
-            print "(a, i0, a)", "正在输出第", i, "个时间步。"
-            call output_to_paraview_vtk_one_step(i)
+            do i = nstart + 1, nstart + steps
+                print "(a, i0, a)", "正在输出第<", i, ">个时间步, 请稍等..."
+                call output_to_paraview_vtk_one_step(i)
+            end do
+
+            nstart = nstart + steps
+            write (*, "(a)", advance="no") "输出已完成, 是否继续输出 (0=no, 1=yes)?: "
+            read (*, *) steps
+            if (steps == 0) exit
+
         end do
+
+        write (*, "(a)") "输出完毕, 输出文件保存在 `data/paraview`, 请打开 paraview 查看."
 
     end subroutine output_to_paraview_vtk
 
@@ -36,6 +49,15 @@ contains
         integer :: unit_xv, unit_state, unit_other
         integer :: index, i, d
         real(rk), allocatable :: x(:, :), vx(:, :), mass(:), rho(:), p(:), u(:), itype(:), hsml(:)
+        logical is_exist_xv
+
+        !> 查询文件是否存在
+        inquire (file="./data/all/f_"//to_string(i_steps)//"xv.dat", exist=is_exist_xv)
+        if (.not. is_exist_xv) then
+            write (*, "(a)") "数据文件不存在, 请检查输入的时间步数是否正确."
+            write (*, "(a,i0)") "当前时间步数为: ", i_steps
+            error stop
+        end if
 
         !> 读入数据:xv, state, other
         open (newunit=unit_xv, file="./data/all/f_"//to_string(i_steps)//"xv.dat", status="old")

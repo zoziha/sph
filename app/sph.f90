@@ -44,14 +44,16 @@ program sph
     do
         write (*, "(a)", advance="no") 'please input the maximal time steps: '
         read (*, *) maxtimestep
+        
         call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
 
-        !> 输出最后一个时间布的求解信息
+        !> 输出最后一个时间步的求解信息
         call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
 
         write (*, "(a)", advance="no") 'are you going to run more time steps ? (0=no, 1=yes): '
         read (*, *) yesorno
         if (yesorno == 0) exit
+        
     end do
     call time_print()
     call toc()
