@@ -116,7 +116,7 @@ module parameter
     !> moni_particle: the particle number for information monitoring.
     integer, parameter :: moni_particle = 1600
 
-    real(rk), parameter :: pi = acos(-1._rk)
+    real(rk), parameter :: pi = acos(-1.0_rk)
 
     !> simulation cases
     

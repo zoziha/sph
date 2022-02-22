@@ -32,12 +32,12 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
     !> 粒子的熵
     !> entropy of particles, not used here
     real(rk), intent(out) :: s(maxn)
-    !> 粒子的总能量
+    !> 粒子的总能量（@note: 暂未使用）
     !> total energy of particles
     real(rk), intent(out) :: e(maxn)
     !> 粒子的类型(1: ideal gas; 2: water; 3: TNT)
     !> types of particles
-    integer, intent(in) :: itype(maxn)
+    integer, intent(inout) :: itype(maxn)
     !> 粒子的平滑长度
     !> smoothing lengths of particles
     real(rk), intent(inout) :: hsml(maxn)
@@ -53,15 +53,17 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
     integer :: i, j, k, itimestep, d, nstart = 0  !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
     real(rk) :: x_min(dim, maxn), v_min(dim, maxn), u_min(maxn), rho_min(maxn), dx(dim, maxn), dvx(dim, maxn), &
-                du(maxn), drho(maxn), av(dim, maxn), ds(maxn), t(maxn), tdsdt(maxn)
+                du(maxn), drho(maxn), ds(maxn), t(maxn), tdsdt(maxn)
+    real(rk) :: av(dim, maxn)   !! 平均速度, average velocity
     real(rk) :: temp_rho, temp_u, &
-                time = 0.0_rk    !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
+                time = 0.0_rk   !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
 
-    do i = 1, ntotal
-        do d = 1, dim
-            av(d, i) = 0._rk
-        end do
-    end do
+    ! @todo: 重复初始化
+    ! do i = 1, ntotal
+    !     do d = 1, dim
+    !         av(d, i) = 0.0_rk
+    !     end do
+    ! end do
 
     do itimestep = nstart + 1, nstart + maxtimestep    !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
 
@@ -72,6 +74,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
             write (*, *) '----------------------------------------------'
         end if
 
+        ! 如果不是第一个时间步长，则更新热能、密度和速度半步长
         !     if not first time step, then update thermal energy, density and
         !     velocity half a time step
 
@@ -79,21 +82,21 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
             do i = 1, ntotal
                 u_min(i) = u(i)
-                temp_u = 0._rk
+                temp_u = 0.0_rk
                 if (dim == 1) temp_u = -nsym*p(i)*vx(1, i)/x(1, i)/rho(i)
-                u(i) = u(i) + (dt/2.)*(du(i) + temp_u)
-                if (u(i) < 0) u(i) = 0._rk
+                u(i) = u(i) + (dt/2.0_rk)*(du(i) + temp_u)
+                if (u(i) < 0) u(i) = 0.0_rk
 
                 if (.not. summation_density) then
                     rho_min(i) = rho(i)
-                    temp_rho = 0._rk
+                    temp_rho = 0.0_rk
                     if (dim == 1) temp_rho = -nsym*rho(i)*vx(1, i)/x(1, i)
-                    rho(i) = rho(i) + (dt/2.)*(drho(i) + temp_rho)
+                    rho(i) = rho(i) + (dt/2.0_rk)*(drho(i) + temp_rho)
                 end if
 
                 do d = 1, dim
                     v_min(d, i) = vx(d, i)
-                    vx(d, i) = vx(d, i) + (dt/2.)*dvx(d, i)
+                    vx(d, i) = vx(d, i) + (dt/2.0_rk)*dvx(d, i)
                 end do
             end do
 
@@ -118,6 +121,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
                     rho(i) = rho(i) + (dt/2.0_rk)*(drho(i) + temp_rho)
                 end if
 
+                ! 更新速度和位置
                 do d = 1, dim
                     vx(d, i) = vx(d, i) + (dt/2.0_rk)*dvx(d, i) + av(d, i)
                     x(d, i) = x(d, i) + dt*vx(d, i)
@@ -138,6 +142,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
                     rho(i) = rho_min(i) + dt*(drho(i) + temp_rho)
                 end if
 
+                ! 更新速度和位置
                 do d = 1, dim
                     vx(d, i) = v_min(d, i) + dt*dvx(d, i) + av(d, i)
                     x(d, i) = x(d, i) + dt*vx(d, i)
@@ -151,6 +156,8 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
         if (mod(itimestep, save_step) == 0) then
 
             !> 覆盖输出最后的保存时间步的求解信息（局限）
+            !> @todo: 待删除v2.0发布时
+            !> @note: 重复覆盖输出最后一步的结果，意义不大，output_all足够了
             call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
 
             !> 输出每个保存时间步的求解信息（拓展）

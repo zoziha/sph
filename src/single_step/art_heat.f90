@@ -58,8 +58,8 @@ subroutine art_heat(ntotal, hsml, mass, x, vx, niac, rho, u, c, pair_i, pair_j, 
     g1 = 0.1_rk
     g2 = 1.0_rk
     do i = 1, ntotal
-        vcc(i) = 0._rk
-        dedt(i) = 0._rk
+        vcc(i) = 0.0_rk
+        dedt(i) = 0.0_rk
     end do
 
     do k = 1, niac
@@ -82,10 +82,10 @@ subroutine art_heat(ntotal, hsml, mass, x, vx, niac, rho, u, c, pair_i, pair_j, 
 
         i = pair_i(k)
         j = pair_j(k)
-        mhsml = (hsml(i) + hsml(j))/2._rk
+        mhsml = (hsml(i) + hsml(j))/2.0_rk
         mrho = 0.5_rk*(rho(i) + rho(j))
-        rr = 0._rk
-        rdwdx = 0._rk
+        rr = 0.0_rk
+        rdwdx = 0.0_rk
         do d = 1, dim
             dx = x(d, i) - x(d, j)
             rr = rr + dx*dx

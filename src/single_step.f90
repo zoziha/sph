@@ -79,12 +79,12 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
                 exdvxdt(dim, maxn), ardvxdt(dim, maxn), avdudt(maxn), ahdudt(maxn), c(maxn), eta(maxn)
 
     do i = 1, ntotal
-        avdudt(i) = 0._rk
-        ahdudt(i) = 0._rk
+        avdudt(i) = 0.0_rk
+        ahdudt(i) = 0.0_rk
         do d = 1, dim
-            indvxdt(d, i) = 0._rk
-            ardvxdt(d, i) = 0._rk
-            exdvxdt(d, i) = 0._rk
+            indvxdt(d, i) = 0.0_rk
+            ardvxdt(d, i) = 0.0_rk
+            exdvxdt(d, i) = 0.0_rk
         end do
     end do
 
@@ -105,7 +105,7 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
     else if (nnps == 2) then
         call link_list(itimestep, ntotal + nvirt, hsml(1), x, niac, pair_i, pair_j, w, dwdx, ns)
     else if (nnps == 3) then
-        ! todo: 树型搜索算法（zoziha/quad-tree: https://github.com/zoziha/quad-tree）
+        ! @todo: 树型搜索算法（zoziha/quad-tree: https://github.com/zoziha/quad-tree）
         !        call tree_search(itimestep, ntotal+nvirt,hsml,x,niac,pair_i,
         !     &       pair_j,w,dwdx,ns)
     end if

@@ -47,7 +47,7 @@ subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
         write (*, *) '  **************************************************'
         write (*, *) '      loading initial particle configuration...   '
         read (1, *) ntotal
-        write (*, *) '      total number of particles   ', ntotal
+        write (*, '(1x,a,i0)') '      total number of particles: ', ntotal
         write (*, *) '  **************************************************'
         do i = 1, ntotal
             read (1, *) im, (x(d, i), d=1, dim), (vx(d, i), d=1, dim)
@@ -71,7 +71,7 @@ subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
         end do
         write (*, *) '  **************************************************'
         write (*, *) '      initial particle configuration generated   '
-        write (*, *) '      total number of particles   ', ntotal
+        write (*, '(1x,a,i0)') '      total number of particles: ', ntotal
         write (*, *) '  **************************************************'
 
     end if

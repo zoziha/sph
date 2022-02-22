@@ -52,21 +52,25 @@ subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, 
     integer :: i, j, k, d
     real(rk) :: dx, dvx(dim), alpha, beta, etq, piv, muv, vr, rr, h, mc, mrho, mhsml
 
+    ! 人工粘度参数：
+    ! 剪切粘度
     !     parameter for the artificial viscosity:
     !     shear viscosity
-    parameter(alpha=1._rk)
+    parameter(alpha=1.0_rk)
 
+    ! 散装粘度
     !     bulk viscosity
-    parameter(beta=1._rk)
+    parameter(beta=1.0_rk)
 
+    ! 参数以避免奇点
     !     parameter to avoid singularities
     parameter(etq=0.1_rk)
 
     do i = 1, ntotal
         do d = 1, dim
-            dvxdt(d, i) = 0._rk
+            dvxdt(d, i) = 0.0_rk
         end do
-        dedt(i) = 0._rk
+        dedt(i) = 0.0_rk
     end do
 
     !     calculate sph sum for artificial viscosity
@@ -74,9 +78,9 @@ subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, 
     do k = 1, niac
         i = pair_i(k)
         j = pair_j(k)
-        mhsml = (hsml(i) + hsml(j))/2._rk
-        vr = 0._rk
-        rr = 0._rk
+        mhsml = (hsml(i) + hsml(j))/2.0_rk
+        vr = 0.0_rk
+        rr = 0.0_rk
         do d = 1, dim
             dvx(d) = vx(d, i) - vx(d, j)
             dx = x(d, i) - x(d, j)
@@ -86,7 +90,7 @@ subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, 
 
         !     artificial viscous force only if v_ij * r_ij < 0
 
-        if (vr < 0._rk) then
+        if (vr < 0.0_rk) then
 
             !     calculate muv_ij = hsml v_ij * r_ij / ( r_ij^2 + hsml^2 etq^2 )
 

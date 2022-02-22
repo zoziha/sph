@@ -19,6 +19,7 @@ program sph
 
     use sph_kind, only: rk
     use parameter
+    use utils, only: tic, toc
     implicit none
 
     !> 在模拟中所使用的粒子总数
@@ -31,33 +32,29 @@ program sph
     integer :: d, m, i, yesorno
     real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), &
                 u(maxn), c(maxn), s(maxn), e(maxn), hsml(maxn), dt
-    !> 时间记录点
-    !> time records
-    real(rk) :: s1, s2
 
     call time_print()
-    call cpu_time(s1)
+    call tic()
 
     if (shocktube) dt = 0.005_rk
-    if (shearcavity) dt = 5.e-5_rk
+    if (shearcavity) dt = 5.0e-5_rk
     call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
-1   write (*, *) '  ***************************************************'
-    write (*, *) '          please input the maximal time steps '
-    write (*, *) '  ***************************************************'
-    read (*, *) maxtimestep
-    call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
+    
+    ! 主循环
+    do
+        write (*, "(a)", advance="no") 'please input the maximal time steps: '
+        read (*, *) maxtimestep
+        call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
 
-    !> 输出最后一个时间布的求解信息
-    call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
+        !> 输出最后一个时间布的求解信息
+        call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
 
-    write (*, *) '  ***************************************************'
-    write (*, *) ' are you going to run more time steps ? (0=no, 1=yes)'
-    write (*, *) '  ***************************************************'
-    read (*, *) yesorno
-    if (yesorno /= 0) goto 1
+        write (*, "(a)", advance="no") 'are you going to run more time steps ? (0=no, 1=yes): '
+        read (*, *) yesorno
+        if (yesorno == 0) exit
+    end do
     call time_print()
-    call cpu_time(s2)
-    write (*, "(A,F0.1)") '        elapsed cpu time (seconds) = ', s2 - s1
+    call toc()
     write (*, *) 'all finish!'
 
 end program sph

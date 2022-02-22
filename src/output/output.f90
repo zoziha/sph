@@ -37,7 +37,7 @@ subroutine output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
     !> total particle number
     integer, intent(in) :: ntotal
 
-    integer :: i, d, npart
+    integer :: i, d
 
     open (1, file='./data/f_xv.dat')
     open (2, file='./data/f_state.dat')

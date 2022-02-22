@@ -1,4 +1,5 @@
 !> 装载虚粒子或通过问题的几何形状产生虚粒子信息的子程序。
+!> @todo: 不重复输出虚粒子信息
 !>   subroutine to determine the information of virtual particles
 !>   here only the monaghan type virtual particles for the 2d shear
 !>   cavity driven problem are generated.

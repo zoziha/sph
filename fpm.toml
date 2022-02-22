@@ -1,6 +1,7 @@
 name = "SPH"
 version = "VERSION"
 maintainer = "左志华"
+license = "BSD-3 Clause"
 
 [build]
 auto-executables = false

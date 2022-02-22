@@ -1,4 +1,4 @@
-!> 输出模块(TODO: 待更名)
+!> 输出模块(@todo: 待更名)
 module output_m
 
     use utils, only: to_string
@@ -48,7 +48,7 @@ contains
         !> number of time step
         integer, intent(in) :: n
 
-        integer :: i, d, npart
+        integer :: i, d
         integer :: xv_unit, state_unit, other_unit
 
         !> 输出粒子的位置、速度信息
