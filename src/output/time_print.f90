@@ -2,7 +2,7 @@
 !> TIME_PRINT: Print out the current date and time.
 subroutine time_print()
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use, intrinsic :: iso_fortran_env, only: stdout => output_unit
     implicit none
 

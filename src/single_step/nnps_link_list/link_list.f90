@@ -14,7 +14,7 @@
 !>     countiac  : number of neighboring particles                  [out]
 subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, countiac)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 
@@ -29,7 +29,7 @@ subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, 
     !     3-dim. problem: maxngx = maxngy = maxngz ~ maxn^(1/3)
     integer :: maxngx, maxngy, maxngz
     parameter(maxngx=100, maxngy=100, maxngz=1)
-    integer :: itimestep
+    integer, intent(in) :: itimestep
     !> 在模拟中所使用的粒子总数
     !> number of particles in simulation
     integer, intent(in) :: ntotal
@@ -42,17 +42,14 @@ subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, 
                maxxcell(3), dnxgcell(dim), dpxgcell(dim), ngridx(dim), ghsmlx(dim)
     real(rk) :: hsml2, dr, r, dx(dim), mingridx(dim), maxgridx(dim), tdwdx(dim), dgeomx(dim)
 
-    if (skf == 1) then
+    select case (skf)
+    case (1)
         scale_k = 2
-    else if (skf == 2) then
+    case (2, 3)
         scale_k = 3
-    else if (skf == 3) then
-        scale_k = 3
-    end if
+    end select
 
-    do i = 1, ntotal
-        countiac(i) = 0
-    end do
+    countiac(1:ntotal) = 0
 
     !     initialize grid:
 

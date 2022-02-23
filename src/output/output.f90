@@ -2,7 +2,7 @@
 !> subroutine for saving particle information to external disk file
 subroutine output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 

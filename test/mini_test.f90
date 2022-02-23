@@ -1,11 +1,11 @@
 module mini_test
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     implicit none
     private
-    
+
     public :: check
-    
+
     !> 断言
     interface check
         procedure check_logial
@@ -23,15 +23,15 @@ contains
         if (.not. condition) error stop msg
 
     end subroutine check_logial
-    
+
     !> 断言
     subroutine check_real(r1, r2, msg)
         real(rk), intent(in) :: r1  !! 第一个数
         real(rk), intent(in) :: r2  !! 第二个数
         character(len=*), intent(in) :: msg  !! 错误提示
-        
-        if (abs(r1-r2) >= 1.0e-3_rk) error stop msg
-        
+
+        if (abs(r1 - r2) >= 1.0e-3_rk) error stop msg
+
     end subroutine check_real
 
 end module mini_test

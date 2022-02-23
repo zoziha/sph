@@ -3,7 +3,7 @@
 
 module parameter
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
 
     !> 求解问题的维度
     !> dim : dimension of the problem (1, 2 or 3)
@@ -46,7 +46,7 @@ module parameter
     !>       2 : dh/dt = (-1/dim)*(h/rho)*(drho/dt)
     !>       3 : other approaches (e.g. h = h_0 * (rho_0/rho)**(1/dim) )
     integer, parameter :: sle = 0
-    
+
     !> 光滑核函数的指示变量
     !> smoothing kernel function
     !> skf = 1, cubic spline kernel by w4 - spline (monaghan 1985)
@@ -104,14 +104,14 @@ module parameter
     !> int_stat = .true. : print statistics about sph particle interactions.
     !>                    including virtual particle information.
     logical, parameter :: int_stat = .true.
-    
+
     !> 控制在屏幕上显示的粒子信息是第几个时间步
     !> print_step: print timestep (on screen)
     integer, parameter :: print_step = 100
     !> 控制保存到外部磁盘的粒子信息是第几个时间步
     !> save_step : save timestep    (to disk file)
     integer, parameter :: save_step = 500
-    
+
     !> 所要监测的粒子的序号
     !> moni_particle: the particle number for information monitoring.
     integer, parameter :: moni_particle = 1600
@@ -119,13 +119,16 @@ module parameter
     real(rk), parameter :: pi = acos(-1.0_rk)
 
     !> simulation cases
-    
+
     !> 一维振荡管
     !> shocktube = .true. : carry out shock tube simulation
     logical, parameter :: shocktube = .false.
-    
+
     !> 剪切腔
     !> shearcavity = .true. : carry out shear cavity simulation
     logical, parameter :: shearcavity = .true.
+
+    !> 树型搜索边界尺度比例
+    integer, parameter :: tree_scale_ratio = 10
 
 end module parameter

@@ -8,8 +8,8 @@ auto-executables = false
 auto-tests = false
 auto-examples = false
 
-[library]
-include-dir = "src"
+[dev-dependencies]
+test-drive = { git = "https://github.com/fortran-lang/test-drive", tag="v0.4.0" }
 
 [[executable]]
 name = "sph"

@@ -6,8 +6,9 @@
 !>   see p.148 in chapter 4
 subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, countiac)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
+    use utils, only: get_distance
     implicit none
 
     !> 当前时间步
@@ -39,36 +40,40 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
     real(rk), intent(out) :: dwdx(dim, max_interaction)
     !> 相互作用对的数目
     !> number of neighboring particles
-    integer, intent(out) :: countiac(ntotal)
+    integer, intent(out) :: countiac(maxn)
 
-    integer :: i, j, d, sumiac, maxiac, miniac, noiac, maxp, minp, scale_k
-    real(rk) :: dxiac(dim), driac, r, mhsml, tdwdx(dim)
+    integer :: i, j, d, sumiac, maxiac, miniac, noiac, & ! 无作用对粒子数
+               maxp, minp, scale_k
+    real(rk) :: dxiac(dim), driac, r, mhsml
 
+    !> 光滑核函数
     !> smoothing kernel function
     !> skf = 1, cubic spline kernel by w4 - spline (monaghan 1985)
     !>     = 2, gauss kernel   (gingold and monaghan 1981)
     !>     = 3, quintic kernel (morris 1997)
-    if (skf == 1) then; scale_k = 2
-    else if (skf == 2) then; scale_k = 3
-    else if (skf == 3) then; scale_k = 3
-    end if
+    select case (skf)
+    case (1)
+        scale_k = 2
+    case (2, 3)
+        scale_k = 3
+    end select
 
     countiac(1:ntotal) = 0
-
     niac = 0
 
     do i = 1, ntotal - 1
         do j = i + 1, ntotal
-            dxiac(1) = x(1, i) - x(1, j)
-            driac = dxiac(1)*dxiac(1)
-            do d = 2, dim
-                dxiac(d) = x(d, i) - x(d, j)
-                driac = driac + dxiac(d)*dxiac(d)
-            end do
-            mhsml = (hsml(i) + hsml(j))/2.0_rk
+
+            ! 计算两个粒子之间的距离的平方
+            ! calculate distance between two particles
+            call get_distance(x(1:dim, i), x(1:dim, j), dxiac, driac)
+
+            ! 对称光滑长度: 光滑长度的算数平均值 Page 127.
+            mhsml = (hsml(i) + hsml(j))/2
             if (sqrt(driac) < scale_k*mhsml) then
                 if (niac < max_interaction) then
 
+                    !> 相邻对列表，以及每个粒子的总交互次数和相互作用数
                     !> neighboring pair list, and totalinteraction number and
                     !> the interaction number for each particle
 
@@ -79,12 +84,10 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
                     countiac(i) = countiac(i) + 1
                     countiac(j) = countiac(j) + 1
 
+                    !> 核函数及其对 x, y, z 的导数
                     !> kernel and derivations of kernel
+                    call kernel(r, dxiac, mhsml, w(niac), dwdx(:, niac))
 
-                    call kernel(r, dxiac, mhsml, w(niac), tdwdx)
-                    do d = 1, dim
-                        dwdx(d, niac) = tdwdx(d)
-                    end do
                 else
                     error stop ' >>> error <<< : too many interactions'
                 end if
@@ -92,6 +95,7 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
         end do
     end do
 
+    !> 相互作用的统计信息
     !> statistics for the interaction
 
     sumiac = 0
@@ -116,13 +120,13 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
             print *, ' >> statistics: interactions per particle:'
             print 100, '**** particle: ', maxp, '   maximal interactions: ', maxiac
             print 100, '**** particle: ', minp, '   minimal interactions: ', miniac
-            print 101, '**** average : ', real(sumiac)/real(ntotal)
+            ! 平均每个粒子的作用对数
+            print 100, '**** average : ', sumiac/ntotal
             print 100, '**** total pairs : ', niac
             print 100, '**** particles with no interactions: ', noiac
         end if
     end if
-    
-101 format(1x,*(a,g0.2))
-100 format(1x,*(a,i0))
+
+100 format(1x, *(a, i0))
 
 end subroutine direct_find

@@ -14,7 +14,7 @@
 
 subroutine init_grid(ntotal, hsml, grid, ngridx, ghsmlx, maxgridx, mingridx, dgeomx)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 

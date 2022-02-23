@@ -2,7 +2,7 @@
 !>     subroutine to calculate the artificial viscosity (monaghan, 1992)
 subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, dwdx, dvxdt, dedt)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 

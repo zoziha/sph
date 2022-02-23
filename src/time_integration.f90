@@ -3,7 +3,7 @@
 !> 相关参考为 Hernquist 和 Katz (1989), Simpson (1995), Monaghan (1992) 等等。
 subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     use output_m, only: output_all
     implicit none
@@ -105,7 +105,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
         !---  definition of variables out of the function vector:
 
         call single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
-            tdsdt, dx, dvx, du, ds, drho, itype, av)
+                         tdsdt, dx, dvx, du, ds, drho, itype, av)
 
         if (itimestep == 1) then
 

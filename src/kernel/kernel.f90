@@ -3,7 +3,7 @@
 !> derivatives dwdxij.
 subroutine kernel(r, dx, hsml, w, dwdx)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 

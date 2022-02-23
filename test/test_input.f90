@@ -1,6 +1,6 @@
 module test_input
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     use mini_test
     implicit none

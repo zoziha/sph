@@ -68,7 +68,7 @@
 		<File RelativePath=".\src\output\paraview_interface.f90"/>
 		<File RelativePath=".\src\single_step.f90"/>
 		<File RelativePath=".\app\sph.f90"/>
-		<File RelativePath=".\src\sph_kind.F90"/>
+		<File RelativePath=".\src\sph_kinds.F90"/>
 		<File RelativePath=".\src\time_integration.f90"/>
 		<File RelativePath=".\src\output\time_print.f90"/>
 		<File RelativePath=".\src\utils\utils.f90"/>

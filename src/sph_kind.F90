@@ -1,4 +1,5 @@
-module sph_kind
+!> SPH 精度
+module sph_kinds
 
     use, intrinsic :: iso_fortran_env, only: real32, real64
     implicit none
@@ -10,4 +11,4 @@ module sph_kind
     !> Default real precision for SPH
     integer, parameter :: rk = real64
 
-end module sph_kind
+end module sph_kinds

@@ -2,16 +2,17 @@
 !> General Tools
 module utils
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
+    use parameter
     implicit none
     private
-    
-    public :: to_string, tic, toc
-    
+
+    public :: to_string, tic, toc, get_distance
+
     real(rk), save :: time_save
 
 contains
-    
+
     ! SPDX-Identifier: MIT
     !> 将整数转化为字符串。借鉴了Fortran标准库的to_string。
     !> Change integer to string.
@@ -52,7 +53,7 @@ contains
         string = buffer(pos:)
 
     end function to_string
-    
+
     ! 非并行方案
     subroutine tic()
         call cpu_time(time_save)
@@ -63,5 +64,22 @@ contains
         call cpu_time(time_now)
         write (*, "(A, F0.1)") "elapsed cpu time (seconds) = ", time_now - time_save
     end subroutine toc
+
+    !> 获取两点之间的距离
+    subroutine get_distance(x, y, d, r)
+        real(rk), intent(in), dimension(dim) :: x, y
+        real(rk), intent(out), dimension(dim) :: d
+        real(rk), intent(out) :: r
+        integer i
+
+        d(1) = x(1) - y(1)
+        r = d(1)*d(1)
+
+        do i = 2, dim
+            d(i) = x(i) - y(i)
+            r = r + d(i)*d(i)
+        end do
+
+    end subroutine get_distance
 
 end module utils

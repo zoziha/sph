@@ -15,7 +15,7 @@
 
 subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 
@@ -97,7 +97,7 @@ end subroutine sum_density
 
 subroutine con_density(ntotal, mass, niac, pair_i, pair_j, dwdx, vx, itype, x, rho, drhodt)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 

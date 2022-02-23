@@ -17,7 +17,7 @@
 
 program sph
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     use utils, only: tic, toc
     implicit none
@@ -39,12 +39,12 @@ program sph
     if (shocktube) dt = 0.005_rk
     if (shearcavity) dt = 5.0e-5_rk
     call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
-    
+
     ! 主循环
     do
         write (*, "(a)", advance="no") 'please input the maximal time steps: '
         read (*, *) maxtimestep
-        
+
         call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
 
         !> 输出最后一个时间步的求解信息
@@ -53,7 +53,7 @@ program sph
         write (*, "(a)", advance="no") 'are you going to run more time steps ? (0=no, 1=yes): '
         read (*, *) yesorno
         if (yesorno == 0) exit
-        
+
     end do
     call time_print()
     call toc()

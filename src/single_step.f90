@@ -6,7 +6,7 @@
 subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
                        tdsdt, dx, dvx, du, ds, drho, itype, av)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 
@@ -102,12 +102,13 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
 
     if (nnps == 1) then
         call direct_find(itimestep, ntotal + nvirt, hsml, x, niac, pair_i, pair_j, w, dwdx, ns)
-    else if (nnps == 2) then
+    elseif (nnps == 2) then
         call link_list(itimestep, ntotal + nvirt, hsml(1), x, niac, pair_i, pair_j, w, dwdx, ns)
-    else if (nnps == 3) then
+    elseif (nnps == 3) then
         ! @todo: 树型搜索算法（zoziha/quad-tree: https://github.com/zoziha/quad-tree）
-        !        call tree_search(itimestep, ntotal+nvirt,hsml,x,niac,pair_i,
-        !     &       pair_j,w,dwdx,ns)
+        ! @tocheck
+        call tree_search(itimestep, ntotal + nvirt, hsml, x, niac, pair_i, &
+                         pair_j, w, dwdx, ns)
     end if
 
     ! 密度近似或改变rate，rate不知道如何翻译
@@ -167,7 +168,7 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
             exdvxdt(1, moni_particle), dvx(1, moni_particle)
     end if
 
-102 format(/1x,a,i0)
+102 format(/1x, a, i0)
 101 format(1x, 4(2x, a12))
 100 format(1x, 4(2x, es12.5))
 

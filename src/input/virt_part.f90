@@ -5,7 +5,7 @@
 !>   cavity driven problem are generated.
 subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, itype)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 
@@ -131,9 +131,7 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
             write (2, 1002) i, mass(i), rho(i), p(i), u(i)
             write (3, 1003) i, itype(i), hsml(i)
         end do
-        close (1)
-        close (2)
-        close (3)
+        close (1); close (2); close (3)
     end if
 
     if (mod(itimestep, print_step) == 0) then

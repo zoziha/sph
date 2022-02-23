@@ -3,7 +3,7 @@
 !> for preventing.penetration (Monaghan, 1992)
 subroutine av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 
@@ -37,7 +37,7 @@ subroutine av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
 
     integer :: i, j, k, d
     real(rk) :: vcc, dvx(dim), epsilon
-    
+
     ! epsilon -- 经验性的容差值，可能会导致不稳定
     ! 例如，一维震荡管问题，e (epsilon) <= 0.3
     !     epsilon --- a small constants chosen by experience, may lead to instability.

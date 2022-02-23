@@ -2,7 +2,7 @@
 !> subroutine for loading or generating initial particle information
 subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 
@@ -91,7 +91,7 @@ end subroutine input
 !> 1 d noh shock tube problem
 subroutine shock_tube(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 
@@ -167,7 +167,7 @@ end subroutine shock_tube
 !> 2 d shear driven cavity probem with re = 1
 subroutine shear_cavity(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
-    use sph_kind, only: rk
+    use sph_kinds, only: rk
     use parameter
     implicit none
 
