@@ -17,19 +17,19 @@
 #### 参数
 
 `x/vx`: 浮点型的rank-2数组。
-该参数是`intent(in)`的。<br>
+该参数是`intent(in)`的。
 粒子的坐标/速度。
 
 `mass/rho/p/u/c`: 浮点型的rank-1数组。
-该参数是`intent(in)`的。<br>
+该参数是`intent(in)`的。
 粒子的质量/密度/压强/内能/声速。
 
 `itype`: 整型的标量。
-该参数是`intent(in)`的。<br>
+该参数是`intent(in)`的。
 粒子的类型。
 
 `hsml`: 浮点型的rank-1数组。
-该参数是`intent(in)`的。<br>
+该参数是`intent(in)`的。
 粒子的光滑长度。
 
 `ntotal`: 整型的标量。

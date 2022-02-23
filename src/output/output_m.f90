@@ -77,4 +77,48 @@ contains
 
     end subroutine output_all
 
+    !> 输出粒子作用对的统计信息
+    subroutine set_statistics_print(itimestep, ntotal, niac, countiac)
+        use parameter
+        integer, intent(in) :: itimestep, ntotal, niac, countiac(:)
+        integer sumiac, & !
+            maxiac, &
+            miniac, &
+            noiac, &
+            maxp, &
+            minp, &
+            i
+            
+        sumiac = 0
+        maxiac = 0
+        miniac = 1000
+        noiac = 0
+        do i = 1, ntotal
+            sumiac = sumiac + countiac(i)
+            if (countiac(i) > maxiac) then
+                maxiac = countiac(i)
+                maxp = i
+            end if
+            if (countiac(i) < miniac) then
+                miniac = countiac(i)
+                minp = i
+            end if
+            if (countiac(i) == 0) noiac = noiac + 1
+        end do
+
+        if (mod(itimestep, print_step) == 0) then
+            if (int_stat) then
+                print *, ' >> statistics: interactions per particle:'
+                print 100, '**** particle: ', maxp, ' maximal interactions: ', maxiac
+                print 100, '**** particle: ', minp, ' minimal interactions: ', miniac
+                ! 平均每个粒子的作用对数
+                print 100, '**** average : ', sumiac/ntotal
+                print 100, '**** total pairs : ', niac
+                print 100, '**** particles with no interactions: ', noiac
+            end if
+        end if
+
+100     format(1x, *(a, i0))
+    end subroutine set_statistics_print
+
 end module output_m

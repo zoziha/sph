@@ -16,3 +16,6 @@ data/all/*
 data/paraview/*
 f_**
 x64/*
+
+# ignorance
+*.ignore

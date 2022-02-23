@@ -9,6 +9,7 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
     use sph_kinds, only: rk
     use parameter
     use utils, only: get_distance
+    use output_m, only: set_statistics_print
     implicit none
 
     !> 当前时间步
@@ -96,37 +97,7 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
     end do
 
     !> 相互作用的统计信息
-    !> statistics for the interaction
-
-    sumiac = 0
-    maxiac = 0
-    miniac = 1000
-    noiac = 0
-    do i = 1, ntotal
-        sumiac = sumiac + countiac(i)
-        if (countiac(i) > maxiac) then
-            maxiac = countiac(i)
-            maxp = i
-        end if
-        if (countiac(i) < miniac) then
-            miniac = countiac(i)
-            minp = i
-        end if
-        if (countiac(i) == 0) noiac = noiac + 1
-    end do
-
-    if (mod(itimestep, print_step) == 0) then
-        if (int_stat) then
-            print *, ' >> statistics: interactions per particle:'
-            print 100, '**** particle: ', maxp, '   maximal interactions: ', maxiac
-            print 100, '**** particle: ', minp, '   minimal interactions: ', miniac
-            ! 平均每个粒子的作用对数
-            print 100, '**** average : ', sumiac/ntotal
-            print 100, '**** total pairs : ', niac
-            print 100, '**** particles with no interactions: ', noiac
-        end if
-    end if
-
-100 format(1x, *(a, i0))
+    !     statistics for the interaction
+    call set_statistics_print(itimestep, ntotal, niac, countiac)
 
 end subroutine direct_find

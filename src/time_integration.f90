@@ -167,7 +167,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
         if (mod(itimestep, print_step) == 0) then
             write (*, *)
-            write (*, 101) 'x', 'velocity', 'dvx'
+            write (*, 101) 'x', 'velocity', 'acc'
             write (*, 100) x(1, moni_particle), vx(1, moni_particle), dvx(1, moni_particle)
         end if
 

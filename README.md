@@ -1,38 +1,42 @@
-# Smoothed Particle Hydrodynamics（SPH）([中文文档](./README_CN.md))
+# 光滑粒子流体动力学（SPH）([English README](./README_EN.md))
 
 [![fpm](https://github.com/zoziha/SPH/workflows/fpm/badge.svg)](https://github.com/zoziha/SPH/actions)
 [![msys2-fpm](https://github.com/zoziha/SPH/workflows/msys2-fpm/badge.svg)](https://github.com/zoziha/SPH/actions)
 
-A community-driven open source smoothed particle hydrodynamics (SPH) code, the starting code version is derived from the textbook "Smooth Particle hydrodynamics - A Meshfree Particle Method".
+一份社区驱动的开源光滑粒子流体动力学（SPH）代码，起始代码版本源自课本《光滑粒子流体动力学--一种无网格粒子法》。
 
-| Item | Info |
+| 项目 | 描述 |
 | :-: | :-: |
-| Version | 0.0.2 |
-| License | BSD 3-Clause  |
-| Copyright | Copyright (c) 2021 SPH Contributors |
+| 版本 | 0.0.3 |
+| 许可证 | BSD 3-Clause |
+| 版权 | Copyright (c) 2021~2022 SPH 贡献者 |
 
-## Get Started
+## 开始
 
-### Get the Code
+### 获取代码
 
 ```sh
 git clone https://github.com/zoziha/SPH.git
 cd SPH
 ```
 
-### Build with [fortran-lang/fpm](https://github.com/fortran-lang/fpm)
+### 使用[fortran-lang/fpm](https://github.com/fortran-lang/fpm)构建代码
 
-FPM is a community-driven Fortran language package manager and code build system, suitable for c/c++/fortran code construction.
-You can build the code with the provided `fpm.toml`:
+FPM是社区驱动的Fortran语言的包管理器和代码构建工具，适用于c/c++/fortran代码的构建。  
+你可以通过提供的`fpm.toml`构建代码：
 
 ```sh
 fpm build
-# SPH main program
+# 运行SPH主程序
 fpm run sph --profile release
-# SPH post-processing program for ParaView
+# 运行后处理程序，生成vtk给ParaView使用
 fpm run vtk
 ```
 
-## Links
+### 其它构建系统
+
+除了fpm，本项目将有可能支持visual studio进行构建。
+
+## 链接
 
 + [spheric/SPH Codes](https://spheric-sph.org/sph-projects-and-codes)

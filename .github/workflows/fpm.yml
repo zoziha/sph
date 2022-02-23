@@ -7,6 +7,7 @@ on:
     - "src/**.f90"
     - "test/**.f90"
     - "fpm.toml"
+    - ".github/**.yml"
     
   pull_request:
     braches:
@@ -16,6 +17,7 @@ on:
     - "src/**.f90"
     - "test/**.f90"
     - "fpm.toml"
+    - ".github/**.yml"
 
 jobs:
   build:

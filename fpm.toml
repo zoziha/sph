@@ -2,7 +2,10 @@ name = "SPH"
 version = "VERSION"
 maintainer = "左志华"
 license = "BSD-3 Clause"
+copyright = "Copyright 2022 左志华"
+description = "An open source smoothed particle hydrodynamics (SPH) project"
 
+# fpm中文帮助文档: https://fpm.fortran-lang.org/zh_CN/spec/manifest.html
 [build]
 auto-executables = false
 auto-tests = false

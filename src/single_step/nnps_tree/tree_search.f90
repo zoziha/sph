@@ -4,6 +4,7 @@ module tree_search_m
     use quad_types, only: rectangle_t, circle_t, point_t
     use quad, only: quad_tree_t
     use parameter
+    use output_m, only: set_statistics_print
     implicit none
     private
 
@@ -73,6 +74,9 @@ contains
             call get_distance(x(1:dim, i), x(1:dim, j), dx, r)
             call kernel(r, dx, hsml, w(i), dwdx(1:dim, i))
         end do
+
+        !     statistics for the interaction
+        call set_statistics_print(itimestep, ntotal, niac, countiac)
 
     end subroutine tree_search
 

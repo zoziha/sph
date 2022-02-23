@@ -16,6 +16,7 @@ subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, 
 
     use sph_kinds, only: rk
     use parameter
+    use output_m, only: set_statistics_print
     implicit none
 
     !     parameter used for sorting grid cells in the link list algorithm
@@ -129,33 +130,6 @@ subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, 
     end do
 
     !     statistics for the interaction
-
-    sumiac = 0
-    maxiac = 0
-    miniac = 1000
-    noiac = 0
-    do i = 1, ntotal
-        sumiac = sumiac + countiac(i)
-        if (countiac(i) > maxiac) then
-            maxiac = countiac(i)
-            maxp = i
-        end if
-        if (countiac(i) < miniac) then
-            miniac = countiac(i)
-            minp = i
-        end if
-        if (countiac(i) == 0) noiac = noiac + 1
-    end do
-
-    if (mod(itimestep, print_step) == 0) then
-        if (int_stat) then
-            print *, ' >> statistics: interactions per particle:'
-            print *, '**** particle:', maxp, ' maximal interactions:', maxiac
-            print *, '**** particle:', minp, ' minimal interactions:', miniac
-            print *, '**** average :', real(sumiac)/real(ntotal)
-            print *, '**** total pairs : ', niac
-            print *, '**** particles with no interactions:', noiac
-        end if
-    end if
+    call set_statistics_print(itimestep, ntotal, niac, countiac)
 
 end subroutine link_list
