@@ -43,8 +43,7 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
     !> number of neighboring particles
     integer, intent(out) :: countiac(maxn)
 
-    integer :: i, j, d, sumiac, maxiac, miniac, noiac, & ! 无作用对粒子数
-               maxp, minp, scale_k
+    integer :: i, j, scale_k
     real(rk) :: dxiac(dim), driac, r, mhsml
 
     !> 光滑核函数

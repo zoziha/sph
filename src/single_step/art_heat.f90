@@ -51,7 +51,7 @@ subroutine art_heat(ntotal, hsml, mass, x, vx, niac, rho, u, c, pair_i, pair_j, 
     real(rk), intent(out) :: dedt(maxn)
 
     integer :: i, j, k, d
-    real(rk) :: dx, dvx(dim), vr, rr, h, mc, mrho, mhsml, vcc(maxn), hvcc, mui, muj, muij, rdwdx, g1, g2
+    real(rk) :: dx, dvx(dim), rr, h, mrho, mhsml, vcc(maxn), hvcc, mui, muj, muij, rdwdx, g1, g2
 
     !---  parameter for the artificial heat conduction:
 

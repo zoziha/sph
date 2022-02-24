@@ -6,6 +6,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
     use sph_kinds, only: rk
     use parameter
     use output_m, only: output_all
+    use progress_bar_m, only: pbflush, pbout
     implicit none
 
     !> 粒子的坐标
@@ -51,23 +52,17 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
     !> timestep
     real(rk), intent(in) :: dt
 
-    integer :: i, j, k, itimestep, d, nstart = 0  !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
+    integer :: i, itimestep, d, nstart = 0  !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
     real(rk) :: x_min(dim, maxn), v_min(dim, maxn), u_min(maxn), rho_min(maxn), dx(dim, maxn), dvx(dim, maxn), &
                 du(maxn), drho(maxn), ds(maxn), t(maxn), tdsdt(maxn)
     real(rk) :: av(dim, maxn)   !! 平均速度, average velocity
     real(rk) :: temp_rho, temp_u, &
                 time = 0.0_rk   !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
 
-    ! @todo: 重复初始化
-    ! do i = 1, ntotal
-    !     do d = 1, dim
-    !         av(d, i) = 0.0_rk
-    !     end do
-    ! end do
-
     do itimestep = nstart + 1, nstart + maxtimestep    !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
 
         if (mod(itimestep, print_step) == 0) then
+            call pbflush()      ! 进度条辅助程序
             write (*, *) '----------------------------------------------'
             write (*, '(1x,a,i0)') '  current number of time step = ', itimestep
             write (*, "(1x,a,g0.3)") '  current time = ', time
@@ -169,6 +164,8 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
             write (*, *)
             write (*, 101) 'x', 'velocity', 'acc'
             write (*, 100) x(1, moni_particle), vx(1, moni_particle), dvx(1, moni_particle)
+            !> 屏幕输出进度条
+            call pbout(itimestep, nstart + maxtimestep, .true.)
         end if
 
     end do

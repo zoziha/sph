@@ -7,7 +7,7 @@ A community-driven open source smoothed particle hydrodynamics (SPH) code, the s
 
 | Item | Info |
 | :-: | :-: |
-| Version | 0.0.3 |
+| Version | 0.0.4 |
 | License | BSD 3-Clause  |
 | Copyright | Copyright (c) 2021~2022 SPH Contributors |
 

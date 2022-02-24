@@ -9,7 +9,7 @@ module utils
 
     public :: to_string, tic, toc, get_distance
 
-    real(rk), save :: time_save
+    integer, save :: time_save
 
 contains
 
@@ -56,13 +56,14 @@ contains
 
     ! 非并行方案
     subroutine tic()
-        call cpu_time(time_save)
+        call system_clock(time_save)
     end subroutine tic
 
     subroutine toc()
-        real(rk) :: time_now
-        call cpu_time(time_now)
-        write (*, "(A, F0.1)") "elapsed cpu time (seconds) = ", time_now - time_save
+        integer :: time_now
+        call system_clock(time_now)
+        write (*, "(A, i0, A)") "Elapsed cpu time (seconds) = ", &
+            (time_now - time_save)/1000, "s"
     end subroutine toc
 
     !> 获取两点之间的距离

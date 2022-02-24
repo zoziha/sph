@@ -7,7 +7,7 @@ module quad_types
     type point_t
         real(rk) :: x  !! 点的横坐标
         real(rk) :: y  !! 点的纵坐标
-        integer index !! 粒子索引
+        integer  :: index !! 粒子索引
     end type point_t
 
     !> 矩形

@@ -38,10 +38,10 @@ subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, 
     integer, intent(out) :: niac
     integer :: pair_i(max_interaction), pair_j(max_interaction), countiac(maxn)
     real(rk) :: hsml, x(dim, maxn), w(max_interaction), dwdx(dim, max_interaction)
-    integer :: i, j, d, scale_k, sumiac, maxiac, noiac, miniac, maxp, minp
+    integer :: i, j, d, scale_k
     integer :: grid(maxngx, maxngy, maxngz), xgcell(3, maxn), gcell(3), xcell, ycell, zcell, celldata(maxn), minxcell(3), &
                maxxcell(3), dnxgcell(dim), dpxgcell(dim), ngridx(dim), ghsmlx(dim)
-    real(rk) :: hsml2, dr, r, dx(dim), mingridx(dim), maxgridx(dim), tdwdx(dim), dgeomx(dim)
+    real(rk) :: dr, r, dx(dim), mingridx(dim), maxgridx(dim), tdwdx(dim), dgeomx(dim)
 
     select case (skf)
     case (1)

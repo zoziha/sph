@@ -36,7 +36,7 @@ subroutine av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
     real(rk), intent(out) :: av(dim, maxn)
 
     integer :: i, j, k, d
-    real(rk) :: vcc, dvx(dim), epsilon
+    real(rk) :: dvx(dim), epsilon
 
     ! epsilon -- 经验性的容差值，可能会导致不稳定
     ! 例如，一维震荡管问题，e (epsilon) <= 0.3

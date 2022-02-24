@@ -48,7 +48,7 @@ module parameter
     integer, parameter :: sle = 0
 
     !> 光滑核函数的指示变量
-    !> smoothing kernel function
+    !> smoothing kernel function (skf)
     !> skf = 1, cubic spline kernel by w4 - spline (monaghan 1985)
     !>     = 2, gauss kernel   (gingold and monaghan 1981)
     !>     = 3, quintic kernel (morris 1997)
@@ -57,27 +57,27 @@ module parameter
     !     switches for different senarios
 
     !     summation_density = .true. : use density summation model in the code,
-    !                        .false.: use continuiity equation
+    !                        .false. : use continuiity equation
     !     average_velocity = .true. : monaghan treatment on average velocity,
-    !                       .false.: no average treatment.
+    !                       .false. : no average treatment.
     !     config_input = .true. : load initial configuration data,
-    !                   .false.: generate initial configuration.
+    !                   .false. : generate initial configuration.
     !     virtual_part = .true. : use vritual particle,
-    !                   .false.: no use of vritual particle.
+    !                   .false. : no use of vritual particle.
     !     vp_input = .true. : load virtual particle information,
-    !               .false.: generate virtual particle information.
+    !               .false. : generate virtual particle information.
     !     visc = .true. : consider viscosity,
-    !           .false.: no viscosity.
+    !           .false. : no viscosity.
     !     ex_force =.true. : consider external force,
-    !               .false.: no external force.
+    !              .false. : no external force.
     !     visc_artificial = .true. : consider artificial viscosity,
-    !                      .false.: no considering of artificial viscosity.
+    !                      .false. : no considering of artificial viscosity.
     !     heat_artificial = .true. : consider artificial heating,
-    !                      .false.: no considering of artificial heating.
+    !                      .false. : no considering of artificial heating.
     !     self_gravity = .true. : considering self_gravity,
-    !                    .false.: no considering of self_gravity
+    !                   .false. : no considering of self_gravity
     !     nor_density =  .true. : density normalization by using cspm,
-    !                    .false.: no normalization.
+    !                   .false. : no normalization.
     logical :: summation_density, average_velocity, config_input, virtual_part, vp_input, visc, ex_force, &
                heat_artificial, visc_artificial, self_gravity, nor_density
     parameter(summation_density=.true.)
@@ -109,7 +109,7 @@ module parameter
     !> print_step: print timestep (on screen)
     integer, parameter :: print_step = 100
     !> 控制保存到外部磁盘的粒子信息是第几个时间步
-    !> save_step : save timestep    (to disk file)
+    !> save_step : save timestep  (to disk file)
     integer, parameter :: save_step = 500
 
     !> 所要监测的粒子的序号
