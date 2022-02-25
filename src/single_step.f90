@@ -8,6 +8,7 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
 
     use sph_kinds, only: rk
     use parameter
+    use tree_search_m, only: tree_search
     implicit none
 
     !> 当前时间步
@@ -160,7 +161,7 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
         du(i) = du(i) + avdudt(i) + ahdudt(i)
     end do
 
-    ! 监测粒子的第一个维度的速度改变量
+    ! 监测粒子的第一个维度的速度改变量 (加速度)
     if (mod(itimestep, print_step) == 0) then
         write (*, 102) '**** information for particle, monitoring particle: ', moni_particle
         write (*, 101) 'internal a ', 'artifical a', 'external a =', 'total a '

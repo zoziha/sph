@@ -23,67 +23,63 @@ subroutine kernel(r, dx, hsml, w, dwdx)
     !> derivative of kernel with respect to x, y and z
     real(rk), intent(out) :: dwdx(dim)
 
-    integer :: i, j, d
-    real(rk) :: q, dw, factor
+    integer :: d
+    real(rk) :: q, factor
 
     q = r/hsml
-    w = 0._rk
-    do d = 1, dim
-        dwdx(d) = 0._rk
-    end do
+    w = 0.0_rk
+    dwdx(1:dim) = 0.0_rk
 
     if (skf == 1) then
 
         if (dim == 1) then
-            factor = 1._rk/hsml
+            factor = 1.0_rk/hsml
         else if (dim == 2) then
-            factor = 15._rk/(7._rk*pi*hsml*hsml)
+            factor = 15._rk/(7.0_rk*pi*hsml*hsml)
         else if (dim == 3) then
-            factor = 3._rk/(2._rk*pi*hsml*hsml*hsml)
+            factor = 3.0_rk/(2.0_rk*pi*hsml**3)
         else
             print *, ' >>> error <<< : wrong dimension: dim =', dim
             stop
         end if
-        if (q >= 0 .and. q <= 1._rk) then
-            w = factor*(2._rk/3._rk - q*q + q**3._rk/2._rk)
+        if (q >= 0 .and. q <= 1) then
+            w = factor*(2.0_rk/3.0_rk - q*q + q**3/2.0_rk)
             do d = 1, dim
-                dwdx(d) = factor*(-2._rk + 3._rk/2._rk*q)/hsml**2*dx(d)
+                dwdx(d) = factor*(-2.0_rk + 3.0_rk/2.0_rk*q)/hsml**2*dx(d)
             end do
-        else if (q > 1._rk .and. q <= 2) then
-            w = factor*1._rk/6._rk*(2._rk - q)**3
+        else if (q > 1 .and. q <= 2) then
+            w = factor/6.0_rk*(2.0_rk - q)**3
             do d = 1, dim
-                dwdx(d) = -factor*1._rk/6._rk*3.*(2._rk - q)**2/hsml*(dx(d)/r)
+                dwdx(d) = -factor/6.0_rk*3.0_rk*(2.0_rk - q)**2/hsml*(dx(d)/r)
             end do
         else
-            w = 0._rk
-            do d = 1, dim
-                dwdx(d) = 0._rk
-            end do
+            w = 0.0_rk
+            dwdx(1:dim) = 0.0_rk
         end if
 
     else if (skf == 2) then
 
-        factor = 1._rk/(hsml**dim*pi**(dim/2._rk))
+        factor = 1.0_rk/(hsml**dim*pi**(dim/2.0_rk))
         if (q >= 0 .and. q <= 3) then
             w = factor*exp(-q*q)
             do d = 1, dim
-                dwdx(d) = w*(-2._rk*dx(d)/hsml/hsml)
+                dwdx(d) = w*(-2.0_rk*dx(d)/(hsml*hsml))
             end do
         else
-            w = 0._rk
+            w = 0.0_rk
             do d = 1, dim
-                dwdx(d) = 0._rk
+                dwdx(d) = 0.0_rk
             end do
         end if
 
     else if (skf == 3) then
 
         if (dim == 1) then
-            factor = 1._rk/(120._rk*hsml)
+            factor = 1.0_rk/(120.0_rk*hsml)
         else if (dim == 2) then
-            factor = 7._rk/(478._rk*pi*hsml*hsml)
+            factor = 7.0_rk/(478.0_rk*pi*hsml*hsml)
         else if (dim == 3) then
-            factor = 1._rk/(120._rk*pi*hsml*hsml*hsml)
+            factor = 1.0_rk/(120.0_rk*pi*hsml**3)
         else
             print *, ' >>> error <<< : wrong dimension: dim =', dim
             stop
@@ -104,10 +100,8 @@ subroutine kernel(r, dx, hsml, w, dwdx)
                 dwdx(d) = factor*(-5*(3 - q)**4)/hsml*(dx(d)/r)
             end do
         else
-            w = 0._rk
-            do d = 1, dim
-                dwdx(d) = 0._rk
-            end do
+            w = 0.0_rk
+            dwdx(1:dim) = 0.0_rk
         end if
 
     end if

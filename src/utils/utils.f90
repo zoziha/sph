@@ -70,16 +70,10 @@ contains
     subroutine get_distance(x, y, d, r)
         real(rk), intent(in), dimension(dim) :: x, y
         real(rk), intent(out), dimension(dim) :: d
-        real(rk), intent(out) :: r
-        integer i
+        real(rk), intent(out) :: r !! 欧式距离
 
-        d(1) = x(1) - y(1)
-        r = d(1)*d(1)
-
-        do i = 2, dim
-            d(i) = x(i) - y(i)
-            r = r + d(i)*d(i)
-        end do
+        d = x - y
+        r = norm2(d)
 
     end subroutine get_distance
 

@@ -5,6 +5,7 @@ module tree_search_m
     use quad, only: quad_tree_t
     use parameter
     use output_m, only: set_statistics_print
+    use utils, only: get_distance
     implicit none
     private
 
@@ -16,7 +17,7 @@ contains
     subroutine tree_search(itimestep, ntotal, hsml, x, niac, pair_i, &
                            pair_j, w, dwdx, countiac)
         integer, intent(in) :: itimestep, ntotal
-        real(rk), intent(in) :: hsml(max_interaction)
+        real(rk), intent(in) :: hsml(maxn)
         real(rk), intent(in) :: x(dim, maxn)
         integer, intent(out) :: niac
         integer, intent(out) :: pair_i(max_interaction)
@@ -29,9 +30,9 @@ contains
         logical bool            !! @todo: 删除
         type(circle_t) range    !! 查找域
         type(point_t), allocatable :: found(:)  !! 查找所得粒子
-        real(rk), save :: range_width = 0  !! 查找域宽度
-        type(rectangle_t) :: boundary  !! 查找域
-        integer scale_k, i, j
+        real(rk), save :: range_width = 0       !! 查找域宽度
+        type(rectangle_t), save :: boundary     !! 树型求解域
+        integer scale_k, i, j, k
         real(rk) dx(dim), r !! 粒子间距
 
         select case (skf)
@@ -55,24 +56,29 @@ contains
             bool = qt%insert(point_t(x(1, i), x(2, i), index=i))
         end do
 
-        do i = 1, ntotal
-            range = circle_t(x(1, i), x(2, i), hsml(i))
+        do i = 1, ntotal - 1
+            range = circle_t(x(1, i), x(2, i), scale_k*hsml(i))
+
+            !@todo: 找不到足够的交互粒子
             call qt%query(range, found)
 
-            do j = 1, size(found)
-                if (found(j)%index < i) cycle  ! 如果域内粒子序号小于当前粒子序号，说明已经计录过了，则跳过
+            do k = 1, size(found)
+                j = found(k)%index
+                if (j <= i) cycle  ! 如果域内粒子序号小于等于当前粒子序号，说明已经计录过了，则跳过
+
                 niac = niac + 1
                 pair_i(niac) = i
-                pair_j(niac) = found(j)%index
+                pair_j(niac) = j
                 countiac(i) = countiac(i) + 1
                 countiac(j) = countiac(j) + 1
+
+                call get_distance(x(1:dim, i), x(1:dim, j), dx, r)
+                !> 计算核函数值和导数备用
+                call kernel(r, dx, hsml(i), w(niac), dwdx(1:dim, niac))
+
             end do
+            deallocate (found)
 
-        end do
-
-        do i = 1, niac
-            call get_distance(x(1:dim, i), x(1:dim, j), dx, r)
-            call kernel(r, dx, hsml, w(i), dwdx(1:dim, i))
         end do
 
         !     statistics for the interaction

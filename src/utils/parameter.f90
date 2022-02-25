@@ -11,10 +11,10 @@ module parameter
 
     !> 粒子的最大数目
     !> maxn    : maximum number of particles (gfortran: *<WARNING>* `-fmax-stack-var-size=`, r change the code to use an ALLOCATABLE array)
-    integer, parameter :: maxn = 12000
+    integer, parameter :: maxn = 3000
     !> 粒子相互作用对的最大数目
     !> max_interation : maximum number of interaction pairs
-    integer, parameter :: max_interaction = 100*maxn
+    integer, parameter :: max_interaction = 20*maxn
 
     !     parameters for the computational geometry,
     !     x_maxgeom : upper limit of allowed x-regime
@@ -37,7 +37,7 @@ module parameter
     !> nnps = 1 : simplest and direct searching
     !>        2 : sorting grid linked list
     !>        3 : tree algorithm
-    integer, parameter :: nnps = 1
+    integer, parameter :: nnps = 2
 
     !> 光滑长度估算方法的指示变量
     !> smoothing length evolution (sle) algorithm
@@ -76,6 +76,8 @@ module parameter
     !                      .false. : no considering of artificial heating.
     !     self_gravity = .true. : considering self_gravity,
     !                   .false. : no considering of self_gravity
+    
+    ! 密度正则化的指示变量
     !     nor_density =  .true. : density normalization by using cspm,
     !                   .false. : no normalization.
     logical :: summation_density, average_velocity, config_input, virtual_part, vp_input, visc, ex_force, &

@@ -27,7 +27,7 @@ subroutine grid_geom(i, x, ngridx, maxgridx, mingridx, dgeomx, xgcell)
     real(rk), intent(in) :: dgeomx(dim)
     !> 分割网格的坐标
     !> x-, y- and z-coordinte of sorting grid cell
-    real(rk), intent(out) :: xgcell(dim)
+    integer, intent(out) :: xgcell(3)
 
     integer :: d
 
@@ -42,7 +42,7 @@ subroutine grid_geom(i, x, ngridx, maxgridx, mingridx, dgeomx, xgcell)
             print *, '    range: [xmin,xmax](', d, ') =                               [', mingridx(d), ',', maxgridx(d), ']'
             stop
         else
-            xgcell(d) = int(real(ngridx(d))/dgeomx(d)*(x(d) - mingridx(d)) + 1._rk)
+            xgcell(d) = int(real(ngridx(d))/dgeomx(d)*(x(d) - mingridx(d)) + 1.0_rk)
         end if
     end do
 

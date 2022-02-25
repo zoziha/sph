@@ -20,6 +20,7 @@ program sph
     use sph_kinds, only: rk
     use parameter
     use utils, only: tic, toc
+    use output_m, only: set_parameter_log
     implicit none
 
     !> 在模拟中所使用的粒子总数
@@ -33,8 +34,9 @@ program sph
     real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), &
                 u(maxn), c(maxn), s(maxn), e(maxn), hsml(maxn), dt
 
-    call time_print()
     call tic()
+    call time_print()
+    call set_parameter_log()
 
     if (shocktube) dt = 0.005_rk
     if (shearcavity) dt = 5.0e-5_rk

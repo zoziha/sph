@@ -26,38 +26,39 @@ subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
     integer, intent(in) :: niac
     integer :: pair_i(max_interaction), pair_j(max_interaction), itype(maxn)
     real(rk) :: hsml(maxn), mass(maxn), w(max_interaction), rho(maxn)
-    integer :: i, j, k, d
-    real(rk) :: selfdens, hv(dim), r, wi(maxn)
+    integer :: i, j, k
+    real(rk) :: selfdens, hv(dim), wi(maxn)
 
     !     wi(maxn)---integration of the kernel itself
 
-    do d = 1, dim
-        hv(d) = 0._rk
-    end do
+    hv(1:dim) = 0.0_rk
 
+    ! 先计算粒子自身对密度的贡献值
     !     self density of each particle: wii (kernel for distance 0)
     !     and take contribution of particle itself:
 
-    r = 0._rk
-
+    ! 修正密度加和法, 先计算分母
     !     firstly calculate the integration of the kernel over the space
 
-    do i = 1, ntotal
-        call kernel(r, hv, hsml(i), selfdens, hv)
-        wi(i) = selfdens*mass(i)/rho(i)
-    end do
+    if (nor_density) then
+        do i = 1, ntotal
+            call kernel(0.0_rk, hv, hsml(i), selfdens, hv)
+            wi(i) = selfdens*mass(i)/rho(i)
+        end do
 
-    do k = 1, niac
-        i = pair_i(k)
-        j = pair_j(k)
-        wi(i) = wi(i) + mass(j)/rho(j)*w(k)
-        wi(j) = wi(j) + mass(i)/rho(i)*w(k)
-    end do
+        do k = 1, niac
+            i = pair_i(k)
+            j = pair_j(k)
+            wi(i) = wi(i) + mass(j)/rho(j)*w(k)
+            wi(j) = wi(j) + mass(i)/rho(i)*w(k)
+        end do
 
+    end if
+    ! 修正密度加和法, 再计算分子
     !     secondly calculate the rho integration over the space
 
     do i = 1, ntotal
-        call kernel(r, hv, hsml(i), selfdens, hv)
+        call kernel(0.0_rk, hv, hsml(i), selfdens, hv)
         rho(i) = selfdens*mass(i)
     end do
 
@@ -69,12 +70,11 @@ subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
         rho(j) = rho(j) + mass(i)*w(k)
     end do
 
+    ! 修正密度加和法, 正则化
     !     thirdly, calculate the normalized rho, rho=sum(rho)/sum(w)
 
     if (nor_density) then
-        do i = 1, ntotal
-            rho(i) = rho(i)/wi(i)
-        end do
+        rho(i:ntotal) = rho(i:ntotal)/wi(i:ntotal)
     end if
 
 end subroutine sum_density

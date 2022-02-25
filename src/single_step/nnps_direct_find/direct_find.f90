@@ -44,7 +44,7 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
     integer, intent(out) :: countiac(maxn)
 
     integer :: i, j, scale_k
-    real(rk) :: dxiac(dim), driac, r, mhsml
+    real(rk) :: dxiac(dim), r, mhsml
 
     !> 光滑核函数
     !> smoothing kernel function
@@ -66,11 +66,11 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
 
             ! 计算两个粒子之间的距离的平方
             ! calculate distance between two particles
-            call get_distance(x(1:dim, i), x(1:dim, j), dxiac, driac)
+            call get_distance(x(1:dim, i), x(1:dim, j), dxiac, r)
 
             ! 对称光滑长度: 光滑长度的算数平均值 Page 127.
             mhsml = (hsml(i) + hsml(j))/2
-            if (sqrt(driac) < scale_k*mhsml) then
+            if (r < scale_k*mhsml) then
                 if (niac < max_interaction) then
 
                     !> 相邻对列表，以及每个粒子的总交互次数和相互作用数
@@ -80,7 +80,6 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
                     niac = niac + 1
                     pair_i(niac) = i
                     pair_j(niac) = j
-                    r = sqrt(driac)
                     countiac(i) = countiac(i) + 1
                     countiac(j) = countiac(j) + 1
 

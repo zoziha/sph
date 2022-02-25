@@ -3,6 +3,7 @@ module quad
 
     use quad_types, only: rectangle_t, point_t, circle_t
     use utils, only: to_string
+    use sph_kinds, only: rk
     implicit none
 
     !> 四叉树
@@ -41,14 +42,15 @@ contains
         self%boundary = boundary
         self%capacity = n
         allocate (self%points(0))
-        ! allocate(character(0) :: self%code)
         self%divided = .false.
 
-        if (boundary%w /= boundary%h) error stop "*<ERROR>* heigh /= width!"
+        if (boundary%w /= boundary%h) then
+            write(*, *) "*<ERROR>* heigh /= width!"
+            write(*, *) boundary%w, boundary%h
+        end if
 
     end subroutine constructor
 
-    !\TODO: 确认是否需要递归 (是)
     !> 插入点
     recursive logical function insert(self, point) result(done)
 
@@ -94,10 +96,23 @@ contains
             end do
 
         end if
+        
+        if (.not. done) then
+            write(*, *) "*<ERROR>* insert failed!"
+            write(*, *) point
+            write(*, *) self%boundary
+            if (self%divided) then
+                do i = 1, size(self%children)
+                    write(*, *) self%children(i)%boundary
+                end do
+            end if
+            stop
+        end if
 
     end function insert
 
     !> 细分
+    !> 细分算法会导致某些在矩形边上的粒子无法插入树型表
     subroutine subdivide(self)
 
         class(quad_tree_t), intent(inout) :: self
@@ -109,11 +124,14 @@ contains
                    h => self%boundary%h)
 
             !> children: 1-ne(东北), 2-nw(西北), 3-se(东南), 4-sw(西南)
-
-            ne = rectangle_t(x + 0.25*w, y + 0.25*h, 0.5*w, 0.5*h)
-            nw = rectangle_t(x - 0.25*w, y + 0.25*h, 0.5*w, 0.5*h)
-            se = rectangle_t(x + 0.25*w, y - 0.25*h, 0.5*w, 0.5*h)
-            sw = rectangle_t(x - 0.25*w, y - 0.25*h, 0.5*w, 0.5*h)
+            
+            ! 添加容差 0.0005，使得四叉树存在小的重叠区域，以涵盖所有粒子，消除精度误差；
+            ! 存在一些粒子在两个相邻的矩形公共边上，计算机误差使得这些粒子无法插入树型表；
+            ! 同时使得，被父矩形包含的粒子，在子矩形中必定能插入。
+            ne = rectangle_t(x + 0.25_rk*w, y + 0.25_rk*h, 0.5005_rk*w, 0.5005_rk*h)
+            nw = rectangle_t(x - 0.25_rk*w, y + 0.25_rk*h, 0.5005_rk*w, 0.5005_rk*h)
+            se = rectangle_t(x + 0.25_rk*w, y - 0.25_rk*h, 0.5005_rk*w, 0.5005_rk*h)
+            sw = rectangle_t(x - 0.25_rk*w, y - 0.25_rk*h, 0.5005_rk*w, 0.5005_rk*h)
 
             call self%children(1)%constructor(ne, self%capacity)
             call self%children(2)%constructor(nw, self%capacity)
@@ -189,7 +207,7 @@ contains
 
         class(quad_tree_t), intent(inout) :: self
         type(circle_t), intent(in) :: range
-        type(point_t), intent(out), allocatable :: found(:)
+        type(point_t), intent(inout), allocatable :: found(:)
 
         integer :: i
 

@@ -120,5 +120,18 @@ contains
 
 100     format(1x, *(a, i0))
     end subroutine set_statistics_print
+    
+    !> 输出常数信息 (临时)
+    subroutine set_parameter_log()
+        use parameter
+        integer log_unit
+        
+        open(newunit=log_unit, file='./data/parameter.log')
+        write(log_unit, *) "核函数: ", skf
+        write(log_unit, *) "模拟空间: ", dim
+        write(log_unit, *) "nnps算法: ", sle
+        close(log_unit)
+        
+    end subroutine set_parameter_log
 
 end module output_m
