@@ -45,8 +45,8 @@ contains
         self%divided = .false.
 
         if (boundary%w /= boundary%h) then
-            write(*, *) "*<ERROR>* heigh /= width!"
-            write(*, *) boundary%w, boundary%h
+            write (*, *) "*<ERROR>* heigh /= width!"
+            write (*, *) boundary%w, boundary%h
         end if
 
     end subroutine constructor
@@ -96,14 +96,14 @@ contains
             end do
 
         end if
-        
+
         if (.not. done) then
-            write(*, *) "*<ERROR>* insert failed!"
-            write(*, *) point
-            write(*, *) self%boundary
+            write (*, *) "*<ERROR>* insert failed!"
+            write (*, *) point
+            write (*, *) self%boundary
             if (self%divided) then
                 do i = 1, size(self%children)
-                    write(*, *) self%children(i)%boundary
+                    write (*, *) self%children(i)%boundary
                 end do
             end if
             stop
@@ -124,7 +124,7 @@ contains
                    h => self%boundary%h)
 
             !> children: 1-ne(东北), 2-nw(西北), 3-se(东南), 4-sw(西南)
-            
+
             ! 添加容差 0.0005，使得四叉树存在小的重叠区域，以涵盖所有粒子，消除精度误差；
             ! 存在一些粒子在两个相邻的矩形公共边上，计算机误差使得这些粒子无法插入树型表；
             ! 同时使得，被父矩形包含的粒子，在子矩形中必定能插入。
@@ -211,11 +211,11 @@ contains
 
         integer :: i
 
-        if (.not. allocated(found)) allocate (found(0))
-
         if (.not. range%intersects(self%boundary)) then
             return
         end if
+
+        if (.not. allocated(found)) allocate (found(0))
 
         do i = 1, size(self%points)
             if (range%contains(self%points(i))) found = [found, self%points(i)]

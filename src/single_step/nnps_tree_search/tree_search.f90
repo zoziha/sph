@@ -51,7 +51,7 @@ contains
                                      maxval(x(:, 1:ntotal), dim=2), &
                                      range_width, boundary)
 
-        call qt%constructor(boundary, 1)
+        call qt%constructor(boundary, 2)
         do i = 1, ntotal
             bool = qt%insert(point_t(x(1, i), x(2, i), index=i))
         end do
@@ -61,6 +61,7 @@ contains
 
             !@todo: 找不到足够的交互粒子
             call qt%query(range, found)
+            if (.not. allocated(found)) cycle
 
             do k = 1, size(found)
                 j = found(k)%index
