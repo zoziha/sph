@@ -15,6 +15,7 @@
   - 所有函数参数接口
 - 将许可证改为 BSD 3-Clause
 - 添加 vtk 输出，支持 paraview 可视化
+- 使用自制子组件库: easy_string, master_time, progress_bar
 
 ## TO DO
 
@@ -25,3 +26,4 @@
 - OpenMP 并行
 - 前后处理模块增强
 - 三维算例计算, 更好地支持 3D
+- 添加读取 BDF 能力 (https://gitee.com/zoziha/set-particles)

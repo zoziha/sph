@@ -2,7 +2,7 @@
 module quad
 
     use quad_types, only: rectangle_t, point_t, circle_t
-    use utils, only: to_string
+    use easy_string_m, only: to_string
     use sph_kinds, only: rk
     implicit none
 

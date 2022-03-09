@@ -1,22 +1,13 @@
-# 光滑粒子流体动力学（SPH）([English README](./README_EN.md))
-
-[![fpm](https://github.com/zoziha/SPH/workflows/fpm/badge.svg)](https://github.com/zoziha/SPH/actions)
-[![msys2-fpm](https://github.com/zoziha/SPH/workflows/msys2-fpm/badge.svg)](https://github.com/zoziha/SPH/actions)
+# 光滑粒子流体动力学（SPH）([English](./README_EN.md))
 
 一份社区驱动的开源光滑粒子流体动力学（SPH）代码，起始代码版本源自[课本《光滑粒子流体动力学--一种无网格粒子法》](doc/books/光滑粒子流体动力学：一种无网格粒子法.pdf)。
-
-| 项目 | 描述 |
-| :-: | :-: |
-| 版本 | 0.0.4 |
-| 许可证 | BSD 3-Clause |
-| 版权 | Copyright (c) 2021~2022 SPH 贡献者 |
 
 ## 开始
 
 ### 获取代码
 
 ```sh
-git clone https://github.com/zoziha/SPH.git
+git clone https://gitee.com/zoziha/SPH.git
 cd SPH
 ```
 

@@ -1,7 +1,7 @@
 !> 输出模块(@todo: 待更名)
 module output_m
 
-    use utils, only: to_string
+    use easy_string_m, only: to_string
     implicit none
 
 contains

@@ -19,7 +19,7 @@ program sph
 
     use sph_kinds, only: rk
     use parameter
-    use utils, only: tic, toc
+    use master_time_m, only: tic, toc, time_print
     use output_m, only: set_parameter_log
     implicit none
 

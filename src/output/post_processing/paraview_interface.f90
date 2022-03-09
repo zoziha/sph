@@ -3,7 +3,7 @@
 module paraview_interface
 
     use parameter
-    use utils, only: to_string
+    use easy_string_m, only: to_string
     implicit none
     private
 

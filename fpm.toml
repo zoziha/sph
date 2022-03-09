@@ -1,5 +1,5 @@
 name = "SPH"
-version = "VERSION"
+version = "0.1.0"
 maintainer = "左志华"
 license = "BSD-3 Clause"
 copyright = "Copyright 2022 左志华"
@@ -10,6 +10,11 @@ description = "An open source smoothed particle hydrodynamics (SPH) project"
 auto-executables = false
 auto-tests = false
 auto-examples = false
+
+[dependencies]
+master_time = { git = "https://gitee.com/zoziha/master_time.git" }
+progress_bar = { git = "https://gitee.com/zoziha/progress_bar.git" }
+easy_string = { git = "https://gitee.com/zoziha/easy_string.git" }
 
 [dev-dependencies]
 test-drive = { git = "https://github.com/fortran-lang/test-drive", tag = "v0.4.0" }

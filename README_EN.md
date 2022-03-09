@@ -1,22 +1,13 @@
 # Smoothed Particle Hydrodynamics（SPH）([中文文档](./README.md))
 
-[![fpm](https://github.com/zoziha/SPH/workflows/fpm/badge.svg)](https://github.com/zoziha/SPH/actions)
-[![msys2-fpm](https://github.com/zoziha/SPH/workflows/msys2-fpm/badge.svg)](https://github.com/zoziha/SPH/actions)
-
 A community-driven open source smoothed particle hydrodynamics (SPH) code, the starting code version is derived from the textbook "Smooth Particle hydrodynamics - A Meshfree Particle Method".
-
-| Item | Info |
-| :-: | :-: |
-| Version | 0.0.4 |
-| License | BSD 3-Clause  |
-| Copyright | Copyright (c) 2021~2022 SPH Contributors |
 
 ## Getting Started
 
 ### Get the Code
 
 ```sh
-git clone https://github.com/zoziha/SPH.git
+git clone https://gitee.com/zoziha/SPH.git
 cd SPH
 ```
 
