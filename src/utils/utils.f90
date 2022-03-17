@@ -2,7 +2,7 @@
 !> General Tools
 module utils
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use parameter
     implicit none
     private

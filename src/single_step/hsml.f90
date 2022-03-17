@@ -2,7 +2,7 @@
 !> Subroutine to evolve smoothing length.
 subroutine h_upgrade(dt, ntotal, mass, vx, rho, niac, pair_i, pair_j, dwdx, hsml)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use parameter
     implicit none
 

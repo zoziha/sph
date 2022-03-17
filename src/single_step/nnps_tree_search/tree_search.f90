@@ -1,6 +1,6 @@
 module tree_search_m
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use quad_types, only: rectangle_t, circle_t, point_t
     use quad, only: quad_tree_t
     use parameter

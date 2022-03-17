@@ -10,7 +10,7 @@ contains
     !> subroutine for saving particle information to external disk file
     subroutine output_all(x, vx, mass, rho, p, u, c, itype, hsml, ntotal, n)
 
-        use sph_kinds, only: rk
+        use config_m, only: rk
         use parameter
         implicit none
 

@@ -1,6 +1,6 @@
 module mini_test
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     implicit none
     private
 

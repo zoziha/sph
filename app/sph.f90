@@ -17,7 +17,7 @@
 
 program sph
 
-    use sph_kinds, only: rk
+    use config_m, only: rk, stdout, stdin
     use parameter
     use master_time_m, only: tic, toc, time_print
     use output_m, only: set_parameter_log
@@ -44,21 +44,22 @@ program sph
 
     ! 主循环
     do
-        write (*, "(a)", advance="no") 'Please input the maximal time steps: '
-        read (*, *) maxtimestep
+        write (stdout, "(a)", advance="no") 'Please input the maximal time steps: '
+        read (stdin, *) maxtimestep
 
-        call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
+        if (maxtimestep > 0) then
+            call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
+            !> 输出最后一个时间步的求解信息
+            call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
+        end if
 
-        !> 输出最后一个时间步的求解信息
-        call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
-
-        write (*, "(a)", advance="no") 'Are you going to run more time steps ? (0=no, 1=yes): '
-        read (*, *) yesorno
+        write (stdout, "(a)", advance="no") 'Are you going to run more time steps ? (0=no, 1=yes): '
+        read (stdin, *) yesorno
         if (yesorno == 0) exit
 
     end do
     call time_print()
     call toc()
-    write (*, "(a)") 'All finish!'
+    write (stdout, "(a)") 'All finish!'
 
 end program sph

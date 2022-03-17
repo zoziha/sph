@@ -3,7 +3,7 @@
 !> for preventing.penetration (Monaghan, 1992)
 subroutine av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use parameter
     implicit none
 

@@ -3,7 +3,7 @@ program tester
     use test_utils, only: test_utils_to_string
     use test_param, only: test_param_keyword
     use test_input, only: test_input_unit
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use test_tree_search_m, only: collect_tree_search_tests
     use parameter
     use, intrinsic :: iso_fortran_env, only: error_unit

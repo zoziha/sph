@@ -5,7 +5,7 @@
 !>  are also calculated here as external forces.
 subroutine ext_force(ntotal, mass, x, niac, pair_i, pair_j, itype, hsml, dvxdt)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use parameter
     implicit none
 

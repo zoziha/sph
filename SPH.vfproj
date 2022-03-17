@@ -48,9 +48,15 @@
 		<Filter Name="Header Files" Filter="fi;fd"/>
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
+		<Filter Name="deps">
+		<File RelativePath=".\build\dependencies\easy_string\src\easy_string.f90"/>
+		<File RelativePath=".\build\dependencies\master_time\src\master_time.f90"/>
+		<File RelativePath=".\build\dependencies\progress_bar\src\progress_bar.f90"/></Filter>
+		<Filter Name="src">
 		<File RelativePath=".\src\single_step\art_heat.f90"/>
 		<File RelativePath=".\src\single_step\art_visc.f90"/>
 		<File RelativePath=".\src\single_step\av_vel.f90"/>
+		<File RelativePath=".\src\config.F90"/>
 		<File RelativePath=".\src\single_step\density.f90"/>
 		<File RelativePath=".\src\single_step\nnps_direct_find\direct_find.f90"/>
 		<File RelativePath=".\src\single_step\eos.f90"/>
@@ -66,16 +72,13 @@
 		<File RelativePath=".\src\output\output_m.f90"/>
 		<File RelativePath=".\src\utils\parameter.f90"/>
 		<File RelativePath=".\src\output\post_processing\paraview_interface.f90"/>
-		<File RelativePath=".\src\output\progress_bar\progress_bar_m.f90"/>
 		<File RelativePath=".\src\single_step\nnps_tree_search\quad_base_types.f90"/>
 		<File RelativePath=".\src\single_step\nnps_tree_search\quad_tree_types.f90"/>
 		<File RelativePath=".\src\single_step.f90"/>
 		<File RelativePath=".\app\sph.f90"/>
-		<File RelativePath=".\src\sph_kind.F90"/>
 		<File RelativePath=".\src\time_integration.f90"/>
-		<File RelativePath=".\src\output\time_print.f90"/>
 		<File RelativePath=".\src\single_step\nnps_tree_search\tree_search.f90"/>
 		<File RelativePath=".\src\utils\utils.f90"/>
 		<File RelativePath=".\src\input\virt_part.f90"/>
-		<File RelativePath=".\src\single_step\viscosity.f90"/></Filter></Files>
+		<File RelativePath=".\src\single_step\viscosity.f90"/></Filter></Filter></Files>
 	<Globals/></VisualStudioProject>

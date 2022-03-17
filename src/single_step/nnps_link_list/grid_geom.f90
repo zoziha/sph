@@ -3,7 +3,7 @@
 !>   the sorting  grid, in which the particle with coordinates (x) lies.
 subroutine grid_geom(i, x, ngridx, maxgridx, mingridx, dgeomx, xgcell)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use parameter
     implicit none
 

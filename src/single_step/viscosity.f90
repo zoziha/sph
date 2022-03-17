@@ -2,7 +2,7 @@
 !> subroutine to define the fluid particle viscosity
 subroutine viscosity(ntotal, itype, x, rho, eta)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use parameter
     implicit none
 

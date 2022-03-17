@@ -14,7 +14,7 @@
 !>     countiac  : number of neighboring particles                  [out]
 subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, countiac)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use parameter
     use output_m, only: set_statistics_print
     implicit none

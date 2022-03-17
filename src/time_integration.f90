@@ -3,7 +3,7 @@
 !> 相关参考为 Hernquist 和 Katz (1989), Simpson (1995), Monaghan (1992) 等等。
 subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use parameter
     use output_m, only: output_all
     use progress_bar_m, only: pbflush, pbout
@@ -17,7 +17,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
     real(rk), intent(inout) :: vx(dim, maxn)
     !> 粒子的质量
     !> mass of particles
-    real(rk), intent(in) :: mass(maxn)
+    real(rk), intent(inout) :: mass(maxn)
     !> 粒子的密度
     !> dnesities of particles
     real(rk), intent(inout) :: rho(maxn)

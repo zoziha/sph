@@ -10,7 +10,7 @@
 subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair_i, pair_j, &
                      dwdx, u, itype, x, t, c, p, dvxdt, tdsdt, dedt)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use parameter
     implicit none
 

@@ -6,7 +6,7 @@
 !>   see p.148 in chapter 4
 subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, countiac)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use parameter
     use utils, only: get_distance
     use output_m, only: set_statistics_print

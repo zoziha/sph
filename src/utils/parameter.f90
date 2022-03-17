@@ -3,7 +3,7 @@
 
 module parameter
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
 
     !> 求解问题的维度
     !> dim : dimension of the problem (1, 2 or 3)

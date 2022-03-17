@@ -2,7 +2,7 @@
 !> gamma law eos: subroutine to calculate the pressure and sound
 subroutine p_gas(rho, u, p, c)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     implicit none
     !> 密度
     !> Density
@@ -32,7 +32,7 @@ end subroutine p_gas
 !>   artificial equation of state for the artificial compressibility.
 subroutine p_art_water(rho, p, c)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     implicit none
     !> 密度
     !> Density

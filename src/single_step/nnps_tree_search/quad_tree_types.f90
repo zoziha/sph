@@ -3,7 +3,7 @@ module quad
 
     use quad_types, only: rectangle_t, point_t, circle_t
     use easy_string_m, only: to_string
-    use sph_kinds, only: rk
+    use config_m, only: rk
     implicit none
 
     !> 四叉树

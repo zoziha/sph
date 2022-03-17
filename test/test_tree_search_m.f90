@@ -4,7 +4,7 @@ module test_tree_search_m
     use tree_search_m, only: tree_search
     use quad_types, only: point_t, rectangle_t, circle_t
     use quad, only: quad_tree_t
-    use sph_kinds, only: rk
+    use config_m, only: rk
     implicit none
     private
 

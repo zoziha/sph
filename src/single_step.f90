@@ -6,7 +6,7 @@
 subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
                        tdsdt, dx, dvx, du, ds, drho, itype, av)
 
-    use sph_kinds, only: rk
+    use config_m, only: rk
     use parameter
     use tree_search_m, only: tree_search
     implicit none

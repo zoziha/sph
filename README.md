@@ -28,6 +28,12 @@ fpm run vtk
 
 除了fpm，本项目将有可能支持visual studio进行构建。
 
+```sh
+fpm update # 仍然需要使用fpm拉取上游依赖库!
+```
+
+然后，在visual studio中选中`src`和`build/dependencies/*`中的源码文件，并构建和运行。
+
 ## 链接
 
 + [spheric/SPH Codes](https://spheric-sph.org/sph-projects-and-codes)
