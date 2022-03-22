@@ -49,9 +49,26 @@
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
 		<Filter Name="deps">
+		<Filter Name="queue">
+		<File RelativePath=".\build\dependencies\queue\src\queue.f90">
+			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessNo"/></FileConfiguration></File></Filter>
+		<Filter Name="ntree">
+		<File RelativePath=".\build\dependencies\ntree\src\ntree.f90"/>
+		<File RelativePath=".\build\dependencies\ntree\src\ntree_factory.f90"/>
+		<File RelativePath=".\build\dependencies\ntree\src\shape.f90"/></Filter>
 		<File RelativePath=".\build\dependencies\easy_string\src\easy_string.f90"/>
 		<File RelativePath=".\build\dependencies\master_time\src\master_time.f90"/>
-		<File RelativePath=".\build\dependencies\progress_bar\src\progress_bar.f90"/></Filter>
+		<File RelativePath=".\build\dependencies\progress_bar\src\progress_bar.f90"/>
+		<File RelativePath=".\build\dependencies\swift_file\src\swift_file.F90">
+			<FileConfiguration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File></Filter>
 		<Filter Name="src">
 		<File RelativePath=".\src\single_step\art_heat.f90"/>
 		<File RelativePath=".\src\single_step\art_visc.f90"/>
@@ -72,8 +89,6 @@
 		<File RelativePath=".\src\output\output_m.f90"/>
 		<File RelativePath=".\src\utils\parameter.f90"/>
 		<File RelativePath=".\src\output\post_processing\paraview_interface.f90"/>
-		<File RelativePath=".\src\single_step\nnps_tree_search\quad_base_types.f90"/>
-		<File RelativePath=".\src\single_step\nnps_tree_search\quad_tree_types.f90"/>
 		<File RelativePath=".\src\single_step.f90"/>
 		<File RelativePath=".\app\sph.f90"/>
 		<File RelativePath=".\src\time_integration.f90"/>

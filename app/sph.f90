@@ -20,7 +20,7 @@ program sph
     use config_m, only: rk, stdout, stdin
     use parameter
     use master_time_m, only: tic, toc, time_print
-    use output_m, only: set_parameter_log
+    use output_m, only: set_parameter_log, set_folder
     implicit none
 
     !> 在模拟中所使用的粒子总数
@@ -37,6 +37,7 @@ program sph
     call tic()
     call time_print()
     call set_parameter_log()
+    call set_folder()
 
     if (shocktube) dt = 0.005_rk
     if (shearcavity) dt = 5.0e-5_rk

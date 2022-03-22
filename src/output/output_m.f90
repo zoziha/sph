@@ -1,8 +1,11 @@
-!> 输出模块(@todo: 待更名)
+!> 输出模块
 module output_m
 
     use easy_string_m, only: to_string
+    use swift_file_m, only: mkdir, is_exist
     implicit none
+
+    public :: set_folder
 
 contains
 
@@ -88,7 +91,7 @@ contains
             maxp, &
             minp, &
             i
-            
+
         sumiac = 0
         maxiac = 0
         miniac = 1000
@@ -120,18 +123,23 @@ contains
 
 100     format(1x, *(a, i0))
     end subroutine set_statistics_print
-    
+
     !> 输出常数信息 (临时)
     subroutine set_parameter_log()
         use parameter
         integer log_unit
-        
-        open(newunit=log_unit, file='./data/parameter.log')
-        write(log_unit, *) "核函数: ", skf
-        write(log_unit, *) "模拟空间: ", dim
-        write(log_unit, *) "nnps算法: ", sle
-        close(log_unit)
-        
+
+        open (newunit=log_unit, file='./data/parameter.log')
+        write (log_unit, *) "核函数: ", skf
+        write (log_unit, *) "模拟空间: ", dim
+        write (log_unit, *) "nnps算法: ", sle
+        close (log_unit)
+
     end subroutine set_parameter_log
+
+    subroutine set_folder()
+        if (.not. is_exist('./data/all')) call mkdir('./data/all', .true.)
+        if (.not. is_exist('./data/paraview')) call mkdir('./data/paraview', .true.)
+    end subroutine set_folder
 
 end module output_m

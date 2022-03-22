@@ -27,3 +27,4 @@
 - 前后处理模块增强
 - 三维算例计算, 更好地支持 3D
 - 添加读取 BDF 能力 (https://gitee.com/zoziha/set-particles)
+- 支持配置文件toml

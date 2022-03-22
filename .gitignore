@@ -10,12 +10,12 @@ Release/*
 *.pdb
 .vscode
 .vs/*
+x64/*
 
 # data
 data/all/*
 data/paraview/*
 f_**
-x64/*
 
 # ignorance
 *.ignore

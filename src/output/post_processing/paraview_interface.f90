@@ -4,6 +4,7 @@ module paraview_interface
 
     use parameter
     use easy_string_m, only: to_string
+    use master_time_m, only: time_print
     implicit none
     private
 
@@ -50,6 +51,7 @@ contains
         integer :: index, i, d
         real(rk), allocatable :: x(:, :), vx(:, :), mass(:), rho(:), p(:), u(:), itype(:), hsml(:)
         logical is_exist_xv
+        character(:), allocatable :: time
 
         !> 查询文件是否存在
         inquire (file="./data/all/f_"//to_string(i_steps)//"xv.dat", exist=is_exist_xv)
@@ -82,7 +84,8 @@ contains
               form="formatted")
 
         !> 输出头部和点坐标
-        write (unit_xv, "(a)") "# vtk DataFile Version 3.0"
+        call time_print(time)
+        write (unit_xv, "(a)") "# vtk DataFile Version 3.0, "//time
         write (unit_xv, "(a)") "paraview_vtk_output"
         write (unit_xv, "(a)") "ASCII"
         write (unit_xv, "(a)") "DATASET UNSTRUCTURED_GRID"
