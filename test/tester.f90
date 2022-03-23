@@ -1,8 +1,5 @@
 program tester
 
-    use test_utils, only: test_utils_to_string
-    use test_param, only: test_param_keyword
-    use test_input, only: test_input_unit
     use config_m, only: rk
     use test_tree_search_m, only: collect_tree_search_tests
     use parameter
@@ -39,16 +36,6 @@ program tester
         write (error_unit, '(i0, 1x, a)') stat, "test(s) failed!"
         error stop
     end if
-
-    ! 辅助单元
-    call test_utils_to_string()
-    call test_param_keyword()
-
-    ! 业务单元
-    if (shocktube) dt = 0.005_rk
-    if (shearcavity) dt = 5.0e-5_rk
-    call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
-    call test_input_unit(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
     print *, "All tests passed. :)"
 

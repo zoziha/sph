@@ -35,7 +35,7 @@
 				<Tool Name="VFPostBuildEventTool"/>
 				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
 		<Configuration Name="Release|x64">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" LocalSavedScalarsZero="true" RuntimeLibrary="rtMultiThreadedDLL"/>
 				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" SubSystem="subSystemConsole"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
@@ -49,14 +49,22 @@
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
 		<Filter Name="deps">
+		<Filter Name="ntree">
+		<File RelativePath=".\build\dependencies\ntree\src\ntree.F90">
+			<FileConfiguration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File>
+		<File RelativePath=".\build\dependencies\ntree\src\ntree_factory.f90"/>
+		<File RelativePath=".\build\dependencies\ntree\src\shape.f90"/></Filter>
 		<Filter Name="queue">
 		<File RelativePath=".\build\dependencies\queue\src\queue.f90">
 			<FileConfiguration Name="Debug|x64">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessNo"/></FileConfiguration></File></Filter>
-		<Filter Name="ntree">
-		<File RelativePath=".\build\dependencies\ntree\src\ntree.f90"/>
-		<File RelativePath=".\build\dependencies\ntree\src\ntree_factory.f90"/>
-		<File RelativePath=".\build\dependencies\ntree\src\shape.f90"/></Filter>
 		<File RelativePath=".\build\dependencies\easy_string\src\easy_string.f90"/>
 		<File RelativePath=".\build\dependencies\master_time\src\master_time.f90"/>
 		<File RelativePath=".\build\dependencies\progress_bar\src\progress_bar.f90"/>

@@ -6,6 +6,7 @@ module config_m
     private
     
     public :: rk, stdout, stdin, stderr, sp, dp
+    public :: tinsert, tsearch
     
     !> sph预设浮点精度
     !> Default real precision for SPH
@@ -17,5 +18,8 @@ module config_m
     integer, parameter :: stdout = output_unit
     !> 标准错误unit
     integer, parameter :: stderr = error_unit
+    
+    !> 粒子搜索时间
+    real, save :: tinsert = 0.0, tsearch = 0.0
 
 end module config_m

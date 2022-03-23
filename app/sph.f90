@@ -17,7 +17,7 @@
 
 program sph
 
-    use config_m, only: rk, stdout, stdin
+    use config_m, only: rk, stdout, stdin, tinsert, tsearch
     use parameter
     use master_time_m, only: tic, toc, time_print
     use output_m, only: set_parameter_log, set_folder
@@ -59,6 +59,10 @@ program sph
         if (yesorno == 0) exit
 
     end do
+
+    if (nnps == 3) write (stdout, '(2(a,es10.3),a)') 'Particle insertion time: ', tinsert, &
+        's, Particle search time: ', tsearch, 's'
+
     call time_print()
     call toc()
     write (stdout, "(a)") 'All finish!'
