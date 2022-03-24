@@ -5,7 +5,8 @@
 !>   cavity driven problem are generated.
 subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, itype)
 
-    use config_m, only: rk
+    use config_m, only: rk, stdout
+    use console_color_m, only: attr
     use parameter
     implicit none
 
@@ -136,8 +137,8 @@ subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, ity
 
     if (mod(itimestep, print_step) == 0) then
         if (int_stat) then
-            print *, ' >> statistics: virtual boundary particles:'
-            print '(1x,a,i0)', '    number of virtual particles: ', nvirt
+            write(stdout, '(a)') attr('<INFO>')//'Statistics: virtual boundary particles:'
+            write(stdout, '(a,i0)')  attr('<INFO>')//'Number of virtual particles: ', nvirt
         end if
     end if
 

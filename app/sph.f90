@@ -17,10 +17,11 @@
 
 program sph
 
-    use config_m, only: rk, stdout, stdin, tinsert, tsearch
+    use config_m, only: rk, stdout, stdin, tinsert, tsearch, dt, nnps
     use parameter
     use master_time_m, only: tic, toc, time_print
     use output_m, only: set_parameter_log, set_folder
+    use toml_info_m, only: parse_toml_info
     implicit none
 
     !> 在模拟中所使用的粒子总数
@@ -32,15 +33,15 @@ program sph
     integer :: maxtimestep
     integer :: d, m, i, yesorno
     real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), &
-                u(maxn), c(maxn), s(maxn), e(maxn), hsml(maxn), dt
+                u(maxn), c(maxn), s(maxn), e(maxn), hsml(maxn)
 
     call tic()
     call time_print()
+    call parse_toml_info()
     call set_parameter_log()
     call set_folder()
 
     if (shocktube) dt = 0.005_rk
-    if (shearcavity) dt = 5.0e-5_rk
     call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
     ! 主循环
@@ -50,8 +51,6 @@ program sph
 
         if (maxtimestep > 0) then
             call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
-            !> 输出最后一个时间步的求解信息
-            call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
         end if
 
         write (stdout, "(a)", advance="no") 'Are you going to run more time steps ? (0=no, 1=yes): '
@@ -61,7 +60,7 @@ program sph
     end do
 
     if (nnps == 3) write (stdout, '(2(a,es10.3),a)') 'Particle insertion time: ', tinsert, &
-        's, Particle search time: ', tsearch, 's'
+        's, particle search time: ', tsearch, 's'
 
     call time_print()
     call toc()

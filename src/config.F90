@@ -3,10 +3,7 @@ module config_m
 
     use, intrinsic :: iso_fortran_env, only: sp => real32, dp => real64, output_unit, input_unit, error_unit
     implicit none
-    private
-    
-    public :: rk, stdout, stdin, stderr, sp, dp
-    public :: tinsert, tsearch
+    public
     
     !> sph预设浮点精度
     !> Default real precision for SPH
@@ -21,5 +18,14 @@ module config_m
     
     !> 粒子搜索时间
     real, save :: tinsert = 0.0, tsearch = 0.0
+    
+    !> 输入、输出文件夹
+    character(:), allocatable :: in_path !! 输入
+    character(:), allocatable :: out_path !! 输出
+    
+    character(:), allocatable :: nick !! 工程名
+    real(rk) :: dt !! 时间步长
+    integer :: skf !! 光滑核函数的指示变量
+    integer :: nnps !! 最近相邻粒子搜索算法指示变量
 
 end module config_m

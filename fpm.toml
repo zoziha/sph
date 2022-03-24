@@ -1,5 +1,5 @@
 name = "SPH"
-version = "0.1.2"
+version = "0.1.3"
 maintainer = "左志华"
 license = "BSD-3 Clause"
 copyright = "Copyright 2022 左志华"
@@ -17,6 +17,10 @@ progress_bar = { git = "https://gitee.com/zoziha/progress_bar.git" }
 swift_file = { git = "https://gitee.com/zoziha/swift_file.git" }
 easy_string = { git = "https://gitee.com/zoziha/easy_string.git" }
 ntree = { git = "https://gitee.com/zoziha/ntree.git" }
+toml-f = { git = "https://github.com/toml-f/toml-f.git" }
+stdlib_logger = { git = "https://gitee.com/zoziha/stdlib_logger.git" }
+M_attr = { git = "https://github.com/urbanjost/M_attr.git" }
+
 
 [dev-dependencies]
 test-drive = { git = "https://github.com/fortran-lang/test-drive", tag = "v0.4.0" }

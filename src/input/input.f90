@@ -2,8 +2,9 @@
 !> subroutine for loading or generating initial particle information
 subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
-    use config_m, only: rk
+    use config_m, only: rk, stdout
     use parameter
+    use console_color_m, only: attr
     implicit none
 
     !> 粒子的位置
@@ -69,10 +70,8 @@ subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
             write (2, 1002) i, mass(i), rho(i), p(i), u(i)
             write (3, 1003) i, itype(i), hsml(i)
         end do
-        write (*, *) '  **************************************************'
-        write (*, *) '      initial particle configuration generated   '
-        write (*, '(1x,a,i0)') '      total number of particles: ', ntotal
-        write (*, *) '  **************************************************'
+        write (stdout, '(a)') attr('<INFO>')//'Initial particle configuration generated'
+        write (stdout, '(a,i0)') attr('<INFO>')//'Total number of particles: ', ntotal
 
     end if
 

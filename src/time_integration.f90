@@ -3,10 +3,12 @@
 !> 相关参考为 Hernquist 和 Katz (1989), Simpson (1995), Monaghan (1992) 等等。
 subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
 
-    use config_m, only: rk
+    use config_m, only: rk, stdout
     use parameter
     use output_m, only: output_all
     use progress_bar_m, only: pbflush, pbout
+    use M_attr, only: fg_cyan, reset
+    use console_color_m, only: attr, is_intel_windows
     implicit none
 
     !> 粒子的坐标
@@ -63,10 +65,8 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
         if (mod(itimestep, print_step) == 0) then
             call pbflush()      ! 进度条辅助程序
-            write (*, *) '----------------------------------------------'
-            write (*, '(1x,a,i0)') '  current number of time step = ', itimestep
-            write (*, "(1x,a,g0.3)") '  current time = ', time
-            write (*, *) '----------------------------------------------'
+            write (stdout, '(a,i0)') attr('<INFO>')//'Current number of time step = ', itimestep
+            write (stdout, "(a,g0.3,a)") attr('<INFO>')//'Current time = ', time, 's'
         end if
 
         ! 如果不是第一个时间步长，则更新热能、密度和速度半步长
@@ -150,11 +150,6 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
         if (mod(itimestep, save_step) == 0) then
 
-            !> 覆盖输出最后的保存时间步的求解信息（局限）
-            !> @todo: 待删除v2.0发布时
-            !> @note: 重复覆盖输出最后一步的结果，意义不大，output_all足够了
-            call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
-
             !> 输出每个保存时间步的求解信息（拓展）
             call output_all(x, vx, mass, rho, p, u, c, itype, hsml, ntotal, itimestep/save_step)
 
@@ -165,14 +160,17 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
             write (*, 101) 'location', 'velocity', 'acc'
             write (*, 100) x(1, moni_particle), vx(1, moni_particle), dvx(1, moni_particle)
             !> 屏幕输出进度条
+            if (.not.is_intel_windows()) write (stdout, '(a)', advance='no') fg_cyan
             call pbout(itimestep, nstart + maxtimestep, .true.)
+            if (.not.is_intel_windows()) write (stdout, '(a)', advance='no') reset
+            
         end if
 
     end do
 
     nstart = nstart + maxtimestep
 
-101 format(1x, 3(2x, a12))
-100 format(1x, 3(2x, es12.5))
+101 format(3(a12,:,2x))
+100 format(3(es12.5,:,2x))
 
 end subroutine time_integration

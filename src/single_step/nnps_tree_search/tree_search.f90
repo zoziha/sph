@@ -1,6 +1,6 @@
 module tree_search_m
 
-    use config_m, only: rk, stdout, tinsert, tsearch
+    use config_m, only: rk, stdout, tinsert, tsearch, skf
     use queue_m, only: queue_t
     use parameter
     use output_m, only: set_statistics_print

@@ -3,7 +3,7 @@
 !> derivatives dwdxij.
 subroutine kernel(r, dx, hsml, w, dwdx)
 
-    use config_m, only: rk
+    use config_m, only: rk, skf
     use parameter
     implicit none
 

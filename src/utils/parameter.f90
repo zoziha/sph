@@ -32,13 +32,6 @@ module parameter
     !>          2 : (e.g. (p(i)/rho(i)**2+p(j)/rho(j)**2)
     integer, parameter :: pa_sph = 2
 
-    !> 最近相邻粒子搜索 (NNPS) 法的指示变量
-    !> nearest neighbor particle searching (nnps) method
-    !> nnps = 1 : simplest and direct searching
-    !>        2 : sorting grid linked list
-    !>        3 : tree algorithm
-    integer, parameter :: nnps = 2
-
     !> 光滑长度估算方法的指示变量
     !> smoothing length evolution (sle) algorithm
     !> sle = 0 : keep unchanged,
@@ -46,13 +39,6 @@ module parameter
     !>       2 : dh/dt = (-1/dim)*(h/rho)*(drho/dt)
     !>       3 : other approaches (e.g. h = h_0 * (rho_0/rho)**(1/dim) )
     integer, parameter :: sle = 0
-
-    !> 光滑核函数的指示变量
-    !> smoothing kernel function (skf)
-    !> skf = 1, cubic spline kernel by w4 - spline (monaghan 1985)
-    !>     = 2, gauss kernel   (gingold and monaghan 1981)
-    !>     = 3, quintic kernel (morris 1997)
-    integer, parameter :: skf = 1
 
     !     switches for different senarios
 

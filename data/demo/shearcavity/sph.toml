@@ -1,0 +1,41 @@
+# 工程名
+name = "2 dimensional shear cavity flow"
+
+# 参数
+[parameter]
+
+# 维度
+dim = 2
+# 粒子近似算法指示变量
+pa_sph = 2
+# 最近相邻粒子搜索(NNPS)算法指示变量: 1, 直接搜索法
+#                                 2, 背景网格-链表搜索法
+#                                 3, 树型搜索法
+nnps = 3
+# 光滑长度估算方法指示变量
+sle = 0
+# 光滑核函数指示变量: 1, cubic spline kernel by w4 - spline (monaghan 1985)
+#                  2, gauss kernel   (gingold and monaghan 1981)
+#                  3, quintic kernel (morris 1997)
+skf = 1
+# 监测的粒子序号
+monitor_particle = 1
+# 控制在屏幕上显示的粒子信息是第几个时间步
+monitor_step = 100
+# 控制保存到外部磁盘的粒子信息是第几个时间步
+save_step = 500
+# 时间步长
+dt = 5.0e-5
+
+
+[pre-process]
+
+# openmp并行线程控制
+openmp = true
+num_threads = 4
+ini_lua_script = "ini_lua_script.lua"
+
+
+[post-process]
+
+vtk = false
