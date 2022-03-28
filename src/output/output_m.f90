@@ -5,7 +5,7 @@ module output_m
     use swift_file_m, only: mkdir, is_exist
     use, intrinsic :: iso_fortran_env, only: stdout => output_unit
     use config_m, only: nick, out_path, skf, nnps
-    use console_color_m, only: attr
+    use info_m, only: operator(.c.)
     implicit none
 
     public :: set_folder, set_parameter_log
@@ -114,7 +114,7 @@ contains
 
         if (mod(itimestep, print_step) == 0) then
             if (int_stat) then
-                write (stdout, '(/a)') attr('<INFO>')//'Statistics: interactions per particle:'
+                write (stdout, '(/a)') .c.'Statistics: interactions per particle:'
                 print 100, 'particle: ', maxp, ' maximal interactions: ', maxiac
                 print 100, 'particle: ', minp, ' minimal interactions: ', miniac
                 ! 平均每个粒子的作用对数
@@ -129,11 +129,12 @@ contains
 
     !> 输出工程特征信息
     subroutine set_parameter_log()
-        write (stdout, '(a)') attr('<INFO>')//'Project name: '//nick
-        write (stdout, '(a,i0)') attr('<INFO>')//'Smoothed kernel function: ', skf
-        write (stdout, '(a,i0/)') attr('<INFO>')//'NNPS method: ', nnps
+        write (stdout, '(a)') .c.'Project name: '//nick
+        write (stdout, '(a,i0)') .c.'Smoothed kernel function: ', skf
+        write (stdout, '(a,i0/)') .c.'NNPS method: ', nnps
     end subroutine set_parameter_log
 
+    !> 建立所需文件夹
     subroutine set_folder()
         if (.not. is_exist('./data/all')) call mkdir('./data/all', .true.)
         if (.not. is_exist('./data/paraview')) call mkdir('./data/paraview', .true.)

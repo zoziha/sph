@@ -4,7 +4,7 @@ subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
     use config_m, only: rk, stdout
     use parameter
-    use console_color_m, only: attr
+    use info_m, only: operator(.c.)
     implicit none
 
     !> 粒子的位置
@@ -70,8 +70,8 @@ subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
             write (2, 1002) i, mass(i), rho(i), p(i), u(i)
             write (3, 1003) i, itype(i), hsml(i)
         end do
-        write (stdout, '(a)') attr('<INFO>')//'Initial particle configuration generated'
-        write (stdout, '(a,i0)') attr('<INFO>')//'Total number of particles: ', ntotal
+        write (stdout, '(a)') .c.'Initial particle configuration generated'
+        write (stdout, '(a,i0)') .c.'Total number of particles: ', ntotal
 
     end if
 

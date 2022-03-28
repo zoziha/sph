@@ -9,7 +9,7 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
     use config_m, only: rk, stdout, nnps
     use parameter
     use tree_search_m, only: tree_search
-    use console_color_m, only: attr
+    use info_m, only: operator(.c.)
     implicit none
 
     !> 当前时间步
@@ -164,7 +164,7 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
 
     ! 监测粒子的第一个维度的速度改变量 (加速度)
     if (mod(itimestep, print_step) == 0) then
-        write (stdout, 102) attr('<INFO>')//'Information for particle, monitoring particle: ', moni_particle
+        write (stdout, 102) .c.'Information for particle, monitoring particle: ', moni_particle
         write (stdout, 101) 'internal a ', 'artifical a', 'external a =', 'total a '
         write (stdout, 100) indvxdt(1, moni_particle), ardvxdt(1, moni_particle), &
             exdvxdt(1, moni_particle), dvx(1, moni_particle)

@@ -18,16 +18,18 @@
 
 - 对非Windows-Intel-OneAPI环境采用部分esc码彩色样式;
 - 拟支持toml-f解析配置文件;
-- 移除原始output子例程。
+- 移除原始output子例程;
+- 使用error_stop(base), info;
+- 数型搜索法(2D);
+- 添加进度条.
 
 ## TO DO
 
-- 树形搜索法 (2D) (WIP)
-- 添加进度条 (WIP)
+- 树形搜索法 (1, 3D)
+- 支持配置文件toml (WIP)
 - 测试
 - 具有材料强度的动力学
 - OpenMP 并行
 - 前后处理模块增强
 - 三维算例计算, 更好地支持 3D
 - 添加读取 BDF 能力 (https://gitee.com/zoziha/set-particles)
-- 支持配置文件toml

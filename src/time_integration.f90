@@ -7,8 +7,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
     use parameter
     use output_m, only: output_all
     use progress_bar_m, only: pbflush, pbout
-    use M_attr, only: fg_cyan, reset
-    use console_color_m, only: attr, is_intel_windows
+    use info_m, only: operator(.c.)
     implicit none
 
     !> 粒子的坐标
@@ -65,8 +64,8 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
         if (mod(itimestep, print_step) == 0) then
             call pbflush()      ! 进度条辅助程序
-            write (stdout, '(a,i0)') attr('<INFO>')//'Current number of time step = ', itimestep
-            write (stdout, "(a,g0.3,a)") attr('<INFO>')//'Current time = ', time, 's'
+            write (stdout, '(a,i0)') .c.'Current number of time step = ', itimestep
+            write (stdout, "(a,g0.3,a)") .c.'Current time = ', time, 's'
         end if
 
         ! 如果不是第一个时间步长，则更新热能、密度和速度半步长
@@ -160,10 +159,7 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
             write (*, 101) 'location', 'velocity', 'acc'
             write (*, 100) x(1, moni_particle), vx(1, moni_particle), dvx(1, moni_particle)
             !> 屏幕输出进度条
-            if (.not.is_intel_windows()) write (stdout, '(a)', advance='no') fg_cyan
             call pbout(itimestep, nstart + maxtimestep, .true.)
-            if (.not.is_intel_windows()) write (stdout, '(a)', advance='no') reset
-            
         end if
 
     end do

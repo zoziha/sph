@@ -1,43 +1,27 @@
-!> This is a three dimensional sph code. the followings are the
-!>  basic parameters needed in this code or calculated by this code.
-!>
-!>     mass-- mass of particles                                      [in]
-!>     ntotal-- total particle number ues                            [in]
-!>     dt--- time step used in the time integration                  [in]
-!>     itype-- types of particles                                    [in]
-!>     x-- coordinates of particles                              [in/out]
-!>     vx-- velocities of particles                              [in/out]
-!>     rho-- densities of particles                              [in/out]
-!>     p-- pressure  of particles                                [in/out]
-!>     u-- internal energy of particles                          [in/out]
-!>     hsml-- smoothing lengths of particles                     [in/out]
-!>     c-- sound velocity of particles                              [out]
-!>     s-- entropy of particles                                     [out]
-!>     e-- total energy of particles                                [out]
-
-program sph
+! 主程序，读入配置文件，初始化数据，启动计算服务。
+! -- 作者: 左志华
+! -- 日期: 2022年3月
+program main
 
     use config_m, only: rk, stdout, stdin, tinsert, tsearch, dt, nnps
     use parameter
     use master_time_m, only: tic, toc, time_print
     use output_m, only: set_parameter_log, set_folder
     use toml_info_m, only: parse_toml_info
+    use macro_m, only: x, vx, mass, rho, p, u, c, s, e, hsml, itype, alloc_macro_memory
+    use info_m, only: operator(.c.)
     implicit none
 
-    !> 在模拟中所使用的粒子总数
-    !> number of particles in simulation
     integer :: ntotal
-    !> 粒子的类型(1: ideal gas; 2: water)
-    !> types of particles
-    integer :: itype(maxn)
     integer :: maxtimestep
-    integer :: d, m, i, yesorno
-    real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), &
-                u(maxn), c(maxn), s(maxn), e(maxn), hsml(maxn)
+    integer :: yesorno
 
     call tic()
     call time_print()
+
+    ! 前处理
     call parse_toml_info()
+    call alloc_macro_memory(dim, maxn, x, vx, mass, rho, p, u, c, s, e, hsml, itype)
     call set_parameter_log()
     call set_folder()
 
@@ -46,24 +30,24 @@ program sph
 
     ! 主循环
     do
-        write (stdout, "(a)", advance="no") 'Please input the maximal time steps: '
+        write (stdout, "(a)", advance="no") .c.'<c>Please input the maximal time steps: '
         read (stdin, *) maxtimestep
 
         if (maxtimestep > 0) then
             call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
         end if
 
-        write (stdout, "(a)", advance="no") 'Are you going to run more time steps ? (0=no, 1=yes): '
+        write (stdout, "(a)", advance="no") .c.'<c>Are you going to run more time steps ? (0=no, 1=yes): '
         read (stdin, *) yesorno
         if (yesorno == 0) exit
 
     end do
 
-    if (nnps == 3) write (stdout, '(2(a,es10.3),a)') 'Particle insertion time: ', tinsert, &
+    if (nnps == 3) write (stdout, '(2(a,es10.3),a)') .c.'Particle insertion time: ', tinsert, &
         's, particle search time: ', tsearch, 's'
 
     call time_print()
     call toc()
     write (stdout, "(a)") 'All finish!'
 
-end program sph
+end program main
