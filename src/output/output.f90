@@ -22,31 +22,31 @@ contains
 
         !> 粒子的位置
         !> coordinates of particles
-        real(rk), intent(in) :: x(dim, maxn)
+        real(rk), intent(in) :: x(:, :)
         !> 粒子的速度
         !> velocities of particles
-        real(rk), intent(in) :: vx(dim, maxn)
+        real(rk), intent(in) :: vx(:, :)
         !> 粒子的质量
         !> mass of particles
-        real(rk), intent(in) :: mass(maxn)
+        real(rk), intent(in) :: mass(:)
         !> 粒子的密度
         !> dnesities of particles
-        real(rk), intent(in) :: rho(maxn)
+        real(rk), intent(in) :: rho(:)
         !> 粒子的压力
         !> pressure  of particles
-        real(rk), intent(in) :: p(maxn)
+        real(rk), intent(in) :: p(:)
         !> 粒子的内部能量
         !> internal energy of particles
-        real(rk), intent(in) :: u(maxn)
+        real(rk), intent(in) :: u(:)
         !> 粒子的声速
         !> sound velocity of particles
-        real(rk), intent(in) :: c(maxn)
+        real(rk), intent(in) :: c(:)
         !> 粒子的类型(1: ideal gas; 2: water; 3: TNT)
         !> types of particles
-        integer, intent(in) :: itype(maxn)
+        integer, intent(in) :: itype(:)
         !> 粒子的光滑长度
         !> smoothing lengths of particles
-        real(rk), intent(in) :: hsml(maxn)
+        real(rk), intent(in) :: hsml(:)
         !> 在模拟中所使用的粒子总数
         !> number of particles in simulation
         integer, intent(in) :: ntotal

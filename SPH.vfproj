@@ -49,47 +49,6 @@
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
 		<Filter Name="deps">
-		<Filter Name="tomlf">
-		<Filter Name="build">
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\build\array.f90">
-			<FileConfiguration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\build_array"/></FileConfiguration></File>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\build\keyval.f90">
-			<FileConfiguration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\build_keyval"/></FileConfiguration></File>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\build\merge.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\build\table.f90">
-			<FileConfiguration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\build_table"/></FileConfiguration></File></Filter>
-		<Filter Name="de">
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\de\character.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\de\tokenizer.f90"/></Filter>
-		<Filter Name="utils">
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\utils\convert.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\utils\sort.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\utils\verify.f90"/></Filter>
-		<Filter Name="structure">
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\structure\base.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\structure\vector.f90"/></Filter>
-		<Filter Name="type">
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\type\array.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\type\keyval.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\type\table.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\type\value.f90"/></Filter>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\all.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\build.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\constants.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\datetime.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\de.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\error.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\ser.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\structure.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\type.f90"/>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\utils.f90">
-			<FileConfiguration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\tomlf_utils"/></FileConfiguration></File>
-		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\version.f90"/></Filter>
 		<Filter Name="ntree">
 		<File RelativePath=".\build\dependencies\ntree\src\ntree.F90">
 			<FileConfiguration Name="Debug|Win32">
@@ -106,8 +65,50 @@
 		<File RelativePath=".\build\dependencies\queue\src\queue.f90">
 			<FileConfiguration Name="Debug|x64">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessNo"/></FileConfiguration></File></Filter>
+		<Filter Name="tomlf">
+		<Filter Name="build">
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\build\array.f90">
+			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\build_array"/></FileConfiguration></File>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\build\keyval.f90">
+			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\build_keyval"/></FileConfiguration></File>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\build\merge.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\build\table.f90">
+			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\build_table"/></FileConfiguration></File></Filter>
+		<Filter Name="de">
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\de\character.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\de\tokenizer.f90"/></Filter>
+		<Filter Name="structure">
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\structure\base.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\structure\vector.f90"/></Filter>
+		<Filter Name="type">
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\type\array.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\type\keyval.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\type\table.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\type\value.f90"/></Filter>
+		<Filter Name="utils">
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\utils\convert.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\utils\sort.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\utils\verify.f90"/></Filter>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\all.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\build.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\constants.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\datetime.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\de.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\error.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\ser.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\structure.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\type.f90"/>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\utils.f90">
+			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\tomlf_utils"/></FileConfiguration></File>
+		<File RelativePath=".\build\dependencies\toml-f\src\tomlf\version.f90"/></Filter>
 		<File RelativePath=".\build\dependencies\easy_string\src\easy_string.f90"/>
-		<File RelativePath=".\build\dependencies\M_attr\src\M_attr.f90"/>
+		<File RelativePath=".\build\dependencies\error_stop\src\error_stop.f90"/>
+		<File RelativePath=".\build\dependencies\info\src\info.f90"/>
 		<File RelativePath=".\build\dependencies\master_time\src\master_time.f90"/>
 		<File RelativePath=".\build\dependencies\progress_bar\src\progress_bar.f90"/>
 		<File RelativePath=".\build\dependencies\stdlib_logger\src\stdlib_logger.f90"/>
@@ -125,29 +126,23 @@
 		<File RelativePath=".\src\single_step\art_visc.f90"/>
 		<File RelativePath=".\src\single_step\av_vel.f90"/>
 		<File RelativePath=".\src\config.F90"/>
-		<File RelativePath=".\src\output\console_color.F90">
-			<FileConfiguration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File>
 		<File RelativePath=".\src\single_step\density.f90"/>
 		<File RelativePath=".\src\single_step\nnps_direct_find\direct_find.f90"/>
 		<File RelativePath=".\src\single_step\eos.f90"/>
 		<File RelativePath=".\src\single_step\external_force.f90"/>
-		<File RelativePath=".\src\single_step\nnps_link_list\grid_geom.f90"/>
 		<File RelativePath=".\src\single_step\hsml.f90"/>
-		<File RelativePath=".\src\single_step\nnps_link_list\init_grid.f90"/>
 		<File RelativePath=".\src\input\input.f90"/>
 		<File RelativePath=".\src\single_step\internal_force.f90"/>
 		<File RelativePath=".\src\kernel\kernel.f90"/>
 		<File RelativePath=".\src\single_step\nnps_link_list\link_list.f90"/>
-		<File RelativePath=".\src\output\output_m.f90"/>
+		<File RelativePath=".\src\macro.f90"/>
+		<File RelativePath=".\src\output\output.f90"/>
 		<File RelativePath=".\src\utils\parameter.f90"/>
 		<File RelativePath=".\src\output\post_processing\paraview_interface.f90"/>
-		<File RelativePath=".\src\single_step.f90"/>
 		<File RelativePath=".\app\sph.f90"/>
 		<File RelativePath=".\src\time_integration.f90"/>
 		<File RelativePath=".\src\input\toml_info.f90"/>
 		<File RelativePath=".\src\single_step\nnps_tree_search\tree_search.f90"/>
 		<File RelativePath=".\src\utils\utils.f90"/>
-		<File RelativePath=".\src\input\virt_part.f90"/>
 		<File RelativePath=".\src\single_step\viscosity.f90"/></Filter></Filter></Files>
 	<Globals/></VisualStudioProject>

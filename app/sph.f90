@@ -9,7 +9,9 @@ program main
     use output_m, only: set_parameter_log, set_folder
     use toml_info_m, only: parse_toml_info
     use macro_m, only: x, vx, mass, rho, p, u, c, s, e, hsml, itype, alloc_macro_memory
-    use info_m, only: operator(.c.)
+    use info_m, only: operator(.c.), info
+    use input_m, only: input
+    use time_integration_m, only: time_integration
     implicit none
 
     integer :: ntotal
@@ -43,7 +45,7 @@ program main
 
     end do
 
-    if (nnps == 3) write (stdout, '(2(a,es10.3),a)') .c.'Particle insertion time: ', tinsert, &
+    if (nnps == 3) write (stdout, '(2(a,es10.3),a)') info('Particle insertion time: '), tinsert, &
         's, particle search time: ', tsearch, 's'
 
     call time_print()

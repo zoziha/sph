@@ -1,5 +1,4 @@
 ! 读取toml配置文件
-
 module toml_info_m
 
     use tomlf, only: toml_table, get_value, toml_parse

@@ -14,7 +14,6 @@ contains
 
     !> 为流、固体宏观量分配内存
     subroutine alloc_macro_memory(dim, maxn, x, vx, mass, rho, p, u, c, s, e, hsml, itype)
-        implicit none
         integer, intent(in) :: dim, maxn
         real(rk), allocatable, intent(out) :: x(:, :), vx(:, :), mass(:), rho(:), p(:), &
                                              u(:), c(:), s(:), e(:), hsml(:)

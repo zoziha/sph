@@ -7,6 +7,7 @@ module tree_search_m
     use utils, only: get_distance
     use ntree_factory_m, only: ntree_t, shape_t, point_t, &
                                make_ntree, make_boundary, make_range
+    use kernel_m, only: kernel
     implicit none
     private
 
