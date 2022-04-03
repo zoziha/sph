@@ -1,5 +1,13 @@
-name = "一维激波管"
-src = "data"
+name = "1 dimensional shock tube"
+
+[parameter]
+
+dim = 1
+nnps = 3
+skf = 1
+print_step = 100
+save_step = 500
+dt = 5.0e-5
 
 [pre-process]
 

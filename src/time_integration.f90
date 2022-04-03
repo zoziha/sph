@@ -4,7 +4,7 @@ module time_integration_m
     use output_m, only: output_all
     use progress_bar_m, only: pbflush, pbout
     use info_m, only: operator(.c.)
-    use config_m, only: rk, stdout, nnps
+    use config_m, only: rk, stdout, nnps, print_step, save_step
     use tree_search_m, only: tree_search
     use input_m, only: virt_part
     use direct_find_m, only: direct_find

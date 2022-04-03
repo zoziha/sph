@@ -23,4 +23,7 @@ module config_m
     integer :: skf !! 光滑核函数的指示变量
     integer :: nnps !! 最近相邻粒子搜索算法指示变量
 
+    !> 输出到屏幕、磁盘的时间步间隔
+    integer :: print_step, save_step
+
 end module config_m

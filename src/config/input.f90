@@ -1,6 +1,6 @@
 module input_m
 
-    use config_m, only: rk, stdout, in_path
+    use config_m, only: rk, stdout, in_path, save_step, print_step
     use parameter
     use info_m, only: operator(.c.)
     implicit none
@@ -46,7 +46,7 @@ contains
         !> load initial particle information from external disk file
 
         if (config_input) then
-            
+
             !@todo: in_path
             open (1, file=in_path//'/f_xv.dat')
             open (2, file=in_path//'/f_state.dat')

@@ -94,13 +94,6 @@ module parameter
     !>                    including virtual particle information.
     logical, parameter :: int_stat = .true.
 
-    !> 控制在屏幕上显示的粒子信息是第几个时间步
-    !> print_step: print timestep (on screen)
-    integer, parameter :: print_step = 100
-    !> 控制保存到外部磁盘的粒子信息是第几个时间步
-    !> save_step : save timestep  (to disk file)
-    integer, parameter :: save_step = 500
-
     !> 所要监测的粒子的序号
     !> moni_particle: the particle number for information monitoring.
     integer, parameter :: moni_particle = 1600

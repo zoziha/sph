@@ -4,7 +4,7 @@ module output_m
     use easy_string_m, only: to_string
     use swift_file_m, only: mkdir, is_exist
     use, intrinsic :: iso_fortran_env, only: stdout => output_unit
-    use config_m, only: nick, out_path, skf, nnps
+    use config_m, only: nick, out_path, skf, nnps, print_step
     use info_m, only: operator(.c.)
     use error_stop_m, only: error_stop
     implicit none
@@ -140,7 +140,7 @@ contains
         !@tofix: mkdir 只能生成一级目录，不能生成多级目录
         if (.not. is_exist(out_path, .true.)) call mkdir(out_path, .true.)
         if (.not. is_exist(out_path, .true.)) call error_stop('cannot create folder: '//out_path, &
-            'output_m%set_folder')
+                                                              'output_m%set_folder')
         if (.not. is_exist(out_path//'/all', .true.)) call mkdir(out_path//'/all', .true.)
         if (.not. is_exist(out_path//'/paraview', .true.)) call mkdir(out_path//'/paraview', .true.)
         if (.not. is_exist(out_path//'/all', .true.)) call mkdir(out_path//'/all', .true.)
