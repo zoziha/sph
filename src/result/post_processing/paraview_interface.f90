@@ -54,7 +54,7 @@ contains
         character(:), allocatable :: time
 
         !> 查询文件是否存在
-        inquire (file="./data/all/f_"//to_string(i_steps)//"xv.dat", exist=is_exist_xv)
+        inquire (file="./data/output/all/f_"//to_string(i_steps)//"xv.dat", exist=is_exist_xv)
         if (.not. is_exist_xv) then
             write (*, "(a)") "数据文件不存在, 请检查输入的时间步数是否正确."
             write (*, "(a,i0)") "当前时间步数为: ", i_steps
@@ -62,9 +62,9 @@ contains
         end if
 
         !> 读入数据:xv, state, other
-        open (newunit=unit_xv, file="./data/all/f_"//to_string(i_steps)//"xv.dat", status="old")
-        open (newunit=unit_state, file="./data/all/f_"//to_string(i_steps)//"state.dat", status="old")
-        open (newunit=unit_other, file="./data/all/f_"//to_string(i_steps)//"other.dat", status="old")
+        open (newunit=unit_xv, file="./data/output/all/f_"//to_string(i_steps)//"xv.dat", status="old")
+        open (newunit=unit_state, file="./data/output/all/f_"//to_string(i_steps)//"state.dat", status="old")
+        open (newunit=unit_other, file="./data/output/all/f_"//to_string(i_steps)//"other.dat", status="old")
 
         read (unit_xv, *) ntotal
         allocate (x(dim, ntotal), vx(dim, ntotal), mass(ntotal), rho(ntotal), p(ntotal), u(ntotal), itype(ntotal), hsml(ntotal))
@@ -80,7 +80,7 @@ contains
         close (unit_other)
 
         !> 输出数据: vtk
-        open (newunit=unit_xv, file="./data/paraview/sph"//to_string(i_steps)//".vtk", access="stream", &
+        open (newunit=unit_xv, file="./data/output/paraview/sph"//to_string(i_steps)//".vtk", access="stream", &
               form="formatted")
 
         !> 输出头部和点坐标

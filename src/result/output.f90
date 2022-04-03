@@ -6,6 +6,7 @@ module output_m
     use, intrinsic :: iso_fortran_env, only: stdout => output_unit
     use config_m, only: nick, out_path, skf, nnps
     use info_m, only: operator(.c.)
+    use error_stop_m, only: error_stop
     implicit none
 
     public :: set_folder, set_parameter_log
@@ -58,13 +59,13 @@ contains
         integer :: xv_unit, state_unit, other_unit
 
         !> 输出粒子的位置、速度信息
-        open (newunit=xv_unit, file='./data/all/f_'//to_string(n)//'xv.dat')
+        open (newunit=xv_unit, file=out_path//'/all/f_'//to_string(n)//'xv.dat')
 
         !> 输出粒子的宏观信息：质量、密度、压强、内能
-        open (newunit=state_unit, file='./data/all/f_'//to_string(n)//'state.dat')
+        open (newunit=state_unit, file=out_path//'/all/f_'//to_string(n)//'state.dat')
 
         !> 输出粒子的其它信息：粒子类型、光滑长度
-        open (newunit=other_unit, file='./data/all/f_'//to_string(n)//'other.dat')
+        open (newunit=other_unit, file=out_path//'/all/f_'//to_string(n)//'other.dat')
 
         write (xv_unit, *) ntotal
         do i = 1, ntotal
@@ -136,9 +137,13 @@ contains
 
     !> 建立所需文件夹
     subroutine set_folder()
-        if (.not. is_exist('./data/all')) call mkdir('./data/all', .true.)
-        if (.not. is_exist('./data/paraview')) call mkdir('./data/paraview', .true.)
-        if (.not. is_exist(out_path//'/all')) call mkdir(out_path//'/all', .true.)
+        !@tofix: mkdir 只能生成一级目录，不能生成多级目录
+        if (.not. is_exist(out_path, .true.)) call mkdir(out_path, .true.)
+        if (.not. is_exist(out_path, .true.)) call error_stop('cannot create folder: '//out_path, &
+            'output_m%set_folder')
+        if (.not. is_exist(out_path//'/all', .true.)) call mkdir(out_path//'/all', .true.)
+        if (.not. is_exist(out_path//'/paraview', .true.)) call mkdir(out_path//'/paraview', .true.)
+        if (.not. is_exist(out_path//'/all', .true.)) call mkdir(out_path//'/all', .true.)
     end subroutine set_folder
 
 end module output_m

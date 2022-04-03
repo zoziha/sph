@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "SPH", "SPH.vfproj", "{82DCD477-4A83-4DA1-BC7E-5F83D0DBB24A}"
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "sph", "sph.vfproj", "{82DCD477-4A83-4DA1-BC7E-5F83D0DBB24A}"
+EndProject
+Project("{6989167D-11E4-40FE-8C1A-2192A86A7E90}") = "sph_test", "sph_test.vfproj", "{435E8FFC-C3BC-4392-B8AC-83FD5453DC08}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,14 @@ Global
 		{82DCD477-4A83-4DA1-BC7E-5F83D0DBB24A}.Release|Win32.Build.0 = Release|Win32
 		{82DCD477-4A83-4DA1-BC7E-5F83D0DBB24A}.Release|x64.ActiveCfg = Release|x64
 		{82DCD477-4A83-4DA1-BC7E-5F83D0DBB24A}.Release|x64.Build.0 = Release|x64
+		{435E8FFC-C3BC-4392-B8AC-83FD5453DC08}.Debug|Win32.ActiveCfg = Debug|Win32
+		{435E8FFC-C3BC-4392-B8AC-83FD5453DC08}.Debug|Win32.Build.0 = Debug|Win32
+		{435E8FFC-C3BC-4392-B8AC-83FD5453DC08}.Debug|x64.ActiveCfg = Debug|x64
+		{435E8FFC-C3BC-4392-B8AC-83FD5453DC08}.Debug|x64.Build.0 = Debug|x64
+		{435E8FFC-C3BC-4392-B8AC-83FD5453DC08}.Release|Win32.ActiveCfg = Release|Win32
+		{435E8FFC-C3BC-4392-B8AC-83FD5453DC08}.Release|Win32.Build.0 = Release|Win32
+		{435E8FFC-C3BC-4392-B8AC-83FD5453DC08}.Release|x64.ActiveCfg = Release|x64
+		{435E8FFC-C3BC-4392-B8AC-83FD5453DC08}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

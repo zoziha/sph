@@ -1,6 +1,6 @@
 module input_m
 
-    use config_m, only: rk, stdout
+    use config_m, only: rk, stdout, in_path
     use parameter
     use info_m, only: operator(.c.)
     implicit none
@@ -46,10 +46,11 @@ contains
         !> load initial particle information from external disk file
 
         if (config_input) then
-
-            open (1, file='./data/f_xv.dat')
-            open (2, file='./data/f_state.dat')
-            open (3, file='./data/f_other.dat')
+            
+            !@todo: in_path
+            open (1, file=in_path//'/f_xv.dat')
+            open (2, file=in_path//'/f_state.dat')
+            open (3, file=in_path//'/f_other.dat')
 
             write (*, *) '  **************************************************'
             write (*, *) '      loading initial particle configuration...   '
@@ -64,9 +65,9 @@ contains
 
         else
 
-            open (1, file='./data/ini_xv.dat')
-            open (2, file='./data/ini_state.dat')
-            open (3, file='./data/ini_other.dat')
+            open (1, file=in_path//'/ini_xv.dat')
+            open (2, file=in_path//'/ini_state.dat')
+            open (3, file=in_path//'/ini_other.dat')
 
             if (shocktube) call shock_tube(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
@@ -235,10 +236,10 @@ contains
     end subroutine shear_cavity
 
     !> 装载虚粒子或通过问题的几何形状产生虚粒子信息的子程序。
-!> @todo: 不重复输出虚粒子信息
-!>   subroutine to determine the information of virtual particles
-!>   here only the monaghan type virtual particles for the 2d shear
-!>   cavity driven problem are generated.
+    !> @todo: 不重复输出虚粒子信息
+    !>   subroutine to determine the information of virtual particles
+    !>   here only the monaghan type virtual particles for the 2d shear
+    !>   cavity driven problem are generated.
     subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, itype)
 
         use config_m, only: rk, stdout
@@ -285,9 +286,9 @@ contains
 
         if (vp_input) then
 
-            open (1, file='./data/xv_vp.dat')
-            open (2, file='./data/state_vp.dat')
-            open (3, file='./data/other_vp.dat')
+            open (1, file=in_path//'/xv_vp.dat')
+            open (2, file=in_path//'/state_vp.dat')
+            open (3, file=in_path//'/other_vp.dat')
             read (1, *) nvirt
             do j = 1, nvirt
                 i = ntotal + j
@@ -359,9 +360,9 @@ contains
         end if
 
         if (mod(itimestep, save_step) == 0) then
-            open (1, file='./data/xv_vp.dat')
-            open (2, file='./data/state_vp.dat')
-            open (3, file='./data/other_vp.dat')
+            open (1, file=in_path//'/xv_vp.dat')
+            open (2, file=in_path//'/state_vp.dat')
+            open (3, file=in_path//'/other_vp.dat')
             write (1, *) nvirt
             do i = ntotal + 1, ntotal + nvirt
                 write (1, 1001) i, (x(d, i), d=1, dim), (vx(d, i), d=1, dim)

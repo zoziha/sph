@@ -39,6 +39,7 @@ contains
         class(*), allocatable :: j
         real :: t1, t2
 
+        !@note: add explicit interface for `skf`
         select case (skf)
         case (1)
             scale_k = 2

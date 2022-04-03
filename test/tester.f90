@@ -1,10 +1,11 @@
 program tester
 
     use config_m, only: rk
-    use test_tree_search_m, only: collect_tree_search_tests
+    use testdrive, only: run_testsuite, new_testsuite, testsuite_type
     use parameter
     use, intrinsic :: iso_fortran_env, only: error_unit
-    use testdrive, only: run_testsuite, new_testsuite, testsuite_type
+    use test_tree_search_m, only: collect_tree_search_tests
+    use test_macro_m, only: collect_macro
     implicit none
 
     !> 在模拟中所使用的粒子总数
@@ -22,9 +23,10 @@ program tester
     character(*), parameter :: fmt = "('#', *(1x, a))"
     
     stat = 0
-    
+    !@todo: test macro
     test_suites = [ &
-        new_testsuite("test_tree_search_m", collect_tree_search_tests) &
+        new_testsuite("module: test_tree_search_m", collect_tree_search_tests), &
+        new_testsuite("module: test_macro_m", collect_macro) &
         ]
         
     do is = 1, size(test_suites)

@@ -5,6 +5,7 @@ module parameter
 
     use config_m, only: rk
 
+    !@todo#2022-4: move dim/maxn/max_interaction to toml! 
     !> 求解问题的维度
     !> dim : dimension of the problem (1, 2 or 3)
     integer, parameter :: dim = 2

@@ -31,8 +31,8 @@ contains
         close (access_toml_unit)
         
         call get_value(access_table, 'access', subtable)
-        call get_value(subtable, 'in', in_path, 'data/input')  !! 默认输入路径
-        call get_value(subtable, 'out', out_path, 'data/output')  !! 默认输出路径
+        call get_value(subtable, 'in', in_path, './data/input')  !! 默认输入路径
+        call get_value(subtable, 'out', out_path, './data/output')  !! 默认输出路径
         
     end subroutine parse_access_toml
     

@@ -293,8 +293,7 @@ contains
         elseif (nnps == 2) then
             call link_list(itimestep, ntotal + nvirt, hsml(1), x, niac, pair_i, pair_j, w, dwdx, ns)
         elseif (nnps == 3) then
-            ! @todo: 树型搜索算法（zoziha/quad-tree: https://github.com/zoziha/quad-tree）
-            ! @tocheck
+            ! @todo: 测试1、3维算法
             call tree_search(itimestep, ntotal + nvirt, hsml, x, niac, pair_i, &
                              pair_j, w, dwdx, ns)
         end if

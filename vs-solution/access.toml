@@ -2,7 +2,7 @@
 [access]
 
 # 输入路径
-in = './data/demo/shearcavity'
+in = '../data/demo/shearcavity'
 
 # 输出路径
-out = './data/output'
+out = '../data/output'

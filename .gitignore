@@ -9,8 +9,8 @@ Debug/*
 Release/*
 *.pdb
 .vscode
-.vs/*
-x64/*
+.vs**
+vs-**
 
 # data
 data/all/*

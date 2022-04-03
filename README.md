@@ -22,6 +22,7 @@ fpm build
 fpm run sph --profile release
 # 运行后处理程序，生成vtk给ParaView使用
 fpm run vtk
+fpm test
 ```
 
 ### 其它构建系统
@@ -30,6 +31,7 @@ fpm run vtk
 
 ```sh
 fpm update # 仍然需要使用fpm拉取上游依赖库!
+F5 / CTRL + F5 # 运行与调试
 ```
 
 然后，在visual studio中检查和选中`src`和`build/dependencies/*`中的源码文件，并构建和运行。
