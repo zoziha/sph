@@ -8,14 +8,14 @@ name = "2 dimensional shear cavity flow"
 dim = 2
 # 粒子最大数目
 maxn = 3000
-# 平均粒子相互作用对的数目比例
+# 平均粒子相互作用对的数目比例: kpair*maxn
 kpair = 20
 # 粒子近似算法指示变量
 pa_sph = 2
 # 最近相邻粒子搜索(NNPS)算法指示变量: 1, 直接搜索法
 #                                 2, 背景网格-链表搜索法
 #                                 3, 树型搜索法
-nnps = 3
+nnps = 2
 # 光滑长度估算方法指示变量
 sle = 0
 # 光滑核函数指示变量: 1, cubic spline kernel by w4 - spline (monaghan 1985)

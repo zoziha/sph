@@ -53,17 +53,29 @@
 		<File RelativePath="..\build\dependencies\ntree\src\ntree.F90">
 			<FileConfiguration Name="Debug|Win32">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
 			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File>
 		<File RelativePath="..\build\dependencies\ntree\src\ntree_factory.F90">
 			<FileConfiguration Name="Debug|Win32">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
 			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File>
 		<File RelativePath="..\build\dependencies\ntree\src\shape.F90">
 			<FileConfiguration Name="Debug|Win32">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
 			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File></Filter>
 		<Filter Name="queue">
 		<File RelativePath="..\build\dependencies\queue\src\queue.f90">
@@ -72,15 +84,33 @@
 		<Filter Name="tomlf">
 		<Filter Name="build">
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\build\array.f90">
+			<FileConfiguration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\array1"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\array1"/></FileConfiguration>
 			<FileConfiguration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\build_array"/></FileConfiguration></File>
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\array1"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\array1"/></FileConfiguration></File>
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\build\keyval.f90">
+			<FileConfiguration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\keyval1"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\keyval1"/></FileConfiguration>
 			<FileConfiguration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\build_keyval"/></FileConfiguration></File>
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\keyval1"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\keyval1"/></FileConfiguration></File>
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\build\merge.f90"/>
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\build\table.f90">
+			<FileConfiguration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\table1"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\table1"/></FileConfiguration>
 			<FileConfiguration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\build_table"/></FileConfiguration></File></Filter>
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\table1"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\table1"/></FileConfiguration></File></Filter>
 		<Filter Name="de">
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\de\character.f90"/>
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\de\tokenizer.f90"/></Filter>
@@ -107,9 +137,16 @@
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf.f90"/>
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\type.f90"/>
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\utils.f90">
+			<FileConfiguration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\utils1"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\utils1"/></FileConfiguration>
 			<FileConfiguration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\tomlf_utils"/></FileConfiguration></File>
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\utils1"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\utils1"/></FileConfiguration></File>
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\version.f90"/></Filter>
+		<File RelativePath="..\build\dependencies\easy_math\src\easy_math.f90"/>
 		<File RelativePath="..\build\dependencies\easy_string\src\easy_string.f90"/>
 		<File RelativePath="..\build\dependencies\error_stop\src\error_stop.f90"/>
 		<File RelativePath="..\build\dependencies\info\src\info.f90"/>
@@ -128,7 +165,11 @@
 		<File RelativePath="..\build\dependencies\test-drive\src\testdrive.F90">
 			<FileConfiguration Name="Debug|Win32">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
 			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File>
 		<File RelativePath="..\build\dependencies\test-drive\src\testdrive_version.f90"/></Filter>
 		<Filter Name="src">
@@ -154,7 +195,9 @@
 		<File RelativePath="..\src\single_step\nnps_tree_search\tree_search.f90"/>
 		<File RelativePath="..\src\utils\utils.f90"/>
 		<File RelativePath="..\src\single_step\viscosity.f90"/></Filter>
+		<File RelativePath="..\test\test_kernel.f90"/>
 		<File RelativePath="..\test\test_macro.f90"/>
+		<File RelativePath="..\test\test_ouput.f90"/>
 		<File RelativePath="..\test\test_tree_search.f90"/>
 		<File RelativePath="..\test\tester.f90"/></Filter></Files>
 	<Globals/></VisualStudioProject>

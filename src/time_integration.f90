@@ -254,7 +254,7 @@ contains
         integer :: i, d, nvirt
         !> 相互作用对的数目
         integer :: niac
-        integer :: pair_i(max_interaction), pair_j(max_interaction), ns(2*ntotal) !@tofix: ntotal + nvirt
+        integer :: pair_i(max_interaction), pair_j(max_interaction), ns(2*ntotal) !@tofix: ntotal + nvirt, ifort, heap-array!
         real(rk) :: w(max_interaction), dwdx(dim, max_interaction), indvxdt(dim, 2*ntotal), &
                     exdvxdt(dim, 2*ntotal), ardvxdt(dim, 2*ntotal), avdudt(2*ntotal), ahdudt(2*ntotal), c(2*ntotal), eta(2*ntotal)
 
