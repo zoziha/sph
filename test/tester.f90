@@ -8,19 +8,21 @@ program tester
     use test_macro_m, only: collect_macro
     use test_kernel_m, only: collect_kernel
     use test_output_m, only: collect_output
+    use test_toml_info_m, only: collect_toml_info
     implicit none
     integer stat, is
     type(testsuite_type), allocatable :: test_suites(:)
     character(*), parameter :: fmt = "('#', *(1x, a))"
-    
+
     stat = 0
     !@todo: test art_heat/art_visc
     test_suites = [ &
-        new_testsuite("module: test_tree_search_m", collect_tree_search_tests), &
-        new_testsuite("module: test_macro_m", collect_macro), &
-        new_testsuite("module: test_kernel_m", collect_kernel) &
-        ]
-        
+                  new_testsuite("module: test_toml_info_m", collect_toml_info), &
+                  new_testsuite("module: test_macro_m", collect_macro), &
+                  new_testsuite("module: test_kernel_m", collect_kernel), &
+                  new_testsuite("module: test_tree_search_m", collect_tree_search_tests) &
+                  ]
+
     do is = 1, size(test_suites)
         write (error_unit, fmt) "Testing:", test_suites(is)%name
         call run_testsuite(test_suites(is)%collect, error_unit, stat)

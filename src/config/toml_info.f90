@@ -7,6 +7,7 @@ module toml_info_m
     use config_m
     use error_stop_m, only: error_stop
     implicit none
+    private
 
     public :: parse_toml_info
 

@@ -53,6 +53,15 @@
 		<File RelativePath="..\test\test_kernel.f90"/>
 		<File RelativePath="..\test\test_macro.f90"/>
 		<File RelativePath="..\test\test_ouput.f90"/>
+		<File RelativePath="..\test\test_toml_info.F90">
+			<FileConfiguration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File>
 		<File RelativePath="..\test\test_tree_search.f90"/>
 		<File RelativePath="..\test\tester.f90"/></Filter></Files>
 	<Globals/></VisualStudioProject>

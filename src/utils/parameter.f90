@@ -10,13 +10,6 @@ module parameter
     !> dim : dimension of the problem (1, 2 or 3)
     integer, parameter :: dim = 2
 
-    !> 粒子的最大数目
-    !> maxn    : maximum number of particles (gfortran: *<WARNING>* `-fmax-stack-var-size=`, r change the code to use an ALLOCATABLE array)
-    integer, parameter :: maxn = 3000
-    !> 粒子相互作用对的最大数目
-    !> max_interation : maximum number of interaction pairs
-    integer, parameter :: max_interaction = 20*maxn
-
     !     parameters for the computational geometry,
     !     x_maxgeom : upper limit of allowed x-regime
     !     x_mingeom : lower limit of allowed x-regime
