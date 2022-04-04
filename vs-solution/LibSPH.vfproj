@@ -1,49 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<VisualStudioProject ProjectCreator="Intel Fortran" Keyword="Console Application" Version="11.0" ProjectIdGuid="{82DCD477-4A83-4DA1-BC7E-5F83D0DBB24A}">
+<VisualStudioProject ProjectType="typeStaticLibrary" ProjectCreator="Intel Fortran" Keyword="Static Library" Version="11.0" ProjectIdGuid="{5ACAC13E-EB12-4B3F-B530-C88384F003BF}">
 	<Platforms>
 		<Platform Name="Win32"/>
 		<Platform Name="x64"/></Platforms>
 	<Configurations>
-		<Configuration Name="Debug|Win32">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" WarnInterfaces="true" Traceback="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
-				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemConsole"/>
+		<Configuration Name="Debug|Win32" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" WarnInterfaces="true" Traceback="true" BoundsCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLibrarianTool"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
 				<Tool Name="VFCustomBuildTool"/>
 				<Tool Name="VFPreLinkEventTool"/>
 				<Tool Name="VFPreBuildEventTool"/>
-				<Tool Name="VFPostBuildEventTool"/>
-				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
-		<Configuration Name="Release|Win32">
+				<Tool Name="VFPostBuildEventTool"/></Configuration>
+		<Configuration Name="Debug|x64" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" WarnInterfaces="true" Traceback="true" BoundsCheck="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
+				<Tool Name="VFLibrarianTool"/>
+				<Tool Name="VFResourceCompilerTool"/>
+				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
+				<Tool Name="VFCustomBuildTool"/>
+				<Tool Name="VFPreLinkEventTool"/>
+				<Tool Name="VFPreBuildEventTool"/>
+				<Tool Name="VFPostBuildEventTool"/></Configuration>
+		<Configuration Name="Release|Win32" ConfigurationType="typeStaticLibrary">
 				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" RuntimeLibrary="rtMultiThreadedDLL"/>
-				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" SubSystem="subSystemConsole"/>
+				<Tool Name="VFLibrarianTool"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true"/>
 				<Tool Name="VFCustomBuildTool"/>
 				<Tool Name="VFPreLinkEventTool"/>
 				<Tool Name="VFPreBuildEventTool"/>
-				<Tool Name="VFPostBuildEventTool"/>
-				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
-		<Configuration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" DebugInformationFormat="debugEnabled" Optimization="optimizeDisabled" WarnInterfaces="true" Traceback="true" StackFrameCheck="true" RuntimeLibrary="rtMultiThreadedDebugDLL"/>
-				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" GenerateDebugInformation="true" SubSystem="subSystemConsole"/>
+				<Tool Name="VFPostBuildEventTool"/></Configuration>
+		<Configuration Name="Release|x64" ConfigurationType="typeStaticLibrary">
+				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" RuntimeLibrary="rtMultiThreadedDLL"/>
+				<Tool Name="VFLibrarianTool"/>
 				<Tool Name="VFResourceCompilerTool"/>
 				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
 				<Tool Name="VFCustomBuildTool"/>
 				<Tool Name="VFPreLinkEventTool"/>
 				<Tool Name="VFPreBuildEventTool"/>
-				<Tool Name="VFPostBuildEventTool"/>
-				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration>
-		<Configuration Name="Release|x64">
-				<Tool Name="VFFortranCompilerTool" SuppressStartupBanner="true" LocalSavedScalarsZero="true" RuntimeLibrary="rtMultiThreadedDLL"/>
-				<Tool Name="VFLinkerTool" LinkIncremental="linkIncrementalNo" SuppressStartupBanner="true" SubSystem="subSystemConsole"/>
-				<Tool Name="VFResourceCompilerTool"/>
-				<Tool Name="VFMidlTool" SuppressStartupBanner="true" TargetEnvironment="midlTargetAMD64"/>
-				<Tool Name="VFCustomBuildTool"/>
-				<Tool Name="VFPreLinkEventTool"/>
-				<Tool Name="VFPreBuildEventTool"/>
-				<Tool Name="VFPostBuildEventTool"/>
-				<Tool Name="VFManifestTool" SuppressStartupBanner="true"/></Configuration></Configurations>
+				<Tool Name="VFPostBuildEventTool"/></Configuration></Configurations>
 	<Files>
 		<Filter Name="Header Files" Filter="fi;fd"/>
 		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
@@ -78,9 +74,7 @@
 			<FileConfiguration Name="Release|Win32">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File></Filter>
 		<Filter Name="queue">
-		<File RelativePath="..\build\dependencies\queue\src\queue.f90">
-			<FileConfiguration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessNo"/></FileConfiguration></File></Filter>
+		<File RelativePath="..\build\dependencies\queue\src\queue.f90"/></Filter>
 		<Filter Name="tomlf">
 		<Filter Name="build">
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\build\array.f90">
@@ -146,7 +140,6 @@
 			<FileConfiguration Name="Release|Win32">
 				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\utils1"/></FileConfiguration></File>
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\version.f90"/></Filter>
-		<File RelativePath="..\build\dependencies\easy_math\src\easy_math.f90"/>
 		<File RelativePath="..\build\dependencies\easy_string\src\easy_string.f90"/>
 		<File RelativePath="..\build\dependencies\error_stop\src\error_stop.f90"/>
 		<File RelativePath="..\build\dependencies\info\src\info.f90"/>
@@ -161,17 +154,7 @@
 			<FileConfiguration Name="Debug|x64">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
 			<FileConfiguration Name="Release|Win32">
-				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File>
-		<File RelativePath="..\build\dependencies\test-drive\src\testdrive.F90">
-			<FileConfiguration Name="Debug|Win32">
-				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
-			<FileConfiguration Name="Release|x64">
-				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
-			<FileConfiguration Name="Debug|x64">
-				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration>
-			<FileConfiguration Name="Release|Win32">
-				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File>
-		<File RelativePath="..\build\dependencies\test-drive\src\testdrive_version.f90"/></Filter>
+				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File></Filter>
 		<Filter Name="src">
 		<File RelativePath="..\src\single_step\art_heat.f90"/>
 		<File RelativePath="..\src\single_step\art_visc.f90"/>
@@ -183,21 +166,40 @@
 		<File RelativePath="..\src\single_step\external_force.f90"/>
 		<File RelativePath="..\src\single_step\hsml.f90"/>
 		<File RelativePath="..\src\config\input.f90"/>
-		<File RelativePath="..\src\single_step\internal_force.f90"/>
+		<File RelativePath="..\src\single_step\internal_force.f90">
+			<FileConfiguration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" BoundsCheck="false"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" BoundsCheck="false"/></FileConfiguration>
+			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" BoundsCheck="false"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" BoundsCheck="false"/></FileConfiguration></File>
 		<File RelativePath="..\src\kernel\kernel.f90"/>
-		<File RelativePath="..\src\single_step\nnps_link_list\link_list.f90"/>
+		<File RelativePath="..\src\single_step\nnps_link_list\link_list.f90">
+			<FileConfiguration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" BoundsCheck="false"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" BoundsCheck="false"/></FileConfiguration>
+			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" BoundsCheck="false"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" BoundsCheck="false"/></FileConfiguration></File>
 		<File RelativePath="..\src\macro.f90"/>
 		<File RelativePath="..\src\result\output.f90"/>
 		<File RelativePath="..\src\utils\parameter.f90"/>
 		<File RelativePath="..\src\result\post_processing\paraview_interface.f90"/>
-		<File RelativePath="..\src\time_integration.f90"/>
+		<File RelativePath="..\src\time_integration.f90">
+			<FileConfiguration Name="Debug|Win32">
+				<Tool Name="VFFortranCompilerTool" HeapArrays="0"/></FileConfiguration>
+			<FileConfiguration Name="Release|x64">
+				<Tool Name="VFFortranCompilerTool" HeapArrays="0"/></FileConfiguration>
+			<FileConfiguration Name="Debug|x64">
+				<Tool Name="VFFortranCompilerTool" HeapArrays="0"/></FileConfiguration>
+			<FileConfiguration Name="Release|Win32">
+				<Tool Name="VFFortranCompilerTool" HeapArrays="0"/></FileConfiguration></File>
 		<File RelativePath="..\src\config\toml_info.f90"/>
 		<File RelativePath="..\src\single_step\nnps_tree_search\tree_search.f90"/>
 		<File RelativePath="..\src\utils\utils.f90"/>
-		<File RelativePath="..\src\single_step\viscosity.f90"/></Filter>
-		<File RelativePath="..\test\test_kernel.f90"/>
-		<File RelativePath="..\test\test_macro.f90"/>
-		<File RelativePath="..\test\test_ouput.f90"/>
-		<File RelativePath="..\test\test_tree_search.f90"/>
-		<File RelativePath="..\test\tester.f90"/></Filter></Files>
+		<File RelativePath="..\src\single_step\viscosity.f90"/></Filter></Filter></Files>
 	<Globals/></VisualStudioProject>
