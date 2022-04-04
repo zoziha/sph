@@ -168,33 +168,30 @@ contains
     !> this subroutine is used to generate initial data for the
     !> 2 d shear driven cavity probem with re = 1
     subroutine shear_cavity(x, vx, mass, rho, p, u, itype, hsml, ntotal)
-
-        implicit none
-
         !> 粒子的位置
         !> coordinates of particles
-        real(rk), intent(out) :: x(dim, maxn)
+        real(rk), intent(out) :: x(:, :)
         !> 粒子的速度
         !> velocities of particles
-        real(rk), intent(out) :: vx(dim, maxn)
+        real(rk), intent(out) :: vx(:, :)
         !> 粒子的质量
         !> mass of particles
-        real(rk), intent(out) :: mass(maxn)
+        real(rk), intent(out) :: mass(:)
         !> 粒子的密度
         !> dnesities of particles
-        real(rk), intent(out) :: rho(maxn)
+        real(rk), intent(out) :: rho(:)
         !> 粒子的压力
         !> pressure  of particles
-        real(rk), intent(out) :: p(maxn)
+        real(rk), intent(out) :: p(:)
         !> 粒子的内部能量
         !> internal energy of particles
-        real(rk), intent(out) :: u(maxn)
+        real(rk), intent(out) :: u(:)
         !> 粒子的类型(1: ideal gas; 2: water)
         !> types of particles
-        integer, intent(out) :: itype(maxn)
+        integer, intent(out) :: itype(:)
         !> 粒子的光滑长度
         !> smoothing lengths of particles
-        real(rk), intent(out) :: hsml(maxn)
+        real(rk), intent(out) :: hsml(:)
         !> 在模拟中所使用的粒子总数
         !> number of particles in simulation
         integer, intent(out) :: ntotal

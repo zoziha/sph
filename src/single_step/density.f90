@@ -30,7 +30,7 @@ contains
         integer :: pair_i(:), pair_j(:), itype(:)
         real(rk) :: hsml(:), mass(:), w(:), rho(:)
         integer :: i, j, k
-        real(rk) :: selfdens, hv(dim), wi(maxn)
+        real(rk) :: selfdens, hv(dim), wi(ntotal)
 
         !     wi(maxn)---integration of the kernel itself
 
@@ -108,8 +108,8 @@ contains
         integer, intent(in) :: ntotal
         !> 相互作用对的数目
         integer, intent(in) :: niac
-        integer :: pair_i(max_interaction), pair_j(max_interaction), itype(maxn)
-        real(rk) :: mass(maxn), dwdx(dim, max_interaction), vx(dim, maxn), x(dim, maxn), rho(maxn), drhodt(maxn)
+        integer :: pair_i(:), pair_j(:), itype(:)
+        real(rk) :: mass(:), dwdx(:, :), vx(:, :), x(:, :), rho(:), drhodt(:)
         integer :: i, j, k, d
         real(rk) :: vcc, dvx(dim)
 

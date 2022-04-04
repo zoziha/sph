@@ -25,5 +25,8 @@ module config_m
 
     !> 输出到屏幕、磁盘的时间步间隔
     integer :: print_step, save_step
+    
+    !> 粒子数目
+    integer :: maxn, max_interaction
 
 end module config_m

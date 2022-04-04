@@ -27,7 +27,6 @@ program main
     call set_parameter_log()
     call set_folder()
 
-    if (shocktube) dt = 0.005_rk
     call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
 
     ! 主循环
@@ -35,9 +34,8 @@ program main
         write (stdout, "(a)", advance="no") .c.'<c>Please input the maximal time steps: '
         read (stdin, *) maxtimestep
 
-        if (maxtimestep > 0) then
+        if (maxtimestep > 0) &
             call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
-        end if
 
         write (stdout, "(a)", advance="no") .c.'<c>Are you going to run more time steps ? (0=no, 1=yes): '
         read (stdin, *) yesorno

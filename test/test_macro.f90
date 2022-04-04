@@ -1,4 +1,3 @@
-!@todo: 添加测试
 module test_macro_m
 
     use testdrive, only: new_unittest, unittest_type, error_type, check

@@ -16,7 +16,7 @@ contains
         integer, intent(in) :: ntotal
         !> 粒子的质量
         !> particle masses
-        real(rk) :: mass(maxn)
+        real(rk), intent(in) :: mass(:)
         !> 相互作用对的数目
         !> number of interaction pairs
         integer, intent(in) :: niac

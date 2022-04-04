@@ -41,6 +41,7 @@ contains
     subroutine parse_info_sph()
         type(toml_table), allocatable :: sph_table
         type(toml_table), pointer :: subtable
+        integer :: kpair
         integer sph_toml_unit
         if (.not. is_exist(in_path//"/sph.toml")) &
             call error_stop('sph.toml文件不存在, 请检查!', &
@@ -56,6 +57,9 @@ contains
         call get_value(subtable, 'nnps', nnps, 1) ! 默认直接搜索
         call get_value(subtable, 'print_step', print_step, 100)
         call get_value(subtable, 'save_step', save_step, 500)
+        call get_value(subtable, 'maxn', maxn, 5000)
+        call get_value(subtable, 'kpair', kpair, 20)
+        max_interaction = kpair*maxn
 
         nullify (subtable)
     end subroutine parse_info_sph

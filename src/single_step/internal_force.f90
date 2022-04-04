@@ -88,8 +88,8 @@ contains
         real(rk), intent(out) :: dedt(:)
 
         integer :: i, j, k, d
-        real(rk) :: dvx(dim), txx(maxn), tyy(maxn), tzz(maxn), txy(maxn), txz(maxn), tyz(maxn), &
-                    vcc(maxn), hxx, hyy, hzz, hxy, hxz, hyz, h, hvcc, he, rhoij
+        real(rk) :: dvx(dim), txx(ntotal), tyy(ntotal), tzz(ntotal), txy(ntotal), txz(ntotal), tyz(ntotal), &
+                    vcc(ntotal), hxx, hyy, hzz, hxy, hxz, hyz, h, hvcc, he, rhoij
 
         !     initialization of shear tensor, velocity divergence,
         !     viscous energy, internal energy, acceleration

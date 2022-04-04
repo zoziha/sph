@@ -42,7 +42,7 @@ contains
         real(rk), intent(inout) :: hsml(:)
 
         integer :: i, j, k, d
-        real(rk) :: fac, dvx(dim), hvcc, vcc(maxn), dhsml(maxn)
+        real(rk) :: fac, dvx(dim), hvcc, vcc(ntotal), dhsml(ntotal)
 
         if (sle == 0) then
 

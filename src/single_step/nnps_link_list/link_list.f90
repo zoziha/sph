@@ -46,7 +46,7 @@ contains
         integer :: pair_i(:), pair_j(:), countiac(:)
         real(rk) :: hsml, x(:, :), w(:), dwdx(:, :)
         integer :: i, j, d, scale_k
-        integer :: grid(maxngx, maxngy, maxngz), xgcell(3, maxn), gcell(3), xcell, ycell, zcell, celldata(maxn), minxcell(3), &
+        integer :: grid(maxngx, maxngy, maxngz), xgcell(3, ntotal), gcell(3), xcell, ycell, zcell, celldata(ntotal), minxcell(3), &
                    maxxcell(3), dnxgcell(dim), dpxgcell(dim), ngridx(dim), ghsmlx(dim)
         real(rk) :: dr, r, dx(dim), mingridx(dim), maxgridx(dim), tdwdx(dim), dgeomx(dim)
 

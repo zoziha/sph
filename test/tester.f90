@@ -6,27 +6,19 @@ program tester
     use, intrinsic :: iso_fortran_env, only: error_unit
     use test_tree_search_m, only: collect_tree_search_tests
     use test_macro_m, only: collect_macro
+    use test_kernel_m, only: collect_kernel
+    use test_output_m, only: collect_output
     implicit none
-
-    !> 在模拟中所使用的粒子总数
-    !> number of particles in simulation
-    integer :: ntotal
-    !> 粒子的类型(1: ideal gas; 2: water)
-    !> types of particles
-    integer :: itype(maxn)
-    integer :: maxtimestep
-    integer :: d, m, i, yesorno
-    real(rk) :: x(dim, maxn), vx(dim, maxn), mass(maxn), rho(maxn), p(maxn), &
-                u(maxn), c(maxn), s(maxn), e(maxn), hsml(maxn), dt
     integer stat, is
     type(testsuite_type), allocatable :: test_suites(:)
     character(*), parameter :: fmt = "('#', *(1x, a))"
     
     stat = 0
-    !@todo: test macro
+    !@todo: test art_heat/art_visc
     test_suites = [ &
         new_testsuite("module: test_tree_search_m", collect_tree_search_tests), &
-        new_testsuite("module: test_macro_m", collect_macro) &
+        new_testsuite("module: test_macro_m", collect_macro), &
+        new_testsuite("module: test_kernel_m", collect_kernel) &
         ]
         
     do is = 1, size(test_suites)

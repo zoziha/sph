@@ -73,9 +73,10 @@ contains
         real(rk), intent(in) :: dt
 
         integer :: i, itimestep, d, nstart = 0  !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
-        real(rk) :: x_min(dim, maxn), v_min(dim, maxn), u_min(maxn), rho_min(maxn), dx(dim, maxn), dvx(dim, maxn), &
-                    du(maxn), drho(maxn), ds(maxn), t(maxn), tdsdt(maxn)
-        real(rk) :: av(dim, maxn)   !! 平均速度, average velocity
+        real(rk) :: x_min(dim, ntotal), v_min(dim, ntotal), u_min(ntotal), rho_min(ntotal), &
+                    dx(dim, 2*ntotal), dvx(dim, 2*ntotal), &
+                    du(2*ntotal), drho(2*ntotal), ds(2*ntotal), t(2*ntotal), tdsdt(2*ntotal)
+        real(rk) :: av(dim, 2*ntotal)   !! 平均速度, average velocity
         real(rk) :: temp_rho, temp_u, &
                     time = 0.0_rk   !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
 
@@ -197,15 +198,8 @@ contains
     !> In this routine and its subroutines the sph algorithms are performed.
     subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
                            tdsdt, dx, dvx, du, ds, drho, itype, av)
-
-        !> 当前时间步
-        !> Current timestep
         integer, intent(in) :: itimestep
-        !> 时间步长
-        !> Time step
         real(rk), intent(in) :: dt
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
         integer, intent(in) :: ntotal
         !> 粒子的平滑长度
         !> smoothing length
@@ -255,20 +249,17 @@ contains
         !> 粒子的类型 (1: ideal gas; 2: water)
         !> particle type
         integer, intent(inout) :: itype(:)
-        !> 平均速度
-        !> monaghan average velocity
         real(rk), intent(out) :: av(:, :)
 
         integer :: i, d, nvirt
         !> 相互作用对的数目
         integer :: niac
-        integer :: pair_i(max_interaction), pair_j(max_interaction), ns(maxn)
-        real(rk) :: w(max_interaction), dwdx(dim, max_interaction), indvxdt(dim, maxn), &
-                    exdvxdt(dim, maxn), ardvxdt(dim, maxn), avdudt(maxn), ahdudt(maxn), c(maxn), eta(maxn)
+        integer :: pair_i(max_interaction), pair_j(max_interaction), ns(2*ntotal) !@tofix: ntotal + nvirt
+        real(rk) :: w(max_interaction), dwdx(dim, max_interaction), indvxdt(dim, 2*ntotal), &
+                    exdvxdt(dim, 2*ntotal), ardvxdt(dim, 2*ntotal), avdudt(2*ntotal), ahdudt(2*ntotal), c(2*ntotal), eta(2*ntotal)
 
         do i = 1, ntotal
             avdudt(i) = 0.0_rk
-            ahdudt(i) = 0.0_rk
             do d = 1, dim
                 indvxdt(d, i) = 0.0_rk
                 ardvxdt(d, i) = 0.0_rk

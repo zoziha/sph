@@ -7,6 +7,7 @@ module output_m
     use config_m, only: nick, out_path, skf, nnps, print_step
     use info_m, only: operator(.c.)
     use error_stop_m, only: error_stop
+    use parameter
     implicit none
 
     public :: set_folder, set_parameter_log
@@ -86,15 +87,8 @@ contains
 
     !> 输出粒子作用对的统计信息
     subroutine set_statistics_print(itimestep, ntotal, niac, countiac)
-        use parameter
         integer, intent(in) :: itimestep, ntotal, niac, countiac(:)
-        integer sumiac, & !
-            maxiac, &
-            miniac, &
-            noiac, &
-            maxp, &
-            minp, &
-            i
+        integer sumiac, maxiac, miniac, noiac, maxp, minp, i
 
         sumiac = 0
         maxiac = 0

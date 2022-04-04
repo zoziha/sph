@@ -6,6 +6,10 @@ name = "2 dimensional shear cavity flow"
 
 # 维度
 dim = 2
+# 粒子最大数目
+maxn = 3000
+# 平均粒子相互作用对的数目比例
+kpair = 20
 # 粒子近似算法指示变量
 pa_sph = 2
 # 最近相邻粒子搜索(NNPS)算法指示变量: 1, 直接搜索法

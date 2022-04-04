@@ -4,7 +4,7 @@ module test_tree_search_m
     use tree_search_m, only: tree_search
     use shape_m, only: point_t, rectangle_t, circle_t
     use ntree_m, only: ntree_t
-    use config_m, only: rk, skf
+    use config_m, only: rk, skf, print_step
     use parameter
     implicit none
     private
@@ -40,6 +40,7 @@ contains
         hsml = 0.25000000E-04_rk
         ns_ = [2, 3, 4, 4, 4, 4, 4, 4, 3, 2] ! 第四个
         skf = 1 !! skf被tree_search使用了
+        print_step = 100
         call tree_search(1, 10, hsml, x, niac, pair_i, pair_j, w, dwdx, ns)
         call check(error, niac, 17, "tree_search: niac")
         if (allocated(error)) return
