@@ -1,7 +1,7 @@
 module link_list_m
 
-    use config_m, only: rk, skf
-    use parameter
+    use config_m, only: rk, skf, max_interaction
+    use parameter, only: dim
     use output_m, only: set_statistics_print
     use kernel_m, only: kernel
     implicit none

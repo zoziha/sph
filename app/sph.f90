@@ -3,8 +3,8 @@
 ! -- 日期: 2022年3月
 program main
 
-    use config_m, only: rk, stdout, stdin, tinsert, tsearch, dt, nnps
-    use parameter
+    use config_m, only: rk, stdout, stdin, tinsert, tsearch, dt, nnps, maxn
+    use parameter, only: dim
     use master_time_m, only: tic, toc, time_print
     use output_m, only: set_parameter_log, set_folder
     use toml_info_m, only: parse_toml_info

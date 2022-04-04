@@ -28,7 +28,7 @@ contains
     !> 但是时间步长可以是时间和空间 (对应于每个粒子) 的变量。
     !> 相关参考为 Hernquist 和 Katz (1989), Simpson (1995), Monaghan (1992) 等等。
     subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
-
+        use config_m, only: max_interaction
         !> 粒子的坐标
         !> coordinates of particles
         real(rk), intent(inout) :: x(:, :)
@@ -118,7 +118,7 @@ contains
 
             !---  definition of variables out of the function vector:
 
-            call single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
+            call single_step(max_interaction, itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
                              tdsdt, dx, dvx, du, ds, drho, itype, av)
 
             if (itimestep == 1) then
@@ -196,9 +196,9 @@ contains
     !>  equation in a single step for performing time integration.
     !>
     !> In this routine and its subroutines the sph algorithms are performed.
-    subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
+    subroutine single_step(max_interaction, itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
                            tdsdt, dx, dvx, du, ds, drho, itype, av)
-        integer, intent(in) :: itimestep
+        integer, intent(in) :: max_interaction, itimestep
         real(rk), intent(in) :: dt
         integer, intent(in) :: ntotal
         !> 粒子的平滑长度
