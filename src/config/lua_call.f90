@@ -5,15 +5,15 @@ module lua_call_m
     use, intrinsic :: iso_c_binding, only: c_ptr
     use lua
     use config_m, only: rk, in_path
+    use input_m, only: saved_virt_part
     use parameter, only: dim
     implicit none
     private
 
-    public :: lua_input!, lua_virt_part
+    public :: lua_input, lua_virt_part
 
 contains
 
-    !@todo: lua_input, lua_nvirt?
     !> 读取初始化粒子数据
     subroutine lua_input(lua_script, x, vx, mass, rho, p, u, itype, hsml, ntotal)
         character(*), intent(in) :: lua_script
@@ -55,33 +55,71 @@ contains
 
     end subroutine lua_input
 
-    ! !@todo: 处理好缝合数据
-    ! subroutine lua_virt_part(lua_script, x, vx, mass, rho, p, u, itype, hsml, ntotal, nvirt)
-    !     character(*), intent(in) :: lua_script
-    !     real(rk), intent(inout) :: x(:, :), vx(:, :), mass(:), rho(:), p(:), u(:), hsml(:)
-    !     integer, intent(inout) :: itype(:)
-    !     integer, intent(in) :: ntotal
-    !     integer, intent(out) :: nvirt
-    !     type(c_ptr) :: l
-    !     integer :: rc
+    ! 读取虚粒子数据
+    subroutine lua_virt_part(x, vx, mass, rho, p, u, itype, hsml, ntotal, nvirt, keep)
+        use config_m, only: lua_script
+        integer, intent(in) :: ntotal
+        !> 虚拟粒子数
+        !> Number of virtual particles
+        integer, intent(out) :: nvirt
+        !> 光滑长度
+        !> Smoothing length
+        real(rk), intent(inout) :: hsml(:)
+        !> 粒子质量
+        !> Particle masses
+        real(rk), intent(inout) :: mass(:)
+        !> 粒子坐标
+        !> Particle coordinates
+        real(rk), intent(inout) :: x(:, :)
+        !> 粒子速度
+        !> Particle velocities
+        real(rk), intent(inout) :: vx(:, :)
+        !> 密度
+        !> Density
+        real(rk), intent(inout) :: rho(:)
+        !> 内部能量
+        !> Internal energy
+        real(rk), intent(inout) :: u(:)
+        !> 粒子压力
+        !> Particle pressure
+        real(rk), intent(inout) :: p(:)
+        !> 粒子类型
+        !> Particle type
+        integer, intent(inout) :: itype(:)
+        logical, intent(in) :: keep
+        type(c_ptr) :: l
+        integer :: rc
 
-    !     l = lual_newstate()
-    !     call lual_openlibs(l)
-    !     rc = lual_loadfile(l, lua_script)
-    !     rc = lua_pcall(l, 0, 0, 0)
-    !     rc = lua_getglobal(l, "virt_part")
-    !     rc = lua_pcall(l, 0, 9, 0)
-    !     call get_value(l, x, -1)
-    !     call get_value(l, vx, -2)
-    !     call get_value(l, mass, -3)
-    !     call get_value(l, rho, -4)
-    !     call get_value(l, p, -5)
-    !     call get_value(l, u, -6)
-    !     call get_value(l, itype, -7)
-    !     call get_value(l, hsml, -8)
-    !     call get_value(l, ntotal, -9)
-    !     call get_value(l, nvirt, -10)
-    !     call lual_close(l)
-    ! end subroutine lua_virt_part
+        if (keep) then
+            nvirt = saved_virt_part%nvirt
+            x(:, ntotal + 1:ntotal + nvirt) = saved_virt_part%x
+            vx(:, ntotal + 1:ntotal + nvirt) = saved_virt_part%vx
+            mass(ntotal + 1:ntotal + nvirt) = saved_virt_part%mass
+            rho(ntotal + 1:ntotal + nvirt) = saved_virt_part%rho
+            p(ntotal + 1:ntotal + nvirt) = saved_virt_part%p
+            hsml(ntotal + 1:ntotal + nvirt) = saved_virt_part%hsml
+            u(ntotal + 1:ntotal + nvirt) = saved_virt_part%u
+            itype(ntotal + 1:ntotal + nvirt) = saved_virt_part%itype
+            return
+        else
+            l = lual_newstate()
+            call lual_openlibs(l)
+            rc = lual_loadfile(l, in_path//'/'//lua_script)
+            rc = lua_pcall(l, 0, 0, 0)
+            rc = lua_getglobal(l, "virt_part")
+            rc = lua_pcall(l, 0, 9, 0)
+            call get_value(l, saved_virt_part%x, index=-9) ! 倒序读取 Lua 堆栈
+            call get_value(l, saved_virt_part%vx, index=-8)
+            call get_value(l, saved_virt_part%mass, index=-7)
+            call get_value(l, saved_virt_part%rho, index=-6)
+            call get_value(l, saved_virt_part%p, index=-5)
+            call get_value(l, saved_virt_part%u, index=-4)
+            call get_value(l, saved_virt_part%itype, index=-3)
+            call get_value(l, saved_virt_part%hsml, index=-2)
+            call get_value(l, saved_virt_part%nvirt, index=-1)
+            call lua_close(l)
+        end if
+
+    end subroutine lua_virt_part
 
 end module lua_call_m

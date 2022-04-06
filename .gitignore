@@ -13,8 +13,7 @@ Release/*
 vs-**
 
 # data
-data/all/*
-data/paraview/*
+output**
 f_**
 
 # ignorance

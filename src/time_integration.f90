@@ -1,22 +1,23 @@
 module time_integration_m
 
-    use parameter
-    use output_m, only: output_all
-    use progress_bar_m, only: pbflush, pbout
-    use info_m, only: operator(.c.)
-    use config_m, only: rk, stdout, nnps, print_step, save_step
-    use tree_search_m, only: tree_search
-    use input_m, only: virt_part
-    use direct_find_m, only: direct_find
-    use link_list_m, only: link_list
-    use density_m, only: sum_density, con_density
-    use viscosity_m, only: viscosity
-    use internal_force_m, only: int_force
-    use external_force_m, only: ext_force
-    use av_vel_m, only: av_vel
-    use art_visc_m, only: art_visc
-    use hsml_m, only: h_upgrade
     use art_heat_m, only: art_heat
+    use art_visc_m, only: art_visc
+    use av_vel_m, only: av_vel
+    use config_m, only: rk, stdout, nnps, print_step, save_step, dofile
+    use density_m, only: sum_density, con_density
+    use direct_find_m, only: direct_find
+    use external_force_m, only: ext_force
+    use hsml_m, only: h_upgrade
+    use info_m, only: operator(.c.)
+    use input_m, only: virt_part
+    use internal_force_m, only: int_force
+    use output_m, only: output_all
+    use link_list_m, only: link_list
+    use lua_call_m, only: lua_virt_part
+    use parameter
+    use progress_bar_m, only: pbflush, pbout
+    use tree_search_m, only: tree_search
+    use viscosity_m, only: viscosity
     implicit none
     private
 
@@ -252,6 +253,7 @@ contains
         real(rk), intent(out) :: av(:, :)
 
         integer :: i, d, nvirt
+        logical, save :: loaded_virt = .false.
         !> 相互作用对的数目
         integer :: niac
         integer :: pair_i(max_interaction), pair_j(max_interaction), ns(2*ntotal) !@tofix: ntotal + nvirt, ifort, heap-array!
@@ -271,8 +273,17 @@ contains
         !> positions of virtual (boundary) particles:
 
         nvirt = 0
+
+        ! 初始化虚粒子的位置, 是否不需要重复设置虚粒子
+        ! 从 Lua 脚本中获取设置虚粒子的方法或数据
         if (virtual_part) then
-            call virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, itype)
+            if (dofile) then
+                call lua_virt_part(x, vx, mass, rho, p, u, itype, hsml, ntotal, nvirt, keep=loaded_virt)
+                if (.not.loaded_virt) loaded_virt = .true. !@tofix: more hack here needed
+            else
+                call virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, itype, keep=loaded_virt)
+                if (.not.loaded_virt) loaded_virt = .true.
+            end if
         end if
 
         ! 交互作用参数，计算相邻粒子并优化平滑长度

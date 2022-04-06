@@ -7,6 +7,16 @@ module input_m
     private
 
     public :: input, shock_tube, shear_cavity, virt_part
+    public :: saved_virt_part ! public for lua_call_m
+
+    ! 临时存储的虚拟粒子信息
+    type virt_part_info_t
+        integer :: nvirt
+        real(rk), allocatable :: x(:, :), vx(:, :), mass(:), rho(:), p(:), hsml(:), u(:)
+        integer, allocatable :: itype(:)
+    end type virt_part_info_t
+
+    type(virt_part_info_t), save :: saved_virt_part
 
 contains
 
@@ -233,17 +243,10 @@ contains
     end subroutine shear_cavity
 
     !> 装载虚粒子或通过问题的几何形状产生虚粒子信息的子程序。
-    !> @todo: 不重复输出虚粒子信息
     !>   subroutine to determine the information of virtual particles
     !>   here only the monaghan type virtual particles for the 2d shear
     !>   cavity driven problem are generated.
-    subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, itype)
-
-        use config_m, only: rk, stdout
-        use info_m, only: operator(.c.)
-        use parameter
-        implicit none
-
+    subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, itype, keep)
         !> 当前时间步
         !> Current time step
         integer, intent(in) :: itimestep
@@ -277,9 +280,23 @@ contains
         !> 粒子类型
         !> Particle type
         integer, intent(inout) :: itype(:)
+        logical, intent(in) :: keep
 
         integer :: i, j, d, im, mp
         real(rk) :: xl, dx, v_inf
+
+        if (keep) then
+            nvirt = saved_virt_part%nvirt
+            x(:, ntotal + 1:ntotal + nvirt) = saved_virt_part%x
+            vx(:, ntotal + 1:ntotal + nvirt) = saved_virt_part%vx
+            mass(ntotal + 1:ntotal + nvirt) = saved_virt_part%mass
+            rho(ntotal + 1:ntotal + nvirt) = saved_virt_part%rho
+            p(ntotal + 1:ntotal + nvirt) = saved_virt_part%p
+            hsml(ntotal + 1:ntotal + nvirt) = saved_virt_part%hsml
+            u(ntotal + 1:ntotal + nvirt) = saved_virt_part%u
+            itype(ntotal + 1:ntotal + nvirt) = saved_virt_part%itype
+            return
+        end if
 
         if (vp_input) then
 
@@ -354,6 +371,18 @@ contains
                 hsml(ntotal + i) = dx
             end do
 
+        end if
+
+        if (.not. keep) then
+            saved_virt_part%nvirt = nvirt
+            saved_virt_part%x = x(:, ntotal + 1:ntotal + nvirt)
+            saved_virt_part%vx = vx(:, ntotal + 1:ntotal + nvirt)
+            saved_virt_part%mass = mass(ntotal + 1:ntotal + nvirt)
+            saved_virt_part%rho = rho(ntotal + 1:ntotal + nvirt)
+            saved_virt_part%hsml = hsml(ntotal + 1:ntotal + nvirt)
+            saved_virt_part%p = p(ntotal + 1:ntotal + nvirt)
+            saved_virt_part%u = u(ntotal + 1:ntotal + nvirt)
+            saved_virt_part%itype = itype(ntotal + 1:ntotal + nvirt)
         end if
 
         if (mod(itimestep, save_step) == 0) then

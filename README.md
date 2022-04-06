@@ -43,3 +43,4 @@ F5 / CTRL + F5 # 运行与调试
 ## 链接
 
 - [spheric/SPH Codes](https://spheric-sph.org/sph-projects-and-codes)
+- [zoziha/SPH-homework](https://github.com/zoziha/SPH-homework)

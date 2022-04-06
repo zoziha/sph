@@ -26,4 +26,5 @@ fpm run vtk
 
 ## Links
 
-+ [spheric/SPH Codes](https://spheric-sph.org/sph-projects-and-codes)
+- [spheric/SPH Codes](https://spheric-sph.org/sph-projects-and-codes)
+- [zoziha/SPH-homework](https://github.com/zoziha/SPH-homework)
