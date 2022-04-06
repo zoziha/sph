@@ -8,6 +8,8 @@
 
 - Lua链接库
 
+如果是 visual-studio 用户，需要将[编译的 Lua 官方库](https://gitee.com/zoziha/sph/issues/I5138J#note_9613327_link)，放置在 `vs-solution` 文件夹下。
+
 ### 获取代码
 
 ```sh

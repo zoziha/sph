@@ -42,9 +42,13 @@
 				<Tool Name="VFPostBuildEventTool"/></Configuration></Configurations>
 	<Files>
 		<Filter Name="Header Files" Filter="fi;fd"/>
-		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"/>
+		<Filter Name="Resource Files" Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe">
+		<File RelativePath=".\LibLua.lib"/></Filter>
 		<Filter Name="Source Files" Filter="f90;for;f;fpp;ftn;def;odl;idl">
 		<Filter Name="deps">
+		<Filter Name="lua">
+		<File RelativePath="..\build\dependencies\easy_lua\src\easy-lua.f90"/>
+		<File RelativePath="..\build\dependencies\fortran-lua53\src\lua.f90"/></Filter>
 		<Filter Name="ntree">
 		<File RelativePath="..\build\dependencies\ntree\src\ntree.F90">
 			<FileConfiguration Name="Debug|Win32">
@@ -185,6 +189,7 @@
 				<Tool Name="VFFortranCompilerTool" BoundsCheck="false"/></FileConfiguration>
 			<FileConfiguration Name="Release|Win32">
 				<Tool Name="VFFortranCompilerTool" BoundsCheck="false"/></FileConfiguration></File>
+		<File RelativePath="..\src\config\lua_call.f90"/>
 		<File RelativePath="..\src\macro.f90"/>
 		<File RelativePath="..\src\result\output.f90"/>
 		<File RelativePath="..\src\utils\parameter.f90"/>
