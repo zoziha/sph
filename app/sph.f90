@@ -24,7 +24,7 @@ program main
     call tic()
     call time_print()
     call stdlog%add_log_file('.stdlog.log')
-    call stdlog%log_information('start logging')
+    call stdlog%log_information('Start logging')
 
     ! 前处理
     call parse_toml_info()
@@ -34,9 +34,10 @@ program main
 
     if (dofile) then
         call lua_input(lua_script, x, vx, mass, rho, p, u, itype, hsml, ntotal)
-        call stdlog%log_information('loaded lua script successfully')
+        call stdlog%log_information('Loaded lua script successfully')
     else
         call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
+        call stdlog%log_information('Loaded non-lua input successfully')
     end if
 
     ! 主循环
@@ -56,7 +57,7 @@ program main
     if (nnps == 3) write (stdout, '(2(a,es10.3),a)') info('Particle insertion time: '), tinsert, &
         's, particle search time: ', tsearch, 's'
 
-    call stdlog%log_information('end logging')
+    call stdlog%log_information('End logging')
     call time_print()
     call toc()
     write (stdout, "(a)") 'All finish!'

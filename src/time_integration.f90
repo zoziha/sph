@@ -6,6 +6,7 @@ module time_integration_m
     use config_m, only: rk, stdout, nnps, print_step, save_step, dofile
     use density_m, only: sum_density, con_density
     use direct_find_m, only: direct_find
+    use easy_string_m, only: to_string
     use external_force_m, only: ext_force
     use hsml_m, only: h_upgrade
     use info_m, only: operator(.c.)
@@ -16,6 +17,7 @@ module time_integration_m
     use lua_call_m, only: lua_virt_part
     use parameter
     use progress_bar_m, only: pbflush, pbout
+    use stdlib_logger, only: stdlog => global_logger
     use tree_search_m, only: tree_search
     use viscosity_m, only: viscosity
     implicit none
@@ -186,7 +188,8 @@ contains
         end do
 
         nstart = nstart + maxtimestep
-
+        call stdlog%log_information('Total number of time steps, nstart = '//to_string(nstart))
+        
 101     format(3(a12, :, 2x))
 100     format(3(es12.5, :, 2x))
 
