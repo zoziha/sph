@@ -20,3 +20,4 @@ f_**
 # ignorance
 *.ignore
 *.log
+tmp/*

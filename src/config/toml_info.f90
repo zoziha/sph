@@ -20,7 +20,7 @@ contains
     end subroutine parse_toml_info
 
     ! 解析access.toml文件
-    subroutine parse_access_toml()
+    subroutine parse_access_toml() !@todo: add argument file_name, parse_access_toml(file_name)
         type(toml_table), allocatable :: access_table
         type(toml_table), pointer :: subtable
         integer access_toml_unit
@@ -61,6 +61,10 @@ contains
         call get_value(subtable, 'maxn', maxn, 5000)
         call get_value(subtable, 'kpair', kpair, 20)
         max_interaction = kpair*maxn
+        
+        call get_value(sph_table, 'pre-process', subtable)
+        call get_value(subtable, 'dofile', dofile, .false.) ! 默认不从 Lua 脚本中生成数据
+        call get_value(subtable, 'lua_script', lua_script, 'lua_script.lua')
 
         nullify (subtable)
     end subroutine parse_info_sph

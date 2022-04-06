@@ -3,7 +3,8 @@
 ! -- 日期: 2022年3月
 program main
 
-    use config_m, only: rk, stdout, stdin, tinsert, tsearch, dt, nnps, maxn
+    use config_m, only: rk, stdout, stdin, tinsert, tsearch, dt, nnps, maxn, dofile, &
+        lua_script
     use parameter, only: dim
     use master_time_m, only: tic, toc, time_print
     use output_m, only: set_parameter_log, set_folder
@@ -12,6 +13,8 @@ program main
     use info_m, only: operator(.c.), info
     use input_m, only: input
     use time_integration_m, only: time_integration
+    use lua_call_m, only: lua_input
+    use stdlib_logger, only: stdlog => global_logger
     implicit none
 
     integer :: ntotal
@@ -20,6 +23,8 @@ program main
 
     call tic()
     call time_print()
+    call stdlog%add_log_file('.stdlog.log')
+    call stdlog%log_information('start logging')
 
     ! 前处理
     call parse_toml_info()
@@ -27,7 +32,12 @@ program main
     call set_parameter_log()
     call set_folder()
 
-    call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
+    if (dofile) then
+        call lua_input(lua_script, x, vx, mass, rho, p, u, itype, hsml, ntotal)
+        call stdlog%log_information('loaded lua script successfully')
+    else
+        call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
+    end if
 
     ! 主循环
     do
@@ -46,6 +56,7 @@ program main
     if (nnps == 3) write (stdout, '(2(a,es10.3),a)') info('Particle insertion time: '), tinsert, &
         's, particle search time: ', tsearch, 's'
 
+    call stdlog%log_information('end logging')
     call time_print()
     call toc()
     write (stdout, "(a)") 'All finish!'

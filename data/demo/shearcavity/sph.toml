@@ -37,7 +37,8 @@ dt = 5.0e-5
 # openmp并行线程控制
 openmp = true
 num_threads = 4
-ini_lua_script = "ini_lua_script.lua"
+dofile = true
+lua_script = "ini_lua_script.lua"
 
 
 [post-process]

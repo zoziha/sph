@@ -25,8 +25,12 @@ module config_m
 
     !> 输出到屏幕、磁盘的时间步间隔
     integer :: print_step, save_step
-    
+
     !> 粒子数目
     integer :: maxn, max_interaction
+
+    !> Lua 脚本配置
+    logical :: dofile
+    character(:), allocatable :: lua_script
 
 end module config_m

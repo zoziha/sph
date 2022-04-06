@@ -12,16 +12,18 @@ auto-tests = false
 auto-examples = false
 
 [dependencies]
-master_time = { git = "https://gitee.com/zoziha/master_time.git" }
-progress_bar = { git = "https://gitee.com/zoziha/progress_bar.git" }
+info = { git = "https://gitee.com/zoziha/info.git" }
+easy_lua = { git = "https://gitee.com/zoziha/easy-lua.git" }
+easy_math = { git = "https://gitee.com/zoziha/easy_math.git" }
 swift_file = { git = "https://gitee.com/zoziha/swift_file.git" }
+error_stop = { git = "https://gitee.com/zoziha/error_stop.git" }
+master_time = { git = "https://gitee.com/zoziha/master_time.git" }
 easy_string = { git = "https://gitee.com/zoziha/easy_string.git" }
+progress_bar = { git = "https://gitee.com/zoziha/progress_bar.git" }
+stdlib_logger = { git = "https://gitee.com/zoziha/stdlib_logger.git" }
+
 ntree = { git = "https://gitee.com/zoziha/ntree.git" }
 toml-f = { git = "https://github.com/toml-f/toml-f.git" }
-stdlib_logger = { git = "https://gitee.com/zoziha/stdlib_logger.git" }
-info = { git = "https://gitee.com/zoziha/info.git" }
-error_stop = { git = "https://gitee.com/zoziha/error_stop.git" }
-easy_math = { git = "https://gitee.com/zoziha/easy_math.git" }
 
 
 [dev-dependencies]
