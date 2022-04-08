@@ -265,6 +265,7 @@ contains
 
         do concurrent(i=1:ntotal)
             avdudt(i) = 0.0_rk
+            ahdudt(i) = 0.0_rk
             indvxdt(:, i) = 0.0_rk
             ardvxdt(:, i) = 0.0_rk
             exdvxdt(:, i) = 0.0_rk
