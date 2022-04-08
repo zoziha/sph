@@ -7,15 +7,16 @@ module internal_force_m
     public :: int_force
 
 contains
-!> 计算SPH相互作用力的子程序。
-!> 内力的计算是通过剪切应力的嵌套 SPH 近似法进行的。
-!> 在此子程序中实现了两种类型的 SPH 粒子近似法。
-!> 详见第 4 章，其他相关参考有 Riffert 等人 (1995), Flebbe 等人 (1994)。
-!> Subroutine to calculate the internal forces on the right hand side
-!>  of the navier-stokes equations, i.e. the pressure gradient and the
-!>  gradient of the viscous stress tensor, used by the time integration.
-!>  moreover the entropy production due to viscous dissipation, tds/dt,
-!>  and the change of internal energy per mass, de/dt, are calculated.
+
+    !> 计算SPH相互作用力的子程序。
+    !> 内力的计算是通过剪切应力的嵌套 SPH 近似法进行的。
+    !> 在此子程序中实现了两种类型的 SPH 粒子近似法。
+    !> 详见第 4 章，其他相关参考有 Riffert 等人 (1995), Flebbe 等人 (1994)。
+    !> Subroutine to calculate the internal forces on the right hand side
+    !>  of the navier-stokes equations, i.e. the pressure gradient and the
+    !>  gradient of the viscous stress tensor, used by the time integration.
+    !>  moreover the entropy production due to viscous dissipation, tds/dt,
+    !>  and the change of internal energy per mass, de/dt, are calculated.
     subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair_i, pair_j, &
                          dwdx, u, itype, x, t, c, p, dvxdt, tdsdt, dedt)
 
@@ -308,6 +309,6 @@ contains
         do i = 1, ntotal
             dedt(i) = tdsdt(i) + 0.5_rk*dedt(i)
         end do
-
     end subroutine int_force
+
 end module internal_force_m

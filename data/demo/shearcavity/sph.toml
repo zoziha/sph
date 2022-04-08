@@ -30,6 +30,8 @@ print_step = 100
 save_step = 500
 # 时间步长
 dt = 5.0e-5
+# 是否考虑重力
+self_gravity = false
 
 
 [pre-process]

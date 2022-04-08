@@ -189,7 +189,7 @@ contains
 
         nstart = nstart + maxtimestep
         call stdlog%log_information('Total number of time steps, nstart = '//to_string(nstart))
-        
+
 101     format(3(a12, :, 2x))
 100     format(3(es12.5, :, 2x))
 
@@ -263,13 +263,11 @@ contains
         real(rk) :: w(max_interaction), dwdx(dim, max_interaction), indvxdt(dim, 2*ntotal), &
                     exdvxdt(dim, 2*ntotal), ardvxdt(dim, 2*ntotal), avdudt(2*ntotal), ahdudt(2*ntotal), c(2*ntotal), eta(2*ntotal)
 
-        do i = 1, ntotal
+        do concurrent(i=1:ntotal)
             avdudt(i) = 0.0_rk
-            do d = 1, dim
-                indvxdt(d, i) = 0.0_rk
-                ardvxdt(d, i) = 0.0_rk
-                exdvxdt(d, i) = 0.0_rk
-            end do
+            indvxdt(:, i) = 0.0_rk
+            ardvxdt(:, i) = 0.0_rk
+            exdvxdt(:, i) = 0.0_rk
         end do
 
         !> (边界) 虚粒子的位置设定
@@ -282,10 +280,10 @@ contains
         if (virtual_part) then
             if (dofile) then
                 call lua_virt_part(x, vx, mass, rho, p, u, itype, hsml, ntotal, nvirt, keep=loaded_virt)
-                if (.not.loaded_virt) loaded_virt = .true. !@tofix: more hack here needed
+                if (.not. loaded_virt) loaded_virt = .true. !@tofix: more hack here needed
             else
                 call virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, itype, keep=loaded_virt)
-                if (.not.loaded_virt) loaded_virt = .true.
+                if (.not. loaded_virt) loaded_virt = .true.
             end if
         end if
 
@@ -337,7 +335,7 @@ contains
 
         if (heat_artificial) call art_heat(ntotal + nvirt, hsml, mass, x, vx, niac, rho, u, c, pair_i, pair_j, w, dwdx, ahdudt)
 
-        ! 计算粒子的平均速度，避免粒子渗透
+        ! 计算粒子的平均速度，避免粒子渗透 @todo: 重力作用下，仍会出现穿透
         !     calculating average velocity of each partile for avoiding penetration(渗透)
 
         if (average_velocity) call av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
@@ -345,10 +343,8 @@ contains
         ! 转换粒子的速度，力和能量为f和dfdt
         !---  convert velocity, force, and energy to f and dfdt
 
-        do i = 1, ntotal
-            do d = 1, dim
-                dvx(d, i) = indvxdt(d, i) + exdvxdt(d, i) + ardvxdt(d, i)
-            end do
+        do concurrent(i=1:ntotal)
+            dvx(:, i) = indvxdt(:, i) + exdvxdt(:, i) + ardvxdt(:, i)
             du(i) = du(i) + avdudt(i) + ahdudt(i)
         end do
 

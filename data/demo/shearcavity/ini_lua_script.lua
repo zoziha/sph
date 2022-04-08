@@ -68,7 +68,6 @@ function virt_part()
     local u = {}
     local itype = {}
     local hsml = {}
-    local ntotal
 
     -- 初始化多维数组
     x[1] = {}

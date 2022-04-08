@@ -5,10 +5,12 @@ module av_vel_m
     private
 
     public :: av_vel
+
 contains
-!> 计算校正平均速度的子程序。详见 Monaghan(1992) (XSPH) 和第 4 章中的论述。
-!> subroutine to calculate the average velocity to correct velocity
-!> for preventing.penetration (Monaghan, 1992)
+
+    !> 计算校正平均速度的子程序。详见 Monaghan(1992) (XSPH) 和第 4 章中的论述。
+    !> subroutine to calculate the average velocity to correct velocity
+    !> for preventing.penetration (Monaghan, 1992)
     subroutine av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
 
         !> 在模拟中所使用的粒子总数
@@ -39,36 +41,26 @@ contains
         !> average velocity of each particle
         real(rk), intent(out) :: av(:, :)
 
-        integer :: i, j, k, d
+        integer :: i, j, k
         real(rk) :: dvx(dim), epsilon
 
         ! epsilon -- 经验性的容差值，可能会导致不稳定
         ! 例如，一维震荡管问题，e (epsilon) <= 0.3
         !     epsilon --- a small constants chosen by experience, may lead to instability.
         !     for example, for the 1 dimensional shock tube problem, the e <= 0.3
+        parameter (epsilon = 0.3_rk)
 
-        epsilon = 0.3_rk
-
-        do i = 1, ntotal
-            do d = 1, dim
-                av(d, i) = 0.0_rk
-            end do
-        end do
+        av(:, 1:ntotal) = 0.0_rk
 
         do k = 1, niac
             i = pair_i(k)
             j = pair_j(k)
-            do d = 1, dim
-                dvx(d) = vx(d, i) - vx(d, j)
-                av(d, i) = av(d, i) - 2*mass(j)*dvx(d)/(rho(i) + rho(j))*w(k)
-                av(d, j) = av(d, j) + 2*mass(i)*dvx(d)/(rho(i) + rho(j))*w(k)
-            end do
+            dvx = vx(:, i) - vx(:, j)
+            av(:, i) = av(:, i) - 2*mass(j)*dvx(:)/(rho(i) + rho(j))*w(k)
+            av(:, j) = av(:, j) + 2*mass(i)*dvx(:)/(rho(i) + rho(j))*w(k)
         end do
 
-        do i = 1, ntotal
-            do d = 1, dim
-                av(d, i) = epsilon*av(d, i)
-            end do
-        end do
+        av(:, 1:ntotal) = epsilon*av(:, 1:ntotal)
     end subroutine av_vel
+
 end module av_vel_m

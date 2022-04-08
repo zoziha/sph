@@ -54,14 +54,12 @@ module parameter
     !                      .false. : no considering of artificial viscosity.
     !     heat_artificial = .true. : consider artificial heating,
     !                      .false. : no considering of artificial heating.
-    !     self_gravity = .true. : considering self_gravity,
-    !                   .false. : no considering of self_gravity
     
     ! 密度正则化的指示变量
     !     nor_density =  .true. : density normalization by using cspm,
     !                   .false. : no normalization.
     logical :: summation_density, average_velocity, config_input, virtual_part, vp_input, visc, ex_force, &
-               heat_artificial, visc_artificial, self_gravity, nor_density
+               heat_artificial, visc_artificial, nor_density
     parameter(summation_density=.true.)
     parameter(average_velocity=.true.)
     parameter(config_input=.false.)
@@ -71,7 +69,6 @@ module parameter
     parameter(ex_force=.true.)
     parameter(visc_artificial=.false.)
     parameter(heat_artificial=.false.)
-    parameter(self_gravity=.false.)
     parameter(nor_density=.true.)
 
     !     symmetry of the problem

@@ -94,7 +94,7 @@ contains
         maxiac = 0
         miniac = 1000
         noiac = 0
-        do i = 1, ntotal
+        do concurrent(i=1:ntotal)
             sumiac = sumiac + countiac(i)
             if (countiac(i) > maxiac) then
                 maxiac = countiac(i)

@@ -61,6 +61,7 @@ contains
         call get_value(subtable, 'maxn', maxn, 5000)
         call get_value(subtable, 'kpair', kpair, 20)
         max_interaction = kpair*maxn
+        call get_value(subtable, 'self_gravity', self_gravity, .false.)
         
         call get_value(sph_table, 'pre-process', subtable)
         call get_value(subtable, 'dofile', dofile, .false.) ! 默认不从 Lua 脚本中生成数据
