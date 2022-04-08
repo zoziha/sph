@@ -28,7 +28,7 @@ module config_m
 
     !> 粒子数目
     integer :: maxn, max_interaction
-    logical :: self_gravity
+    logical :: self_gravity, visc ! default: F, T
 
     !> Lua 脚本配置
     logical :: dofile

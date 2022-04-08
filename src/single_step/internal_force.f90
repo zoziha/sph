@@ -1,6 +1,8 @@
 module internal_force_m
 
+    use config_m, only: rk, visc
     use eos_m, only: p_gas, p_art_water
+    use parameter, only: dim, pa_sph
     implicit none
     private
     
@@ -19,11 +21,6 @@ contains
     !>  and the change of internal energy per mass, de/dt, are calculated.
     subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair_i, pair_j, &
                          dwdx, u, itype, x, t, c, p, dvxdt, tdsdt, dedt)
-
-        use config_m, only: rk
-        use parameter
-        implicit none
-
         !> 当前时间步
         !> Current time step
         integer, intent(in) :: itimestep

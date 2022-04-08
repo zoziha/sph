@@ -3,7 +3,7 @@ module time_integration_m
     use art_heat_m, only: art_heat
     use art_visc_m, only: art_visc
     use av_vel_m, only: av_vel
-    use config_m, only: rk, stdout, nnps, print_step, save_step, dofile
+    use config_m, only: rk, stdout, nnps, print_step, save_step, dofile, visc
     use density_m, only: sum_density, con_density
     use direct_find_m, only: direct_find
     use easy_string_m, only: to_string

@@ -1,11 +1,11 @@
 ! 读取toml配置文件
 module toml_info_m
 
-    use tomlf, only: toml_table, get_value, toml_parse
-    use swift_file_m, only: is_exist
     use, intrinsic :: iso_fortran_env, only: stderr => error_unit
     use config_m
     use error_stop_m, only: error_stop
+    use swift_file_m, only: is_exist
+    use tomlf, only: toml_table, get_value, toml_parse
     implicit none
     private
 
@@ -20,6 +20,7 @@ contains
     end subroutine parse_toml_info
 
     ! 解析access.toml文件
+    !@todo: add argument to specify the file path
     subroutine parse_access_toml() !@todo: add argument file_name, parse_access_toml(file_name)
         type(toml_table), allocatable :: access_table
         type(toml_table), pointer :: subtable
@@ -62,6 +63,7 @@ contains
         call get_value(subtable, 'kpair', kpair, 20)
         max_interaction = kpair*maxn
         call get_value(subtable, 'self_gravity', self_gravity, .false.)
+        call get_value(subtable, 'visc', visc, .true.)
         
         call get_value(sph_table, 'pre-process', subtable)
         call get_value(subtable, 'dofile', dofile, .false.) ! 默认不从 Lua 脚本中生成数据
