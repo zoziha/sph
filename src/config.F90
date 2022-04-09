@@ -7,31 +7,28 @@ module config_m
     implicit none
     public
 
-    !> sph预设浮点精度, @todo: not compatible with single precision at this time
-    !> Default real precision for SPH
-    integer, parameter :: rk = dp
+    integer, parameter :: rk = dp           !! sph预设浮点精度 @todo: not compatible with single precision at this time
 
-    !> 粒子搜索时间
-    real, save :: tinsert = 0.0, tsearch = 0.0
+    real, save :: tinsert = 0.0             !! 粒子记录时间
+    real, save :: tsearch = 0.0             !! 粒子搜索时间
 
-    !> 输入、输出文件夹
-    character(:), allocatable :: in_path !! 输入
-    character(:), allocatable :: out_path !! 输出
+    character(:), allocatable :: in_path    !! 输入路径
+    character(:), allocatable :: out_path   !! 输出路径
 
-    character(:), allocatable :: nick !! 工程名
-    real(rk) :: dt !! 时间步长
-    integer :: skf !! 光滑核函数的指示变量
-    integer :: nnps !! 最近相邻粒子搜索算法指示变量
+    character(:), allocatable :: nick       !! 工程名
+    real(rk) :: dt                          !! 时间步长
+    integer :: skf                          !! 光滑核函数的指示变量
+    integer :: nnps                         !! 最近相邻粒子搜索算法指示变量
 
-    !> 输出到屏幕、磁盘的时间步间隔
-    integer :: print_step, save_step
+    integer :: print_step                   !! 输出到屏幕的时间步间隔
+    integer :: save_step                    !! 输出到磁盘的时间步间隔
 
-    !> 粒子数目
-    integer :: maxn, max_interaction
-    logical :: self_gravity, visc ! default: F, T
+    integer :: maxn                         !! 粒子总数
+    integer :: max_interaction              !! 粒子最大互动数
+    logical :: self_gravity                 !! 是否考虑自重
+    logical :: visc                         !! 是否考虑粘性
 
-    !> Lua 脚本配置
-    logical :: dofile
-    character(:), allocatable :: lua_script
+    logical :: dofile                       !! 是否使用脚本
+    character(:), allocatable :: lua_script !! 脚本名
 
 end module config_m

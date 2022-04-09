@@ -1,3 +1,8 @@
+!> 输入模块，包含:
+!>
+!> 1. 虚粒子信息临时存储;
+!> 2. 实、虚粒子读入程序;
+!> 3. 两个个典型例子，一维冲击管，二维剪切腔
 module input_m
 
     use config_m, only: rk, stdout, in_path, save_step, print_step
@@ -9,51 +14,33 @@ module input_m
     public :: input, shock_tube, shear_cavity, virt_part
     public :: saved_virt_part ! public for lua_call_m
 
-    ! 临时存储的虚拟粒子信息
+    !> 临时存储的虚拟粒子信息
     type virt_part_info_t
         integer :: nvirt
         real(rk), allocatable :: x(:, :), vx(:, :), mass(:), rho(:), p(:), hsml(:), u(:)
         integer, allocatable :: itype(:)
     end type virt_part_info_t
 
+    !> 临时存储的虚拟粒子信息
     type(virt_part_info_t), save :: saved_virt_part
 
 contains
 
-    !> 装载或产生初始数据的子程序。
-    !> subroutine for loading or generating initial particle information
+    !> 装载或产生初始数据的子程序
     subroutine input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
-        !> 粒子的位置
-        !> coordinates of particles
-        real(rk), intent(out) :: x(:, :)
-        !> 粒子的速度
-        !> velocities of particles
-        real(rk), intent(out) :: vx(:, :)
-        !> 粒子的质量
-        !> mass of particles
-        real(rk), intent(out) :: mass(:)
-        !> 粒子的密度
-        !> dnesities of particles
-        real(rk), intent(out) :: rho(:)
-        !> 粒子的压力
-        !> pressure  of particles
-        real(rk), intent(out) :: p(:)
-        !> 粒子的内部能量
-        !> internal energy of particles
-        real(rk), intent(out) :: u(:)
-        !> 粒子的类型
-        !> types of particles
-        integer, intent(out) :: itype(:)
-        !> 粒子的光滑长度
-        !> smoothing lengths of particles
-        real(rk), intent(out) :: hsml(:)
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(out) :: ntotal
+        real(rk), intent(out) :: x(:, :)    !! 粒子位置
+        real(rk), intent(out) :: vx(:, :)   !! 粒子速度
+        real(rk), intent(out) :: mass(:)    !! 粒子质量
+        real(rk), intent(out) :: rho(:)     !! 粒子密度
+        real(rk), intent(out) :: p(:)       !! 粒子压力
+        real(rk), intent(out) :: u(:)       !! 粒子内部能量
+        integer, intent(out) :: itype(:)    !! 粒子类型
+        real(rk), intent(out) :: hsml(:)    !! 粒子光滑长度
+        integer, intent(out) :: ntotal      !! 粒子总数
 
         integer :: i, d, im
 
-        !> load initial particle information from external disk file
+        ! load initial particle information from external disk file
 
         if (config_input) then
 
@@ -102,38 +89,17 @@ contains
 
     end subroutine input
 
-    !> 一维振荡管的初始数据。
-    !> this subroutine is used to generate initial data for the
-    !> 1 d noh shock tube problem
+    !> 一维振荡管的初始数据
     subroutine shock_tube(x, vx, mass, rho, p, u, itype, hsml, ntotal)
-
-        !> 粒子的位置
-        !> coordinates of particles
-        real(rk), intent(out) :: x(:, :)
-        !> 粒子的速度
-        !> velocities of particles
-        real(rk), intent(out) :: vx(:, :)
-        !> 粒子的质量
-        !> mass of particles
-        real(rk), intent(out) :: mass(:)
-        !> 粒子的密度
-        !> dnesities of particles
-        real(rk), intent(out) :: rho(:)
-        !> 粒子的压力
-        !> pressure  of particles
-        real(rk), intent(out) :: p(:)
-        !> 粒子的内部能量
-        !> internal energy of particles
-        real(rk), intent(out) :: u(:)
-        !> 粒子的类型(1: ideal gas; 2: water)
-        !> types of particles
-        integer, intent(out) :: itype(:)
-        !> 粒子的光滑长度
-        !> smoothing lengths of particles
-        real(rk), intent(out) :: hsml(:)
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(out) :: ntotal
+        real(rk), intent(out) :: x(:, :)    !! 粒子位置
+        real(rk), intent(out) :: vx(:, :)   !! 粒子速度
+        real(rk), intent(out) :: mass(:)    !! 粒子质量
+        real(rk), intent(out) :: rho(:)     !! 粒子密度
+        real(rk), intent(out) :: p(:)       !! 粒子压力
+        real(rk), intent(out) :: u(:)       !! 粒子内部能量
+        integer, intent(out) :: itype(:)    !! 粒子类型
+        real(rk), intent(out) :: hsml(:)    !! 粒子光滑长度
+        integer, intent(out) :: ntotal      !! 粒子总数
 
         integer :: i, d
         real(rk) :: space_x
@@ -174,37 +140,17 @@ contains
 
     end subroutine shock_tube
 
-    !> 二维剪切腔的初始数据。
-    !> this subroutine is used to generate initial data for the
-    !> 2 d shear driven cavity probem with re = 1
+    !> 二维剪切腔的初始数据
     subroutine shear_cavity(x, vx, mass, rho, p, u, itype, hsml, ntotal)
-        !> 粒子的位置
-        !> coordinates of particles
-        real(rk), intent(out) :: x(:, :)
-        !> 粒子的速度
-        !> velocities of particles
-        real(rk), intent(out) :: vx(:, :)
-        !> 粒子的质量
-        !> mass of particles
-        real(rk), intent(out) :: mass(:)
-        !> 粒子的密度
-        !> dnesities of particles
-        real(rk), intent(out) :: rho(:)
-        !> 粒子的压力
-        !> pressure  of particles
-        real(rk), intent(out) :: p(:)
-        !> 粒子的内部能量
-        !> internal energy of particles
-        real(rk), intent(out) :: u(:)
-        !> 粒子的类型(1: ideal gas; 2: water)
-        !> types of particles
-        integer, intent(out) :: itype(:)
-        !> 粒子的光滑长度
-        !> smoothing lengths of particles
-        real(rk), intent(out) :: hsml(:)
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(out) :: ntotal
+        real(rk), intent(out) :: x(:, :)    !! 粒子位置
+        real(rk), intent(out) :: vx(:, :)   !! 粒子速度
+        real(rk), intent(out) :: mass(:)    !! 粒子质量
+        real(rk), intent(out) :: rho(:)     !! 粒子密度
+        real(rk), intent(out) :: p(:)       !! 粒子压力
+        real(rk), intent(out) :: u(:)       !! 粒子内部能量
+        integer, intent(out) :: itype(:)    !! 粒子类型
+        real(rk), intent(out) :: hsml(:)    !! 粒子光滑长度
+        integer, intent(out) :: ntotal      !! 粒子总数
 
         integer :: i, j, d, m, n, mp, np, k
         real(rk) :: xl, yl, dx, dy
@@ -242,45 +188,20 @@ contains
 
     end subroutine shear_cavity
 
-    !> 装载虚粒子或通过问题的几何形状产生虚粒子信息的子程序。
-    !>   subroutine to determine the information of virtual particles
-    !>   here only the monaghan type virtual particles for the 2d shear
-    !>   cavity driven problem are generated.
+    !> 装载虚粒子或通过问题的几何形状产生虚粒子信息的子程序
     subroutine virt_part(itimestep, ntotal, nvirt, hsml, mass, x, vx, rho, u, p, itype, keep)
-        !> 当前时间步
-        !> Current time step
-        integer, intent(in) :: itimestep
-        !> 总粒子数
-        !> Total number of particles
-        integer, intent(in) :: ntotal
-        !> 虚拟粒子数
-        !> Number of virtual particles
-        integer, intent(out) :: nvirt
-        !> 光滑长度
-        !> Smoothing length
-        real(rk), intent(inout) :: hsml(:)
-        !> 粒子质量
-        !> Particle masses
-        real(rk), intent(inout) :: mass(:)
-        !> 粒子坐标
-        !> Particle coordinates
-        real(rk), intent(inout) :: x(:, :)
-        !> 粒子速度
-        !> Particle velocities
-        real(rk), intent(inout) :: vx(:, :)
-        !> 密度
-        !> Density
-        real(rk), intent(inout) :: rho(:)
-        !> 内部能量
-        !> Internal energy
-        real(rk), intent(inout) :: u(:)
-        !> 粒子压力
-        !> Particle pressure
-        real(rk), intent(inout) :: p(:)
-        !> 粒子类型
-        !> Particle type
-        integer, intent(inout) :: itype(:)
-        logical, intent(in) :: keep
+        integer, intent(in) :: itimestep    !! 当前时间步长
+        integer, intent(in) :: ntotal       !! 总粒子数
+        integer, intent(out) :: nvirt       !! 虚拟粒子数
+        real(rk), intent(inout) :: hsml(:)  !! 光滑长度
+        real(rk), intent(inout) :: mass(:)  !! 粒子质量
+        real(rk), intent(inout) :: x(:, :)  !! 粒子坐标
+        real(rk), intent(inout) :: vx(:, :) !! 粒子速度
+        real(rk), intent(inout) :: rho(:)   !! 密度
+        real(rk), intent(inout) :: u(:)     !! 内部能量
+        real(rk), intent(inout) :: p(:)     !! 粒子压力
+        integer, intent(inout) :: itype(:)  !! 粒子类型
+        logical, intent(in) :: keep         !! 是否读取存储的虚粒子信息
 
         integer :: i, j, d, im, mp
         real(rk) :: xl, dx, v_inf

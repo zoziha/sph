@@ -4,7 +4,7 @@ module output_m
     use easy_string_m, only: to_string
     use swift_file_m, only: mkdir, is_exist
     use, intrinsic :: iso_fortran_env, only: stdout => output_unit
-    use config_m, only: nick, out_path, skf, nnps, print_step
+    use config_m, only: nick, out_path, skf, nnps, print_step, rk
     use info_m, only: operator(.c.)
     use error_stop_m, only: error_stop
     use parameter
@@ -15,46 +15,18 @@ module output_m
 contains
 
     !> 输出每个保存时间步的求解信息（拓展）
-    !> subroutine for saving particle information to external disk file
     subroutine output_all(x, vx, mass, rho, p, u, c, itype, hsml, ntotal, n)
-
-        use config_m, only: rk
-        use parameter
-        implicit none
-
-        !> 粒子的位置
-        !> coordinates of particles
-        real(rk), intent(in) :: x(:, :)
-        !> 粒子的速度
-        !> velocities of particles
-        real(rk), intent(in) :: vx(:, :)
-        !> 粒子的质量
-        !> mass of particles
-        real(rk), intent(in) :: mass(:)
-        !> 粒子的密度
-        !> dnesities of particles
-        real(rk), intent(in) :: rho(:)
-        !> 粒子的压力
-        !> pressure  of particles
-        real(rk), intent(in) :: p(:)
-        !> 粒子的内部能量
-        !> internal energy of particles
-        real(rk), intent(in) :: u(:)
-        !> 粒子的声速
-        !> sound velocity of particles
-        real(rk), intent(in) :: c(:)
-        !> 粒子的类型(1: ideal gas; 2: water; 3: TNT)
-        !> types of particles
-        integer, intent(in) :: itype(:)
-        !> 粒子的光滑长度
-        !> smoothing lengths of particles
-        real(rk), intent(in) :: hsml(:)
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(in) :: ntotal
-        !> 第几个时间步
-        !> number of time step
-        integer, intent(in) :: n
+        real(rk), intent(in) :: x(:, :)     !! 粒子的坐标
+        real(rk), intent(in) :: vx(:, :)    !! 粒子的速度
+        real(rk), intent(in) :: mass(:)     !! 粒子的质量
+        real(rk), intent(in) :: rho(:)      !! 粒子的密度
+        real(rk), intent(in) :: p(:)        !! 粒子的压力
+        real(rk), intent(in) :: u(:)        !! 粒子的内部能量
+        real(rk), intent(in) :: c(:)        !! 粒子的声速
+        integer, intent(in) :: itype(:)     !! 粒子的类型 (1: ideal gas; 2: water; 3: TNT)
+        real(rk), intent(in) :: hsml(:)     !! 粒子的光滑长度
+        integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
+        integer, intent(in) :: n            !! 第几个时间步
 
         integer :: i, d
         integer :: xv_unit, state_unit, other_unit

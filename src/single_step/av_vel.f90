@@ -1,4 +1,6 @@
+!> 粒子速度校正
 module av_vel_m
+
     use config_m, only: rk
     use parameter
     implicit none
@@ -9,37 +11,16 @@ module av_vel_m
 contains
 
     !> 计算校正平均速度的子程序。详见 Monaghan(1992) (XSPH) 和第 4 章中的论述。
-    !> subroutine to calculate the average velocity to correct velocity
-    !> for preventing.penetration (Monaghan, 1992)
-    subroutine av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
-
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(in) :: ntotal
-        !> 粒子的质量
-        !> particle masses
-        real(rk), intent(in) :: mass(:)
-        !> 相互作用对的数目
-        !> number of interaction pairs
-        integer, intent(in) :: niac
-        !> 相互作用对的第一部分的列表
-        !> list of first partner of interaction pair
-        integer, intent(in) :: pair_i(:)
-        !> 相互作用对的第二部分的列表
-        !> list of second partner of interaction pair
-        integer, intent(in) :: pair_j(:)
-        !> 给定相互作用对的光滑核函数
-        !> kernel for all interaction pairs
-        real(rk), intent(in) :: w(:)
-        !> 粒子的速度
-        !> particle velocities
-        real(rk), intent(in) :: vx(:, :)
-        !> 粒子的密度
-        !> particle densities
-        real(rk), intent(in) :: rho(:)
-        !> 粒子的平均速度
-        !> average velocity of each particle
-        real(rk), intent(out) :: av(:, :)
+    pure subroutine av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
+        integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
+        real(rk), intent(in) :: mass(:)     !! 粒子的质量
+        integer, intent(in) :: niac         !! 相互作用对的数目
+        integer, intent(in) :: pair_i(:)    !! 相互作用对的第一部分的列表
+        integer, intent(in) :: pair_j(:)    !! 相互作用对的第二部分的列表
+        real(rk), intent(in) :: w(:)        !! 给定相互作用对的光滑核函数
+        real(rk), intent(in) :: vx(:, :)    !! 粒子的速度
+        real(rk), intent(in) :: rho(:)      !! 粒子的密度
+        real(rk), intent(out) :: av(:, :)   !! 粒子的平均速度
 
         integer :: i, j, k
         real(rk) :: dvx(dim), epsilon

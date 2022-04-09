@@ -1,3 +1,4 @@
+!> 人工热量
 module art_heat_m
 
     use config_m, only: rk
@@ -10,13 +11,21 @@ module art_heat_m
 contains
 
     !> 计算人工热量的子程序。详见 Monaghan (1992), Fulk (1994) 或第 4 章中的论述 (式 4.74)。
-    !> subroutine to calculate the artificial heat(fulk, 1994, p, a-17)
-    !> see equ.(4.74)
     pure subroutine art_heat(ntotal, hsml, mass, x, vx, niac, rho, u, c, pair_i, pair_j, w, dwdx, dedt)
-        integer, intent(in) :: ntotal, niac, pair_i(:), pair_j(:)
-        real(rk), intent(in) :: hsml(:), mass(:), x(:, :), vx(:, :), rho(:), u(:), c(:)
-        real(rk), intent(in) :: w(:), dwdx(:, :)
-        real(rk), intent(out) :: dedt(:)
+        integer, intent(in) :: ntotal       !! 粒子总数
+        integer, intent(in) :: niac         !! 粒子对数量
+        integer, intent(in) :: pair_i(:)    !! 粒子对的第一个粒子编号
+        integer, intent(in) :: pair_j(:)    !! 粒子对的第二个粒子编号
+        real(rk), intent(in) :: hsml(:)     !! 粒子光滑长度
+        real(rk), intent(in) :: mass(:)     !! 粒子质量
+        real(rk), intent(in) :: x(:, :)     !! 粒子位置
+        real(rk), intent(in) :: vx(:, :)    !! 粒子速度
+        real(rk), intent(in) :: rho(:)      !! 粒子密度
+        real(rk), intent(in) :: u(:)        !! 粒子内能
+        real(rk), intent(in) :: c(:)        !! 粒子速度的光束
+        real(rk), intent(in) :: w(:)        !! 粒子核函数值
+        real(rk), intent(in) :: dwdx(:, :)  !! 粒子核函数的导数
+        real(rk), intent(out) :: dedt(:)    !! 粒子热量
 
         integer :: k
         real(rk) :: dvx(dim), rr, h, mrho, mhsml, vcc(ntotal), rdwdx

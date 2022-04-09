@@ -1,3 +1,4 @@
+!> 人工粘度
 module art_visc_m
 
     use config_m, only: rk
@@ -8,52 +9,23 @@ module art_visc_m
     public :: art_visc
 
 contains
-    !> 计算人工粘度的子程序。详见 Monaghan (1992), Hernquist 和 Katz (1989) 或第 4 章中的论述。
-    !>     subroutine to calculate the artificial viscosity (monaghan, 1992)
-    subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, dwdx, dvxdt, dedt)
 
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(in) :: ntotal
-        !> 光滑长度
-        !> smoothing length
-        real(rk), intent(in) :: hsml(:)
-        !> 粒子的质量
-        !> particle masses
-        real(rk), intent(in) :: mass(:)
-        !> 粒子的坐标
-        !> particle coordinates
-        real(rk), intent(in) :: x(:, :)
-        !> 粒子的速度
-        !> particle velocities
-        real(rk), intent(in) :: vx(:, :)
-        !> 相互作用对的数目
-        !> number of interaction pairs
-        integer, intent(in) :: niac
-        !> 密度
-        !> density
-        real(rk), intent(in) :: rho(:)
-        !> 温度
-        !> temperature
-        real(rk), intent(in) :: c(:)
-        !> 相互作用对的第一个粒子
-        !> first partner of interaction pair
-        integer, intent(in) :: pair_i(:)
-        !> 相互作用对的第二个粒子
-        !> second partner of interaction pair
-        integer, intent(in) :: pair_j(:)
-        !> 相互作用对的核函数
-        !> kernel for all interaction pairs
-        real(rk), intent(in) :: w(:)
-        !> 相互作用对的核函数的导数
-        !> derivative of kernel with respect to x, y and z
-        real(rk), intent(in) :: dwdx(:, :)
-        !> 相互作用对的加速度
-        !> acceleration with respect to x, y and z
-        real(rk), intent(out) :: dvxdt(:, :)
-        !> 改变特定内部能量
-        !> change of specific internal energy
-        real(rk), intent(out) :: dedt(:)
+    !> 计算人工粘度的子程序。详见 Monaghan (1992), Hernquist 和 Katz (1989) 或第 4 章中的论述。
+    pure subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, dwdx, dvxdt, dedt)
+        integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
+        real(rk), intent(in) :: hsml(:)     !! 光滑长度
+        real(rk), intent(in) :: mass(:)     !! 粒子的质量
+        real(rk), intent(in) :: x(:, :)     !! 粒子的坐标
+        real(rk), intent(in) :: vx(:, :)    !! 粒子的速度
+        integer, intent(in) :: niac         !! 相互作用对的数目
+        real(rk), intent(in) :: rho(:)      !! 密度
+        real(rk), intent(in) :: c(:)        !! 温度
+        integer, intent(in) :: pair_i(:)    !! 相互作用对的第一个粒子
+        integer, intent(in) :: pair_j(:)    !! 相互作用对的第二个粒子
+        real(rk), intent(in) :: w(:)        !! 相互作用对的核函数
+        real(rk), intent(in) :: dwdx(:, :)  !! 相互作用对的核函数的导数
+        real(rk), intent(out) :: dvxdt(:, :)!! 相互作用对的加速度
+        real(rk), intent(out) :: dedt(:)    !! 改变特定内部能量
 
         integer :: i, j, k, d
         real(rk) :: dx, dvx(dim), alpha, beta, etq, piv, muv, vr, rr, h, mc, mrho, mhsml
@@ -126,4 +98,5 @@ contains
             dedt(i) = 0.5_rk*dedt(i)
         end do
     end subroutine art_visc
+
 end module art_visc_m

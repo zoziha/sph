@@ -1,7 +1,8 @@
-! 支持核函数: 
-! 1. 三次样条核函数 (monaghan 1985);
-! 2. 高斯核函数 (gingold and monaghan 1981);
-! 3. 五次核函数 (morris 1997)
+!> 支持核函数:
+!>
+!> 1. 三次样条核函数 (monaghan 1985);
+!> 2. 高斯核函数 (gingold and monaghan 1981);
+!> 3. 五次核函数 (morris 1997)
 module kernel_m
 
     use config_m, only: rk, skf
@@ -15,8 +16,12 @@ contains
 
     !> 计算光滑函数 Wij 及其导数 dWdxij 的子例程
     pure subroutine kernel(r, dx, hsml, w, dwdx)
-        real(rk), intent(in) :: r, dx(dim), hsml
-        real(rk), intent(out) :: w, dwdx(dim)
+        real(rk), intent(in) :: r           !! 欧式距离
+        real(rk), intent(in) :: dx(:)       !! 对应坐标轴距离
+        real(rk), intent(in) :: hsml        !! 光滑参数
+        real(rk), intent(out) :: w          !! 光滑函数值
+        real(rk), intent(out) :: dwdx(:)    !! 光滑函数导数值
+
         real(rk) :: q, factor
 
         q = r/hsml

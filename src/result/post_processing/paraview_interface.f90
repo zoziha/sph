@@ -2,9 +2,10 @@
 !> Simple interface for paraview
 module paraview_interface
 
-    use parameter
+    use config_m, only: rk
     use easy_string_m, only: to_string
     use master_time_m, only: time_print
+    use parameter
     implicit none
     private
 
@@ -13,7 +14,6 @@ module paraview_interface
 contains
 
     !> 将数据输出为paraview可读的vtk格式
-    !> output data to paraview readable vtk format
     subroutine output_to_paraview_vtk()
         integer :: steps, i, nstart
 
@@ -41,7 +41,6 @@ contains
     end subroutine output_to_paraview_vtk
 
     !> 将数据输出为paraview可读的vtk格式 (单步)
-    !> output data to paraview readable vtk format (one step)
     subroutine output_to_paraview_vtk_one_step(i_steps)
         integer, intent(in) :: i_steps
         !> 在模拟中所使用的粒子总数

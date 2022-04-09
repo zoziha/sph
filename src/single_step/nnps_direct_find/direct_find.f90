@@ -1,10 +1,11 @@
+!> 直接搜索法
 module direct_find_m
 
     use config_m, only: rk, skf, max_interaction
+    use kernel_m, only: kernel
+    use output_m, only: set_statistics_print
     use parameter, only: dim
     use utils, only: get_distance
-    use output_m, only: set_statistics_print
-    use kernel_m, only: kernel
     implicit none
     private
 
@@ -13,52 +14,26 @@ module direct_find_m
 contains
 
     !> 通过简单的粒子间距与光滑长度相匹配进行最近相邻粒子搜索的子程序。详见第 4 章 148 页。
-    !>   subroutine to calculate the smoothing funciton for each particle and
-    !>   the interaction parameters used by the sph algorithm. interaction
-    !>   pairs are determined by directly comparing the particle distance
-    !>   with the corresponding smoothing length.
-    !>   see p.148 in chapter 4
     subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, countiac)
-
-        !> 当前时间步
-        !> current time step
-        integer, intent(in) :: itimestep
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(in) :: ntotal
-        !> 粒子的光滑长度
-        !> smoothing length
-        real(rk), intent(in) :: hsml(:)
-        !> 粒子的坐标
-        !> coordinates of all particles
-        real(rk), intent(in) :: x(:, :)
-        !> 相互作用对的数目
-        !> number of interaction pairs
-        integer, intent(out) :: niac
-        !> 相互作用对的第一个粒子
-        !> first partner of interaction pair
-        integer, intent(out) :: pair_i(:)
-        !> 相互作用对的第二个粒子
-        !> second partner of interaction pair
-        integer, intent(out) :: pair_j(:)
-        !> 给定相互作用对的光滑核函数
-        !> kernel for all interaction pairs
-        real(rk), intent(out) :: w(:)
-        !> 核函数对 x, y, z 的导数
-        !> derivative of kernel with respect to x, y and z
-        real(rk), intent(out) :: dwdx(:, :)
-        !> 相互作用对的数目
-        !> number of neighboring particles
-        integer, intent(out) :: countiac(:)
+        integer, intent(in) :: itimestep    !! 当前时间步
+        integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
+        real(rk), intent(in) :: hsml(:)     !! 粒子的光滑长度
+        real(rk), intent(in) :: x(:, :)     !! 粒子的坐标
+        integer, intent(out) :: niac        !! 相互作用对的数目
+        integer, intent(out) :: pair_i(:)   !! 相互作用对的第一个粒子
+        integer, intent(out) :: pair_j(:)   !! 相互作用对的第二个粒子
+        real(rk), intent(out) :: w(:)       !! 给定相互作用对的光滑核函数
+        real(rk), intent(out) :: dwdx(:, :) !! 核函数对 x, y, z 的导数
+        integer, intent(out) :: countiac(:) !! 相互作用对的数目
 
         integer :: i, j, scale_k
         real(rk) :: dxiac(dim), r, mhsml
 
-        !> 光滑核函数
-        !> smoothing kernel function
-        !> skf = 1, cubic spline kernel by w4 - spline (monaghan 1985)
-        !>     = 2, gauss kernel   (gingold and monaghan 1981)
-        !>     = 3, quintic kernel (morris 1997)
+        ! 光滑核函数
+        ! smoothing kernel function
+        ! skf = 1, cubic spline kernel by w4 - spline (monaghan 1985)
+        !     = 2, gauss kernel   (gingold and monaghan 1981)
+        !     = 3, quintic kernel (morris 1997)
         select case (skf)
         case (1)
             scale_k = 2
@@ -81,9 +56,9 @@ contains
                 if (r < scale_k*mhsml) then
                     if (niac < max_interaction) then
 
-                        !> 相邻对列表，以及每个粒子的总交互次数和相互作用数
-                        !> neighboring pair list, and totalinteraction number and
-                        !> the interaction number for each particle
+                        ! 相邻对列表，以及每个粒子的总交互次数和相互作用数
+                        ! neighboring pair list, and totalinteraction number and
+                        ! the interaction number for each particle
 
                         niac = niac + 1
                         pair_i(niac) = i
@@ -102,7 +77,7 @@ contains
             end do
         end do
 
-        !> 相互作用的统计信息
+        ! 相互作用的统计信息
         !     statistics for the interaction
         call set_statistics_print(itimestep, ntotal, niac, countiac)
     end subroutine direct_find

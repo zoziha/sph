@@ -1,3 +1,4 @@
+!> 状态方程
 module eos_m
 
     use config_m, only: rk
@@ -8,47 +9,27 @@ module eos_m
 
 contains
 
-    !> 应用状态方程通过密度和能量计算压力的子程序
-    !> gamma law eos: subroutine to calculate the pressure and sound
-    subroutine p_gas(rho, u, p, c)
+    !> 应用状态方程通过密度和能量计算压力
+    pure subroutine p_gas(rho, u, p, c)
+        real(rk), intent(in) :: rho !! 密度
+        real(rk), intent(in) :: u   !! 内能
+        real(rk), intent(out) :: p  !! 压力
+        real(rk), intent(out) :: c  !! 声速
 
-        !> 密度
-        !> Density
-        real(rk), intent(in) :: rho
-        !> 内能
-        !> Internal energy
-        real(rk), intent(in) :: u
-        !> 压力
-        !> Pressure
-        real(rk), intent(out) :: p
-        !> 声速
-        !> Sound velocity
-        real(rk), intent(out) :: c
-
-        real(rk) :: gamma
+        real(rk), parameter :: gamma = 1.4_rk
 
         !      for air (idea gas)
         !      see equ.(3.82)
-
-        gamma = 1.4_rk
         p = (gamma - 1)*rho*u
         c = sqrt((gamma - 1)*u)
 
     end subroutine p_gas
 
     !> 适用人工压缩性的人工状态方程
-    !>   artificial equation of state for the artificial compressibility.
-    subroutine p_art_water(rho, p, c)
-
-        !> 密度
-        !> Density
-        real(rk), intent(in) :: rho
-        !> 压力
-        !> Pressure
-        real(rk), intent(out) :: p
-        !> 声速
-        !> Sound velocity
-        real(rk), intent(out) :: c
+    pure subroutine p_art_water(rho, p, c)
+        real(rk), intent(in) :: rho !! 密度
+        real(rk), intent(out) :: p  !! 压力
+        real(rk), intent(out) :: c  !! 声速
 
         real(rk) :: gamma, rho0
 
@@ -65,4 +46,5 @@ contains
         c = 0.01_rk
         p = c**2*rho
     end subroutine p_art_water
+
 end module eos_m

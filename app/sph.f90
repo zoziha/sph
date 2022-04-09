@@ -1,25 +1,26 @@
-! 主程序，读入配置文件，初始化数据，启动计算服务。
-! -- 作者: 左志华
-! -- 日期: 2022年3月
+!> 主程序，读入配置文件，初始化数据，启动计算服务。
+!>
+!> - 作者: 左志华
+!> - 日期: 2022年3月
 program main
 
     use config_m, only: rk, stdout, stdin, tinsert, tsearch, dt, nnps, maxn, dofile, &
         lua_script
-    use parameter, only: dim
-    use master_time_m, only: tic, toc, time_print
-    use output_m, only: set_parameter_log, set_folder
-    use toml_info_m, only: parse_toml_info
-    use macro_m, only: x, vx, mass, rho, p, u, c, s, e, hsml, itype, alloc_macro_memory
     use info_m, only: operator(.c.), info
     use input_m, only: input
-    use time_integration_m, only: time_integration
     use lua_call_m, only: lua_input
+    use macro_m, only: x, vx, mass, rho, p, u, c, s, e, hsml, itype, alloc_macro_memory
+    use master_time_m, only: tic, toc, time_print
+    use output_m, only: set_parameter_log, set_folder
+    use parameter, only: dim
     use stdlib_logger, only: stdlog => global_logger
+    use time_integration_m, only: time_integration
+    use toml_info_m, only: parse_toml_info
     implicit none
 
-    integer :: ntotal
-    integer :: maxtimestep
-    integer :: yesorno
+    integer :: ntotal       !! 粒子总数
+    integer :: maxtimestep  !! 最大时间步数
+    integer :: yesorno      !! 是否继续运行
 
     call tic()
     call time_print()

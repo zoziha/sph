@@ -16,6 +16,9 @@ vs-**
 output**
 f_**
 
+# tmp doc
+doc/API-docs/*
+
 # ignorance
 *.ignore
 *.log

@@ -1,13 +1,14 @@
+!> 树型搜索法
 module tree_search_m
 
     use config_m, only: rk, stdout, tinsert, tsearch, skf
-    use queue_m, only: queue_t
-    use parameter
-    use output_m, only: set_statistics_print
-    use utils, only: get_distance
+    use kernel_m, only: kernel
     use ntree_factory_m, only: ntree_t, shape_t, point_t, &
                                make_ntree, make_boundary, make_range
-    use kernel_m, only: kernel
+    use output_m, only: set_statistics_print
+    use parameter
+    use queue_m, only: queue_t
+    use utils, only: get_distance
     implicit none
     private
 
@@ -16,18 +17,19 @@ module tree_search_m
 contains
 
     !> 树型搜索法，适用于变光滑长度 @todo: 3维
-    !@todo: 使用记忆<n>叉树，提高搜索速度
+    !> @todo: 使用记忆<n>叉树，提高搜索速度
     subroutine tree_search(itimestep, ntotal, hsml, x, niac, pair_i, &
                            pair_j, w, dwdx, countiac)
-        integer, intent(in) :: itimestep, ntotal
-        real(rk), intent(in) :: hsml(:)
-        real(rk), intent(in) :: x(:, :)
-        integer, intent(out) :: niac
-        integer, intent(out) :: pair_i(:)
-        integer, intent(out) :: pair_j(:)
-        real(rk), intent(out) :: w(:)
-        real(rk), intent(out) :: dwdx(:, :)
-        integer, intent(out) :: countiac(:)
+        integer, intent(in) :: itimestep    !! 当前时间步
+        integer, intent(in) :: ntotal       !! 当前总粒子数
+        real(rk), intent(in) :: hsml(:)     !! 当前粒子的光滑长度
+        real(rk), intent(in) :: x(:, :)     !! 当前粒子的位置
+        integer, intent(out) :: niac        !! 当前粒子对数
+        integer, intent(out) :: pair_i(:)   !! 当前粒子对的第一个粒子编号
+        integer, intent(out) :: pair_j(:)   !! 当前粒子对的第二个粒子编号
+        real(rk), intent(out) :: w(:)       !! 核函数值
+        real(rk), intent(out) :: dwdx(:, :) !! 核函数导数值
+        integer, intent(out) :: countiac(:) !! 当前粒子对数
 
         logical info
         integer scale_k, i, k

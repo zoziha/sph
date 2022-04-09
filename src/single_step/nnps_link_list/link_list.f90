@@ -1,7 +1,8 @@
+!> 背景网格链表法
 module link_list_m
 
-    use config_m, only: rk, skf, max_interaction
-    use parameter, only: dim
+    use config_m, only: rk, skf, max_interaction, stdout
+    use parameter, only: dim, x_maxgeom, y_maxgeom, z_maxgeom, x_mingeom, y_mingeom, z_mingeom
     use output_m, only: set_statistics_print
     use kernel_m, only: kernel
     implicit none
@@ -9,42 +10,35 @@ module link_list_m
 
     public :: link_list
 
+    !     parameter used for sorting grid cells in the link list algorithm
+    !     maxngx  : maximum number of sorting grid cells in x-direction
+    !     maxngy  : maximum number of sorting grid cells in y-direction
+    !     maxngz  : maximum number of sorting grid cells in z-direction
+    !     determining maximum number of sorting grid cells:
+    !     (for an homogeneous particle distribution:)
+    !     1-dim. problem: maxngx = maxn ,  maxngy = maxngz = 1
+    !     2-dim. problem: maxngx = maxngy ~ sqrt(maxn) ,  maxngz = 1
+    !     3-dim. problem: maxngx = maxngy = maxngz ~ maxn^(1/3)
+
+    integer, parameter :: maxngx = 100
+    integer, parameter :: maxngy = 100
+    integer, parameter :: maxngz = 1
+
 contains
 
-    !>   subroutine to calculate the smoothing funciton for each particle and
-    !>   the interaction parameters used by the sph algorithm. interaction
-    !>   pairs are determined by using a sorting grid linked list
-    !>
-    !>     itimestep : current time step                                 [in]
-    !>     ntotal    : number of particles                               [in]
-    !>     hsml      : smoothing length, same for all particles          [in]
-    !>     x         : coordinates of all particles                      [in]
-    !>     niac      : number of interaction pairs                      [out]
-    !>     pair_i    : list of first partner of interaction pair        [out]
-    !>     pair_j    : list of second partner of interaction pair       [out]
-    !>     w         : kernel for all interaction pairs                 [out]
-    !>     dwdx      : derivative of kernel with respect to x, y and z  [out]
-    !>     countiac  : number of neighboring particles                  [out]
+    !> 用于计算每个粒子的平滑函子以及 sph 算法使用的交互参数, 交互作用对是使用排序网格链接列表确定的
     subroutine link_list(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx, countiac)
-        !     parameter used for sorting grid cells in the link list algorithm
-        !     maxngx  : maximum number of sorting grid cells in x-direction
-        !     maxngy  : maximum number of sorting grid cells in y-direction
-        !     maxngz  : maximum number of sorting grid cells in z-direction
-        !     determining maximum number of sorting grid cells:
-        !     (for an homogeneous particle distribution:)
-        !     1-dim. problem: maxngx = maxn ,  maxngy = maxngz = 1
-        !     2-dim. problem: maxngx = maxngy ~ sqrt(maxn) ,  maxngz = 1
-        !     3-dim. problem: maxngx = maxngy = maxngz ~ maxn^(1/3)
-        integer :: maxngx, maxngy, maxngz
-        parameter(maxngx=100, maxngy=100, maxngz=1)
-        integer, intent(in) :: itimestep
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(in) :: ntotal
-        !> 相互作用对的数目
-        integer, intent(out) :: niac
-        integer :: pair_i(:), pair_j(:), countiac(:)
-        real(rk) :: hsml, x(:, :), w(:), dwdx(:, :)
+        integer, intent(in) :: itimestep    !! 当前时间步
+        integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
+        real(rk), intent(in) :: hsml        !! 平滑函子的长度
+        real(rk), intent(in) :: x(:, :)      !! 粒子的坐标
+        integer, intent(out) :: niac        !! 相互作用对的数目
+        integer, intent(out) :: pair_i(:)   !! 第一个相互作用对的粒子编号
+        integer, intent(out) :: pair_j(:)   !! 第二个相互作用对的粒子编号
+        real(rk), intent(out) :: w(:)       !! 平滑函子
+        real(rk), intent(out) :: dwdx(:, :)  !! 平滑函子的导数
+        integer, intent(out) :: countiac(:) !! 在模拟中所使用的相互作用对的数目
+
         integer :: i, j, d, scale_k
         integer :: grid(maxngx, maxngy, maxngz), xgcell(3, ntotal), gcell(3), xcell, ycell, zcell, celldata(ntotal), minxcell(3), &
                    maxxcell(3), dnxgcell(dim), dpxgcell(dim), ngridx(dim), ghsmlx(dim)
@@ -141,42 +135,17 @@ contains
 
     end subroutine link_list
 
-!>   subroutine to established a pair linked list by sorting grid cell.
-!>   it is suitable for a homogeneous particle distribution with the
-!>   same smoothing length in an instant. a fixed number of particles
-!>   lie in each cell.
-!>
-!>     ntotal   : number of particles                                [in]
-!>     hsml     : smoothing length                                   [in]
-!>     grid     : array of grid cells                               [out]
-!>     ngridx   : number of sorting grid cells in x, y, z-direction [out]
-!>     ghsmlx   : smoothing length measured in cells of the grid    [out]
-!>     maxgridx : maximum x-, y- and z-coordinate of grid range     [out]
-!>     mingridx : minimum x-, y- and z-coordinate of grid range     [out]
-!>     dgeomx   : x-, y- and z-expansion of grid range              [out]
+    !> 用于通过对网格单元格进行排序来建立结对链表, 它适用于在瞬间具有相同平滑长度的均匀颗粒分布, 每个细胞中都有固定数量的粒子
+    pure subroutine init_grid(ntotal, hsml, grid, ngridx, ghsmlx, maxgridx, mingridx, dgeomx)
+        integer, intent(in) :: ntotal                           !! 在模拟中所使用的粒子总数
+        real(rk), intent(in) :: hsml                            !! 平滑长度
+        integer, intent(out) :: grid(maxngx, maxngy, maxngz)    !! 网格单元格
+        integer, intent(out) :: ngridx(dim)                     !! 网格单元格数量
+        integer, intent(out) :: ghsmlx(dim)                     !! 平滑长度
+        real(rk), intent(out) :: maxgridx(:)                    !! 最大网格单元格坐标
+        real(rk), intent(out) :: mingridx(:)                    !! 最小网格单元格坐标
+        real(rk), intent(out) :: dgeomx(:)                      !! 网格单元格坐标扩展
 
-    subroutine init_grid(ntotal, hsml, grid, ngridx, ghsmlx, maxgridx, mingridx, dgeomx)
-
-        use config_m, only: rk
-        use parameter
-        implicit none
-
-        !     parameter used for sorting grid cells in the link list algorithm
-        !     maxngx  : maximum number of sorting grid cells in x-direction
-        !     maxngy  : maximum number of sorting grid cells in y-direction
-        !     maxngz  : maximum number of sorting grid cells in z-direction
-        !     determining maximum number of sorting grid cells:
-        !     (for an homogeneous particle distribution:)
-        !     1-dim. problem: maxngx = maxn ,  maxngy = maxngz = 1
-        !     2-dim. problem: maxngx = maxngy ~ sqrt(maxn) ,  maxngz = 1
-        !     3-dim. problem: maxngx = maxngy = maxngz ~ maxn^(1/3)
-        integer :: maxngx, maxngy, maxngz
-        parameter(maxngx=100, maxngy=100, maxngz=1)
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(in) :: ntotal
-        integer :: grid(maxngx, maxngy, maxngz), ngridx(dim), ghsmlx(dim)
-        real(rk) :: hsml, maxgridx(:), mingridx(:), dgeomx(:)
         integer :: i, j, k, d, maxng(dim), ngrid(3)
         !> averaged number of particles per grid cell
         real(rk), parameter :: nppg = 3.0_rk
@@ -246,36 +215,16 @@ contains
         end do
 
     end subroutine init_grid
-!> 用于计算具有坐标 (x) 的粒子所在的排序网格的单元格的坐标 (xgcell) 的子例程。
-!>   subroutine to calculate the coordinates (xgcell) of the cell of
-!>   the sorting  grid, in which the particle with coordinates (x) lies.
+
+    !> 用于计算具有坐标 (x) 的粒子所在的排序网格的单元格的坐标 (xgcell) 的子例程
     subroutine grid_geom(i, x, ngridx, maxgridx, mingridx, dgeomx, xgcell)
-
-        use config_m, only: rk
-        use parameter
-        implicit none
-
-        !> 粒子序号
-        !> index of particle
-        integer, intent(in) :: i
-        !> 粒子的坐标
-        !> coordinates of particle
-        real(rk), intent(in) :: x(:)
-        !> 分割网格的个数
-        !> number of sorting grid cells in x, y, z-direction
-        integer, intent(in) :: ngridx(:)
-        !> 分割网格的最大坐标
-        !> maximum x-, y- and z-coordinate of grid range
-        real(rk), intent(in) :: maxgridx(:)
-        !> 分割网格的最小坐标
-        !> minimum x-, y- and z-coordinate of grid range
-        real(rk), intent(in) :: mingridx(:)
-        !> 分割网格的坐标增量
-        !> x-, y- and z-expansion of grid range
-        real(rk), intent(in) :: dgeomx(:)
-        !> 分割网格的坐标
-        !> x-, y- and z-coordinte of sorting grid cell
-        integer, intent(out) :: xgcell(3)
+        integer, intent(in) :: i            !! 粒子序号
+        real(rk), intent(in) :: x(:)        !! 粒子的坐标
+        integer, intent(in) :: ngridx(:)    !! 分割网格的个数
+        real(rk), intent(in) :: maxgridx(:) !! 分割网格的最大坐标
+        real(rk), intent(in) :: mingridx(:) !! 分割网格的最小坐标
+        real(rk), intent(in) :: dgeomx(:)   !! 分割网格的坐标增量
+        integer, intent(out) :: xgcell(3)   !! 分割网格的坐标
 
         integer :: d
 
@@ -285,9 +234,9 @@ contains
 
         do d = 1, dim
             if ((x(d) > maxgridx(d)) .or. (x(d) < mingridx(d))) then
-                print *, ' >>> error <<< : particle out of range'
-                print *, '    particle position: x(', i, d, ') = ', x(d)
-                print *, '    range: [xmin,xmax](', d, ') =                               [', mingridx(d), ',', maxgridx(d), ']'
+                write (stdout, *) ' >>> error <<< : particle out of range'
+                write (stdout, *) '    particle position: x(', i, d, ') = ', x(d)
+                write (stdout, *) '    range: [xmin,xmax](', d, ') = [', mingridx(d), ',', maxgridx(d), ']'
                 stop
             else
                 xgcell(d) = int(real(ngridx(d))/dgeomx(d)*(x(d) - mingridx(d)) + 1.0_rk)

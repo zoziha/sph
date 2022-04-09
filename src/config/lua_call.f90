@@ -1,11 +1,11 @@
-! 前处理，使用 Lua 脚本初始化粒子。
+!> 前处理，使用 Lua 脚本中的方法与数据初始化粒子。
 module lua_call_m
 
-    use easy_lua_m, only: get_value
     use, intrinsic :: iso_c_binding, only: c_ptr
-    use lua
     use config_m, only: rk, in_path
+    use easy_lua_m, only: get_value
     use input_m, only: saved_virt_part
+    use lua
     use parameter, only: dim
     implicit none
     private
@@ -16,9 +16,16 @@ contains
 
     !> 读取初始化粒子数据
     subroutine lua_input(lua_script, x, vx, mass, rho, p, u, itype, hsml, ntotal)
-        character(*), intent(in) :: lua_script
-        real(rk), intent(out) :: x(:, :), vx(:, :), mass(:), rho(:), p(:), u(:), hsml(:)
-        integer, intent(out) :: itype(:), ntotal
+        character(*), intent(in) :: lua_script  !! 脚本文件名
+        real(rk), intent(out) :: x(:, :)        !! 粒子坐标
+        real(rk), intent(out) :: vx(:, :)       !! 粒子速度
+        real(rk), intent(out) :: mass(:)        !! 粒子质量
+        real(rk), intent(out) :: rho(:)         !! 粒子密度
+        real(rk), intent(out) :: p(:)           !! 粒子压强
+        real(rk), intent(out) :: u(:)           !! 粒子内能
+        integer, intent(out) :: itype(:)        !! 粒子类型
+        real(rk), intent(out) :: hsml(:)        !! 粒子光滑长度
+        integer, intent(out) :: ntotal          !! 粒子总数
         real(rk), allocatable :: x_(:, :), vx_(:, :), mass_(:), rho_(:), p_(:), u_(:), hsml_(:)
         integer, allocatable :: itype_(:)
         integer ntotal_
@@ -55,38 +62,20 @@ contains
 
     end subroutine lua_input
 
-    ! 读取虚粒子数据
+    !> 读取虚粒子数据
     subroutine lua_virt_part(x, vx, mass, rho, p, u, itype, hsml, ntotal, nvirt, keep)
         use config_m, only: lua_script
-        integer, intent(in) :: ntotal
-        !> 虚拟粒子数
-        !> Number of virtual particles
-        integer, intent(out) :: nvirt
-        !> 光滑长度
-        !> Smoothing length
-        real(rk), intent(inout) :: hsml(:)
-        !> 粒子质量
-        !> Particle masses
-        real(rk), intent(inout) :: mass(:)
-        !> 粒子坐标
-        !> Particle coordinates
-        real(rk), intent(inout) :: x(:, :)
-        !> 粒子速度
-        !> Particle velocities
-        real(rk), intent(inout) :: vx(:, :)
-        !> 密度
-        !> Density
-        real(rk), intent(inout) :: rho(:)
-        !> 内部能量
-        !> Internal energy
-        real(rk), intent(inout) :: u(:)
-        !> 粒子压力
-        !> Particle pressure
-        real(rk), intent(inout) :: p(:)
-        !> 粒子类型
-        !> Particle type
-        integer, intent(inout) :: itype(:)
-        logical, intent(in) :: keep
+        integer, intent(in) :: ntotal      !! 粒子总数
+        integer, intent(out) :: nvirt       !! 虚拟粒子数
+        real(rk), intent(inout) :: hsml(:)  !! 光滑长度
+        real(rk), intent(inout) :: mass(:)  !! 粒子质量
+        real(rk), intent(inout) :: x(:, :)  !! 粒子坐标
+        real(rk), intent(inout) :: vx(:, :) !! 粒子速度
+        real(rk), intent(inout) :: rho(:)   !! 密度
+        real(rk), intent(inout) :: u(:)     !! 内部能量
+        real(rk), intent(inout) :: p(:)     !! 粒子压力
+        integer, intent(inout) :: itype(:)  !! 粒子类型
+        logical, intent(in) :: keep         !! 是否保留虚粒子
         type(c_ptr) :: l
         integer :: rc
 

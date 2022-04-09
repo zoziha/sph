@@ -4,11 +4,10 @@
 module parameter
 
     use config_m, only: rk
+    private :: rk
 
-    !@todo#2022-4: move dim/maxn/max_interaction to toml! 
-    !> 求解问题的维度
-    !> dim : dimension of the problem (1, 2 or 3)
-    integer, parameter :: dim = 2
+    !@todo#2022-4: move dim/maxn/max_interaction to toml!
+    integer, parameter :: dim = 2  !! 空间维度
 
     !     parameters for the computational geometry,
     !     x_maxgeom : upper limit of allowed x-regime

@@ -1,4 +1,4 @@
-! 读取toml配置文件
+!> 读取toml配置文件
 module toml_info_m
 
     use, intrinsic :: iso_fortran_env, only: stderr => error_unit
@@ -19,9 +19,10 @@ contains
         call parse_info_sph()
     end subroutine parse_toml_info
 
-    ! 解析access.toml文件
-    !@todo: add argument to specify the file path
-    subroutine parse_access_toml() !@todo: add argument file_name, parse_access_toml(file_name)
+    !> 解析access.toml文件
+    !> @todo: add argument to specify the file path
+    !> @todo: add argument file_name, parse_access_toml(file_name)
+    subroutine parse_access_toml() 
         type(toml_table), allocatable :: access_table
         type(toml_table), pointer :: subtable
         integer access_toml_unit

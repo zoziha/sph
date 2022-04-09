@@ -1,45 +1,27 @@
+!> 更新光滑长度
 module hsml_m
+
     use config_m, only: rk
     use parameter
     implicit none
     private
 
     public :: h_upgrade
+    
 contains
-!> 更新光滑长度
-!> Subroutine to evolve smoothing length.
-    subroutine h_upgrade(dt, ntotal, mass, vx, rho, niac, pair_i, pair_j, dwdx, hsml)
 
-        !> 时间步长
-        !> Time step
-        real(rk), intent(in) :: dt
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(in) :: ntotal
-        !> 粒子的质量
-        !> particle masses
-        real(rk), intent(in) :: mass(:)
-        !> 粒子的速度
-        !> particle velocities
-        real(rk), intent(in) :: vx(:, :)
-        !> 密度
-        !> density
-        real(rk), intent(in) :: rho(:)
-        !> 相互作用对的数目
-        !> number of interaction pairs
-        integer, intent(in) :: niac
-        !> 相互作用对的第一个粒子
-        !> first partner of interaction pair
-        integer, intent(in) :: pair_i(:)
-        !> 相互作用对的第二个粒子
-        !> second partner of interaction pair
-        integer, intent(in) :: pair_j(:)
-        !> 对应于粒子的每个方向的核函数导数
-        !> derivative of kernel with respect to x, y and z
-        real(rk), intent(in) :: dwdx(:, :)
-        !> 光滑长度
-        !> smoothing length
-        real(rk), intent(inout) :: hsml(:)
+    !> 更新光滑长度
+    pure subroutine h_upgrade(dt, ntotal, mass, vx, rho, niac, pair_i, pair_j, dwdx, hsml)
+        real(rk), intent(in) :: dt          !! 时间步长
+        integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
+        real(rk), intent(in) :: mass(:)     !! 粒子的质量
+        real(rk), intent(in) :: vx(:, :)    !! 粒子的速度
+        real(rk), intent(in) :: rho(:)      !! 密度
+        integer, intent(in) :: niac         !! 相互作用对的数目
+        integer, intent(in) :: pair_i(:)    !! 相互作用对的第一个粒子
+        integer, intent(in) :: pair_j(:)    !! 相互作用对的第二个粒子
+        real(rk), intent(in) :: dwdx(:, :)  !! 对应于粒子的每个方向的核函数导数
+        real(rk), intent(inout) :: hsml(:)  !! 光滑长度
 
         integer :: i, j, k, d
         real(rk) :: fac, dvx(dim), hvcc, vcc(ntotal), dhsml(ntotal)
@@ -86,6 +68,6 @@ contains
             end do
 
         end if
-
     end subroutine h_upgrade
+
 end module hsml_m

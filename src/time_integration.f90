@@ -1,3 +1,4 @@
+!> 时间步迭代
 module time_integration_m
 
     use art_heat_m, only: art_heat
@@ -32,56 +33,28 @@ contains
     !> 相关参考为 Hernquist 和 Katz (1989), Simpson (1995), Monaghan (1992) 等等。
     subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
         use config_m, only: max_interaction
-        !> 粒子的坐标
-        !> coordinates of particles
-        real(rk), intent(inout) :: x(:, :)
-        !> 粒子的速度
-        !> velocities of particles
-        real(rk), intent(inout) :: vx(:, :)
-        !> 粒子的质量
-        !> mass of particles
-        real(rk), intent(inout) :: mass(:)
-        !> 粒子的密度
-        !> dnesities of particles
-        real(rk), intent(inout) :: rho(:)
-        !> 粒子的压力
-        !> pressure  of particles
-        real(rk), intent(inout) :: p(:)
-        !> 粒子的内部能量
-        !> internal energy of particles
-        real(rk), intent(inout) :: u(:)
-        !> 粒子的声速
-        !> sound velocity of particles
-        real(rk), intent(out) :: c(:)
-        !> 粒子的熵
-        !> entropy of particles, not used here
-        real(rk), intent(out) :: s(:)
-        !> 粒子的总能量（@note: 暂未使用）
-        !> total energy of particles
-        real(rk), intent(out) :: e(:)
-        !> 粒子的类型(1: ideal gas; 2: water; 3: TNT)
-        !> types of particles
-        integer, intent(inout) :: itype(:)
-        !> 粒子的平滑长度
-        !> smoothing lengths of particles
-        real(rk), intent(inout) :: hsml(:)
-        !> 粒子的总数
-        !> total particle number
-        integer, intent(in) :: ntotal
-        !> 最大的时间步长
-        !> maximum timesteps
-        integer, intent(in) :: maxtimestep
-        !> 时间步长
-        !> timestep
-        real(rk), intent(in) :: dt
+        real(rk), intent(inout) :: x(:, :)      !! 粒子的坐标
+        real(rk), intent(inout) :: vx(:, :)     !! 粒子的速度
+        real(rk), intent(inout) :: mass(:)      !! 粒子的质量
+        real(rk), intent(inout) :: rho(:)       !! 粒子的密度
+        real(rk), intent(inout) :: p(:)         !! 粒子的压力
+        real(rk), intent(inout) :: u(:)         !! 粒子的内部能量
+        real(rk), intent(out) :: c(:)           !! 粒子的声速
+        real(rk), intent(out) :: s(:)           !! 粒子的熵
+        real(rk), intent(out) :: e(:)           !! 粒子的总能量
+        integer, intent(inout) :: itype(:)      !! 粒子的类型
+        real(rk), intent(inout) :: hsml(:)      !! 粒子的平滑长度
+        integer, intent(in) :: ntotal           !! 粒子的总数
+        integer, intent(in) :: maxtimestep      !! 最大的时间步长
+        real(rk), intent(in) :: dt              !! 时间步长
 
-        integer :: i, itimestep, d, nstart = 0  !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
+        integer :: i, itimestep, d, nstart = 0  ! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
         real(rk) :: x_min(dim, ntotal), v_min(dim, ntotal), u_min(ntotal), rho_min(ntotal), &
                     dx(dim, 2*ntotal), dvx(dim, 2*ntotal), &
                     du(2*ntotal), drho(2*ntotal), ds(2*ntotal), t(2*ntotal), tdsdt(2*ntotal)
-        real(rk) :: av(dim, 2*ntotal)   !! 平均速度, average velocity
+        real(rk) :: av(dim, 2*ntotal)   ! 平均速度, average velocity
         real(rk) :: temp_rho, temp_u, &
-                    time = 0.0_rk   !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
+                    time = 0.0_rk   ! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
 
         do itimestep = nstart + 1, nstart + maxtimestep    !! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
 
@@ -196,64 +169,29 @@ contains
     end subroutine time_integration
 
     !> 执行时间积分算法中的一个时间步的子程序
-    !> Subroutine to determine the right hand side of a differential
-    !>  equation in a single step for performing time integration.
-    !>
-    !> In this routine and its subroutines the sph algorithms are performed.
     subroutine single_step(max_interaction, itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
                            tdsdt, dx, dvx, du, ds, drho, itype, av)
-        integer, intent(in) :: max_interaction, itimestep
-        real(rk), intent(in) :: dt
-        integer, intent(in) :: ntotal
-        !> 粒子的平滑长度
-        !> smoothing length
-        real(rk), intent(inout) :: hsml(:)
-        !> 粒子的质量
-        !> particle masses
-        real(rk), intent(inout) :: mass(:)
-        !> 粒子的位置
-        !> particle positions
-        real(rk), intent(inout) :: x(:, :)
-        !> 粒子的速度
-        !> particle velocities
-        real(rk), intent(inout) :: vx(:, :)
-        !> 粒子的内部能量
-        !> particle internal energy
-        real(rk), intent(inout) :: u(:)
-        !> 粒子的熵
-        !> particle entropy (not used here)
-        real(rk), intent(in) :: s(:)
-        !> 粒子的密度
-        !> particle density
-        real(rk), intent(inout) :: rho(:)
-        !> 粒子的压力
-        !> particle pressure
-        real(rk), intent(inout) :: p(:)
-        !> 粒子的温度
-        !> particle temperature
-        real(rk), intent(inout) :: t(:)
-        !> 粒子的熵的生产量
-        !> production of viscous entropy t*ds/dt
-        real(rk), intent(out) :: tdsdt(:)
-        !> 粒子的位移的增量
-        !> particle displacement, dx = vx = dx/dt
-        real(rk), intent(out) :: dx(:, :)
-        !> 粒子的速度的增量
-        !> particle velocity displacement, dvx = dvx/dt
-        real(rk), intent(out) :: dvx(:, :)
-        !> 粒子的内部能量的增量
-        !> particle internal energy displacement, du = du/dt
-        real(rk), intent(out) :: du(:)
-        !> 粒子的熵的增量
-        !> particle entropy displacement, ds  = ds/dt
-        real(rk), intent(out) :: ds(:)
-        !> 粒子的密度的增量
-        !> particle density displacement, drho =  drho/dt
-        real(rk), intent(out) :: drho(:)
-        !> 粒子的类型 (1: ideal gas; 2: water)
-        !> particle type
-        integer, intent(inout) :: itype(:)
-        real(rk), intent(out) :: av(:, :)
+        integer, intent(in) :: max_interaction  !! 最大的互动数
+        integer, intent(in) :: itimestep        !! 当前的时间步数
+        real(rk), intent(in) :: dt              !! 当前的时间步长
+        integer, intent(in) :: ntotal           !! 粒子总数
+        real(rk), intent(inout) :: hsml(:)      !! 粒子的平滑长度
+        real(rk), intent(inout) :: mass(:)      !! 粒子的质量
+        real(rk), intent(inout) :: x(:, :)      !! 粒子的位置
+        real(rk), intent(inout) :: vx(:, :)     !! 粒子的速度
+        real(rk), intent(inout) :: u(:)         !! 粒子的内部能量
+        real(rk), intent(inout) :: s(:)         !! 粒子的熵
+        real(rk), intent(inout) :: rho(:)       !! 粒子的密度
+        real(rk), intent(inout) :: p(:)         !! 粒子的压力
+        real(rk), intent(inout) :: t(:)         !! 粒子的温度
+        real(rk), intent(out) :: tdsdt(:)       !! 粒子的熵的生产量
+        real(rk), intent(out) :: dx(:, :)       !! 粒子的位移的增量
+        real(rk), intent(out) :: dvx(:, :)      !! 粒子的速度的增量
+        real(rk), intent(out) :: du(:)          !! 粒子的内部能量的增量
+        real(rk), intent(out) :: ds(:)          !! 粒子的熵的增量
+        real(rk), intent(out) :: drho(:)        !! 粒子的密度的增量
+        integer, intent(inout) :: itype(:)      !! 粒子的类型
+        real(rk), intent(out) :: av(:, :)       !! 粒子的动量的增量
 
         integer :: i, d, nvirt
         logical, save :: loaded_virt = .false.

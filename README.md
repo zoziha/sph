@@ -42,6 +42,12 @@ F5 / CTRL + F5 # 运行与调试
 
 然后，在visual-studio中检查和选中`src`和`build/dependencies/*`中的源码文件，并构建和运行。
 
+## FORD API 文档
+
+```sh
+ford FORD-project-file.md
+```
+
 ## 链接
 
 - [spheric/SPH Codes](https://spheric-sph.org/sph-projects-and-codes)

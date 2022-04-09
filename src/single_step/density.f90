@@ -1,4 +1,6 @@
+!> 密度
 module density_m
+
     use config_m, only: rk
     use parameter
     use kernel_m, only: kernel
@@ -6,29 +8,21 @@ module density_m
     private
 
     public :: sum_density, con_density
+    
 contains
-    !> 通过应用密度求和法更新密度的子程序。详见第 4 章中的论述。
-    !>   subroutine to calculate the density with sph summation algorithm.
-    !>   see equ.(4.35)
-    !>
-    !>     ntotal : number of particles                                  [in]
-    !>     hsml   : smoothing length                                     [in]
-    !>     mass   : particle masses                                      [in]
-    !>     niac   : number of interaction pairs                          [in]
-    !>     pair_i : list of first partner of interaction pair            [in]
-    !>     pair_j : list of second partner of interaction pair           [in]
-    !>     w      : kernel for all interaction pairs                     [in]
-    !>     itype   : type of particles                                   [in]
-    !>     x       : coordinates of all particles                        [in]
-    !>     rho    : density                                             [out]
+
+    !> 通过应用密度求和法更新密度的子程序。详见第 4 章中的论述 (式4.35)。
     subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(in) :: ntotal
-        !> 相互作用对的数目
-        integer, intent(in) :: niac
-        integer :: pair_i(:), pair_j(:), itype(:)
-        real(rk) :: hsml(:), mass(:), w(:), rho(:)
+        integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
+        real(rk), intent(in) :: hsml(:)     !! 光滑长度
+        real(rk), intent(in) :: mass(:)     !! 粒子质量
+        integer, intent(in) :: niac         !! 相互作用对的数目
+        integer, intent(in) :: pair_i(:)    !! 相互作用对的第一个粒子
+        integer, intent(in) :: pair_j(:)    !! 相互作用对的第二个粒子
+        real(rk), intent(in) :: w(:)        !! 相互作用对的核函数
+        integer, intent(in) :: itype(:)     !! 粒子类型
+        real(rk), intent(out) :: rho(:)     !! 密度
+        
         integer :: i, j, k
         real(rk) :: selfdens, hv(dim), wi(ntotal)
 
@@ -82,34 +76,19 @@ contains
 
     end subroutine sum_density
 
-    !> 通过应用连续密度法更新密度的子程序。详见第 4 章中的论述。
-    !>     subroutine to calculate the density with sph continuity approach.
-    !>     see equ.(4.34)
-    !>
-    !>     ntotal : number of particles                                  [in]
-    !>     mass   : particle masses                                      [in]
-    !>     niac   : number of interaction pairs                          [in]
-    !>     pair_i : list of first partner of interaction pair            [in]
-    !>     pair_j : list of second partner of interaction pair           [in]
-    !>     dwdx   : derivation of kernel for all interaction pairs       [in]
-    !>     vx     : velocities of all particles                          [in]
-    !>     itype   : type of particles                                   [in]
-    !>     x      : coordinates of all particles                         [in]
-    !>     rho    : density                                              [in]
-    !>     drhodt : density change rate of each particle                [out]
-    subroutine con_density(ntotal, mass, niac, pair_i, pair_j, dwdx, vx, itype, x, rho, drhodt)
-
-        use config_m, only: rk
-        use parameter
-        implicit none
-
-        !> 在模拟中所使用的粒子总数
-        !> number of particles in simulation
-        integer, intent(in) :: ntotal
-        !> 相互作用对的数目
-        integer, intent(in) :: niac
-        integer :: pair_i(:), pair_j(:), itype(:)
-        real(rk) :: mass(:), dwdx(:, :), vx(:, :), x(:, :), rho(:), drhodt(:)
+    !> 通过应用连续密度法更新密度的子程序。详见第 4 章中的论述 (式4.34)
+    pure subroutine con_density(ntotal, mass, niac, pair_i, pair_j, dwdx, vx, itype, x, rho, drhodt)
+        integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
+        real(rk), intent(in) :: mass(:)     !! 粒子质量
+        integer, intent(in) :: niac         !! 相互作用对的数目
+        integer, intent(in) :: pair_i(:)    !! 相互作用对的第一个粒子
+        integer, intent(in) :: pair_j(:)    !! 相互作用对的第二个粒子
+        real(rk), intent(in) :: dwdx(:, :)  !! 相互作用对的核函数
+        real(rk), intent(in) :: vx(:, :)    !! 粒子速度
+        integer, intent(in) :: itype(:)     !! 粒子类型
+        real(rk), intent(in) :: x(:, :)     !! 粒子坐标
+        real(rk), intent(in) :: rho(:)      !! 密度
+        real(rk), intent(out) :: drhodt(:)  !! 密度变化率
         integer :: i, j, k, d
         real(rk) :: vcc, dvx(dim)
 
@@ -133,4 +112,5 @@ contains
 
         end do
     end subroutine con_density
+    
 end module density_m

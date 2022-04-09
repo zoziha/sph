@@ -1,3 +1,4 @@
+!> 内力
 module internal_force_m
 
     use config_m, only: rk, visc
@@ -14,76 +15,30 @@ contains
     !> 内力的计算是通过剪切应力的嵌套 SPH 近似法进行的。
     !> 在此子程序中实现了两种类型的 SPH 粒子近似法。
     !> 详见第 4 章，其他相关参考有 Riffert 等人 (1995), Flebbe 等人 (1994)。
-    !> Subroutine to calculate the internal forces on the right hand side
-    !>  of the navier-stokes equations, i.e. the pressure gradient and the
-    !>  gradient of the viscous stress tensor, used by the time integration.
-    !>  moreover the entropy production due to viscous dissipation, tds/dt,
-    !>  and the change of internal energy per mass, de/dt, are calculated.
+    !> 用于计算纳维-斯托克斯方程右侧的内力的子例程，即由时间积分使用的压力梯度和粘性应力张量的梯度。此外，还计算了由于粘性耗散引起的熵产生，tds/dt以及每质量内能的变化de/dt。
     subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair_i, pair_j, &
                          dwdx, u, itype, x, t, c, p, dvxdt, tdsdt, dedt)
-        !> 当前时间步
-        !> Current time step
-        integer, intent(in) :: itimestep
-        !> 时间步长
-        !> Time step
-        real(rk), intent(in) :: dt
-        !> 粒子数量
-        !> Number of particles
-        integer, intent(in) :: ntotal
-        !> 光滑长度
-        !> Smoothing length
-        real(rk), intent(in) :: hsml(:)
-        !> 粒子质量
-        !> Particle masses
-        real(rk), intent(in) :: mass(:)
-        !> 粒子速度
-        !> Particle velocities
-        real(rk), intent(in) :: vx(:, :)
-        !> 粒子互动对数
-        !> Number of interaction pairs
-        integer, intent(in) :: niac
-        !> 粒子密度
-        !> Particle density
-        real(rk), intent(in) :: rho(:)
-        !> 动态粘性
-        !> Dynamic viscosity
-        real(rk), intent(in) :: eta(:)
-        !> 互动对第一个粒子
-        !> First partner of interaction pair
-        integer, intent(in) :: pair_i(:)
-        !> 互动对第二个粒子
-        !> Second partner of interaction pair
-        integer, intent(in) :: pair_j(:)
-        !> 核函数对于x, y, z的导数
-        !> Derivative of kernel with respect to x, y and z
-        real(rk), intent(in) :: dwdx(:, :)
-        !> 粒子内部能量
-        !> Particle internal energy
-        real(rk), intent(in) :: u(:)
-        !> 粒子坐标
-        !> Particle coordinates
-        real(rk), intent(in) :: x(:, :)
-        !> 粒子类型
-        !> Particle type
-        integer, intent(in) :: itype(:)
-        !> 粒子温度
-        !> Particle temperature
-        real(rk), intent(inout) :: t(:)
-        !> 粒子声速
-        !> Particle sound speed
-        real(rk), intent(out) :: c(:)
-        !> 粒子压力
-        !> Particle pressure
-        real(rk), intent(out) :: p(:)
-        !> 粒子加速度
-        !> Acceleration with respect to x, y and z
-        real(rk), intent(out) :: dvxdt(:, :)
-        !> 粒子消耗的粘性熵
-        !> Production of viscous entropy
-        real(rk), intent(out) :: tdsdt(:)
-        !> 粒子温度变化
-        !> Change of specific internal energy
-        real(rk), intent(out) :: dedt(:)
+        integer, intent(in) :: itimestep    !! 当前时间步
+        real(rk), intent(in) :: dt          !! 时间步长
+        integer, intent(in) :: ntotal       !! 粒子数量
+        real(rk), intent(in) :: hsml(:)     !! 光滑长度
+        real(rk), intent(in) :: mass(:)     !! 粒子质量
+        real(rk), intent(in) :: vx(:, :)    !! 粒子速度
+        integer, intent(in) :: niac         !! 粒子互动对数
+        real(rk), intent(in) :: rho(:)      !! 粒子密度
+        real(rk), intent(in) :: eta(:)      !! 动态粘性
+        integer, intent(in) :: pair_i(:)    !! 互动对第一个粒子
+        integer, intent(in) :: pair_j(:)    !! 互动对第二个粒子
+        real(rk), intent(in) :: dwdx(:, :)  !! 核函数对于x, y, z的导数
+        real(rk), intent(in) :: u(:)        !! 粒子内部能量
+        real(rk), intent(in) :: x(:, :)     !! 粒子坐标
+        integer, intent(in) :: itype(:)     !! 粒子类型
+        real(rk), intent(inout) :: t(:)     !! 粒子温度
+        real(rk), intent(out) :: c(:)       !! 粒子声速
+        real(rk), intent(out) :: p(:)       !! 粒子压力
+        real(rk), intent(out) :: dvxdt(:, :)!! 粒子加速度
+        real(rk), intent(out) :: tdsdt(:)   !! 粒子消耗的粘性熵
+        real(rk), intent(out) :: dedt(:)    !! 粒子温度变化
 
         integer :: i, j, k, d
         real(rk) :: dvx(dim), txx(ntotal), tyy(ntotal), tzz(ntotal), txy(ntotal), txz(ntotal), tyz(ntotal), &
