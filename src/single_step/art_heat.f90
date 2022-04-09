@@ -22,7 +22,7 @@ contains
         real(rk), intent(in) :: vx(:, :)    !! 粒子速度
         real(rk), intent(in) :: rho(:)      !! 粒子密度
         real(rk), intent(in) :: u(:)        !! 粒子内能
-        real(rk), intent(in) :: c(:)        !! 粒子速度的光束
+        real(rk), intent(in) :: c(:)        !! 粒子速度的光速
         real(rk), intent(in) :: w(:)        !! 粒子核函数值
         real(rk), intent(in) :: dwdx(:, :)  !! 粒子核函数的导数
         real(rk), intent(out) :: dedt(:)    !! 粒子热量

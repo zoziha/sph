@@ -4,6 +4,7 @@
 
 [![wakatime](https://wakatime.com/badge/user/ca8e3153-da86-47e8-ba89-1fac0c842c19.svg)](https://wakatime.com/@ca8e3153-da86-47e8-ba89-1fac0c842c19)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/49b0928e-4dc4-4c1c-9aa1-b3f0095fb152/deploy-status)](https://app.netlify.com/sites/zoziha-sph-api-docs/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ba328ec0-0f67-4349-86b1-2d5f5847c98a/deploy-status)](https://app.netlify.com/sites/zoziha-sph-specs-and-tutorial/deploys)
 
 ## 开始
 
@@ -52,6 +53,16 @@ ford FORD-project-file.md
 ```
 
 最新生成、发布的API文档详见[此链接](https://zoziha-sph-api-docs.netlify.app/)。
+
+### 规范与教程
+
+[mdbook](https://github.com/rust-lang/mdBook) 是一个 markdown 文档生成器。
+
+```sh
+cd doc && mdbook build
+```
+
+最新生成、发布的规范、教程文档详见[此链接](https://zoziha-sph-specs-and-tutorial.netlify.app/)。
 
 ## 链接
 

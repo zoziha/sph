@@ -18,6 +18,7 @@ f_**
 
 # tmp doc
 doc/API-docs/*
+doc/book/*
 
 # ignorance
 *.ignore

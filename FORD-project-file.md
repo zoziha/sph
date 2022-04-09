@@ -6,7 +6,8 @@ src_dir: app
 project_website: https://gitee.com/zoziha/sph
 project_download: https://gitee.com/zoziha/sph/releases
 output_dir: doc/API-docs
-page_dir: doc/specs
+page_dir: doc/
+copy_subdir: doc/specs
 author: 左志华
 author_description: 哈尔滨工程大学-船舶与海洋结构物设计制造，在读学生
 email: zuo.zhihua@qq.com
