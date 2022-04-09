@@ -2,6 +2,9 @@
 
 一份社区驱动的开源光滑粒子流体动力学（SPH）代码，起始代码版本源自[课本《光滑粒子流体动力学--一种无网格粒子法》](doc/books/光滑粒子流体动力学：一种无网格粒子法.pdf)。
 
+[![wakatime](https://wakatime.com/badge/user/ca8e3153-da86-47e8-ba89-1fac0c842c19.svg)](https://wakatime.com/@ca8e3153-da86-47e8-ba89-1fac0c842c19)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/49b0928e-4dc4-4c1c-9aa1-b3f0095fb152/deploy-status)](https://app.netlify.com/sites/zoziha-sph-api-docs/deploys)
+
 ## 开始
 
 ### 依赖
@@ -42,11 +45,13 @@ F5 / CTRL + F5 # 运行与调试
 
 然后，在visual-studio中检查和选中`src`和`build/dependencies/*`中的源码文件，并构建和运行。
 
-## FORD API 文档
+### [FORD](https://github.com/Fortran-FOSS-Programmers/ford) API 文档
 
 ```sh
 ford FORD-project-file.md
 ```
+
+最新生成、发布的API文档详见[此链接](https://zoziha-sph-api-docs.netlify.app/)。
 
 ## 链接
 
