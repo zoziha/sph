@@ -21,6 +21,7 @@ master_time = { git = "https://gitee.com/zoziha/master_time.git" }
 easy_string = { git = "https://gitee.com/zoziha/easy_string.git" }
 progress_bar = { git = "https://gitee.com/zoziha/progress_bar.git" }
 stdlib_logger = { git = "https://gitee.com/zoziha/stdlib_logger.git" }
+argv-fortran = { git="https://github.com/jacobwilliams/argv-fortran.git" }
 
 ntree = { git = "https://gitee.com/zoziha/ntree.git" }
 toml-f = { git = "https://github.com/toml-f/toml-f.git" }

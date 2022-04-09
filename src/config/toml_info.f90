@@ -2,6 +2,7 @@
 module toml_info_m
 
     use, intrinsic :: iso_fortran_env, only: stderr => error_unit
+    use arg_m, only: get_path
     use config_m
     use error_stop_m, only: error_stop
     use swift_file_m, only: is_exist
@@ -20,16 +21,19 @@ contains
     end subroutine parse_toml_info
 
     !> 解析access.toml文件
-    !> @todo: add argument to specify the file path
-    !> @todo: add argument file_name, parse_access_toml(file_name)
-    subroutine parse_access_toml() 
+    !>
+    !> 用法: fpm run sph -- example/shearcavity
+    subroutine parse_access_toml()
         type(toml_table), allocatable :: access_table
         type(toml_table), pointer :: subtable
+        character(:), allocatable :: path
         integer access_toml_unit
-        if (.not. is_exist("access.toml")) &
-            call error_stop('access.toml文件不存在, 请检查!', &
+
+        call get_path(path)
+        if (.not. is_exist(path//"/access.toml")) &
+            call error_stop(path//'/access.toml文件不存在, 请检查!', &
                             'toml_info_m%parse_access_toml')
-        open (newunit=access_toml_unit, file='access.toml', status='old')
+        open (newunit=access_toml_unit, file=path//'/access.toml', status='old')
         call toml_parse(access_table, access_toml_unit)
         close (access_toml_unit)
 
