@@ -25,10 +25,11 @@ module config_m
 
     integer :: maxn                         !! 粒子总数
     integer :: max_interaction              !! 粒子最大互动数
-    logical :: self_gravity                 !! 是否考虑自重
-    logical :: visc                         !! 是否考虑粘性
+    logical :: self_gravity                 !! 是否考虑自重, 默认值 F
+    logical :: visc                         !! 是否考虑粘性, 默认值 T
+    integer :: eos_form                     !! 水的EOS形式, 默认值 2
 
-    logical :: dofile                       !! 是否使用脚本
+    logical :: dofile                       !! 是否使用脚本, 默认值 F
     character(:), allocatable :: lua_script !! 脚本名
 
 end module config_m

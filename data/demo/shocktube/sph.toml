@@ -3,11 +3,13 @@ name = "1 dimensional shock tube"
 [parameter]
 
 dim = 1
-nnps = 3
+kpair = 30
+nnps = 1
 skf = 1
-print_step = 100
-save_step = 500
+print_step = 10
+save_step = 5
 dt = 0.005
+monitor_particle = 1
 
 [pre-process]
 

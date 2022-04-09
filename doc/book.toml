@@ -4,3 +4,6 @@ language = "zh"
 multilingual = false
 src = "specs"
 title = "sph 规范与教程"
+
+[output.html]
+git-repository-url = "https://gitee.com/zoziha/sph"

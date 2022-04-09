@@ -16,7 +16,7 @@ title: 开发者日志
 - 添加 vtk 输出，支持 paraview 可视化
 - 使用自制子组件库: easy_string, master_time, progress_bar
 
-## v0.1.2 -
+## v0.1.2 - 0.2.0
 
 - 对非Windows-Intel-OneAPI环境采用部分esc码彩色样式;
 - 拟支持toml-f解析配置文件;

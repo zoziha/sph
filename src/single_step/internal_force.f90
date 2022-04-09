@@ -1,4 +1,7 @@
 !> 内力
+!>
+!> 1. 压强;
+!> 2. 粘性力.
 module internal_force_m
 
     use config_m, only: rk, visc
@@ -16,7 +19,7 @@ contains
     !> 在此子程序中实现了两种类型的 SPH 粒子近似法。
     !> 详见第 4 章，其他相关参考有 Riffert 等人 (1995), Flebbe 等人 (1994)。
     !> 用于计算纳维-斯托克斯方程右侧的内力的子例程，即由时间积分使用的压力梯度和粘性应力张量的梯度。此外，还计算了由于粘性耗散引起的熵产生，tds/dt以及每质量内能的变化de/dt。
-    subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair_i, pair_j, &
+    pure subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair_i, pair_j, &
                          dwdx, u, itype, x, t, c, p, dvxdt, tdsdt, dedt)
         integer, intent(in) :: itimestep    !! 当前时间步
         real(rk), intent(in) :: dt          !! 时间步长
@@ -44,8 +47,8 @@ contains
         real(rk) :: dvx(dim), txx(ntotal), tyy(ntotal), tzz(ntotal), txy(ntotal), txz(ntotal), tyz(ntotal), &
                     vcc(ntotal), hxx, hyy, hzz, hxy, hxz, hyz, h, hvcc, he, rhoij
 
-        !     initialization of shear tensor, velocity divergence,
-        !     viscous energy, internal energy, acceleration
+        ! initialization of shear tensor, velocity divergence,
+        ! viscous energy, internal energy, acceleration
 
         do i = 1, ntotal
             txx(i) = 0._rk
@@ -62,7 +65,7 @@ contains
             end do
         end do
 
-        !     calculate sph sum for shear tensor tab = va,b + vb,a - 2/3 delta_ab vc,c
+        ! calculate sph sum for shear tensor tab = va,b + vb,a - 2/3 delta_ab vc,c
 
         if (visc) then
             do k = 1, niac
@@ -113,7 +116,7 @@ contains
                     tzz(j) = tzz(j) + mass(i)*hzz/rho(i)
                 end if
 
-                !     calculate sph sum for vc,c = dvx/dx + dvy/dy + dvz/dz:
+                ! calculate sph sum for vc,c = dvx/dx + dvy/dy + dvz/dz:
 
                 hvcc = 0._rk
                 do d = 1, dim
@@ -126,7 +129,7 @@ contains
 
         do i = 1, ntotal
 
-            !     viscous entropy tds/dt = 1/2 eta/rho tab tab
+            ! viscous entropy tds/dt = 1/2 eta/rho tab tab
 
             if (visc) then
                 if (dim == 1) then
@@ -140,43 +143,45 @@ contains
                 tdsdt(i) = 0.5_rk*eta(i)/rho(i)*tdsdt(i)
             end if
 
-            !     pressure from equation of state
-
-            if (abs(itype(i)) == 1) then
+            ! pressure from equation of state
+            select case (itype(i))
+            case (-1, 1) ! 气体实型、虚型 Ⅰ
                 call p_gas(rho(i), u(i), p(i), c(i))
-            else if (abs(itype(i)) == 2) then
+            case (-2, 2) ! 淡水实型、虚型 Ⅰ
                 call p_art_water(rho(i), p(i), c(i))
-            end if
+            case (-12)   ! 淡水虚型 Ⅱ @todo
+                
+            end select
 
         end do
 
-        !      calculate sph sum for pressure force -p,a/rho
-        !      and viscous force (eta tab),b/rho
-        !      and the internal energy change de/dt due to -p/rho vc,c
+        ! calculate sph sum for pressure force -p,a/rho
+        ! and viscous force (eta tab),b/rho
+        ! and the internal energy change de/dt due to -p/rho vc,c
 
         do k = 1, niac
             i = pair_i(k)
             j = pair_j(k)
             he = 0._rk
 
-            !     for sph algorithm 1
+            ! for sph algorithm 1
 
             rhoij = 1._rk/(rho(i)*rho(j))
             if (pa_sph == 1) then
                 do d = 1, dim
 
-                    !     pressure part
+                    ! pressure part
 
                     h = -(p(i) + p(j))*dwdx(d, k)
                     he = he + (vx(d, j) - vx(d, i))*h
 
-                    !     viscous force
+                    ! viscous force
 
                     if (visc) then
 
                         if (d == 1) then
 
-                            !     x-coordinate of acceleration
+                            ! x-coordinate of acceleration
 
                             h = h + (eta(i)*txx(i) + eta(j)*txx(j))*dwdx(1, k)
                             if (dim >= 2) then
@@ -187,7 +192,7 @@ contains
                             end if
                         else if (d == 2) then
 
-                            !     y-coordinate of acceleration
+                            ! y-coordinate of acceleration
 
                             h = h + (eta(i)*txy(i) + eta(j)*txy(j))*dwdx(1, k) + (eta(i)*tyy(i) + eta(j)*tyy(j))*dwdx(2, k)
                             if (dim == 3) then
@@ -195,7 +200,7 @@ contains
                             end if
                         else if (d == 3) then
 
-                            !     z-coordinate of acceleration
+                            ! z-coordinate of acceleration
 
                             h = h + (eta(i)*txz(i) + eta(j)*txz(j))*dwdx(1, k) + (eta(i)*tyz(i) + eta(j)*tyz(j))*dwdx(2, k) &
                                 + (eta(i)*tzz(i) + eta(j)*tzz(j))*dwdx(3, k)
@@ -209,19 +214,19 @@ contains
                 dedt(i) = dedt(i) + mass(j)*he
                 dedt(j) = dedt(j) + mass(i)*he
 
-                !     for sph algorithm 2
+                ! for sph algorithm 2
 
             else if (pa_sph == 2) then
                 do d = 1, dim
                     h = -(p(i)/rho(i)**2 + p(j)/rho(j)**2)*dwdx(d, k)
                     he = he + (vx(d, j) - vx(d, i))*h
 
-                    !     viscous force
+                    ! viscous force
 
                     if (visc) then
                         if (d == 1) then
 
-                            !     x-coordinate of acceleration
+                            ! x-coordinate of acceleration
 
                             h = h + (eta(i)*txx(i)/rho(i)**2 + eta(j)*txx(j)/rho(j)**2)*dwdx(1, k)
                             if (dim >= 2) then
@@ -232,7 +237,7 @@ contains
                             end if
                         else if (d == 2) then
 
-                            !     y-coordinate of acceleration
+                            ! y-coordinate of acceleration
 
                             h = h + (eta(i)*txy(i)/rho(i)**2 + eta(j)*txy(j)/rho(j)**2)*dwdx(1, k) + &
                                 (eta(i)*tyy(i)/rho(i)**2 + eta(j)*tyy(j)/rho(j)**2)*dwdx(2, k)
@@ -241,7 +246,7 @@ contains
                             end if
                         else if (d == 3) then
 
-                            !     z-coordinate of acceleration
+                            ! z-coordinate of acceleration
 
                             h = h + (eta(i)*txz(i)/rho(i)**2 + eta(j)*txz(j)/rho(j)**2)*dwdx(1, k) + &
                                 (eta(i)*tyz(i)/rho(i)**2 + eta(j)*tyz(j)/rho(j)**2)*dwdx(2, k) + &
@@ -256,7 +261,7 @@ contains
             end if
         end do
 
-        !     change of specific internal energy de/dt = t ds/dt - p/rho vc,c:
+        ! change of specific internal energy de/dt = t ds/dt - p/rho vc,c:
 
         do i = 1, ntotal
             dedt(i) = tdsdt(i) + 0.5_rk*dedt(i)

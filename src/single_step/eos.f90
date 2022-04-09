@@ -1,7 +1,10 @@
 !> 状态方程
+!>
+!> 1. 气体;
+!> 2. 淡水
 module eos_m
 
-    use config_m, only: rk
+    use config_m, only: rk, eos_form
     implicit none
     private
 
@@ -18,8 +21,8 @@ contains
 
         real(rk), parameter :: gamma = 1.4_rk
 
-        !      for air (idea gas)
-        !      see equ.(3.82)
+        ! for air (idea gas)
+        ! see equ.(3.82)
         p = (gamma - 1)*rho*u
         c = sqrt((gamma - 1)*u)
 
@@ -31,20 +34,23 @@ contains
         real(rk), intent(out) :: p  !! 压力
         real(rk), intent(out) :: c  !! 声速
 
-        real(rk) :: gamma, rho0
+        real(rk) :: rho0, b
+        integer, parameter :: gamma = 7
 
-        !     artificial eos, form 1 (monaghan, 1994)
-        !     see equ.(4.88)
-        !      gamma=7.
-        !      rho0=1000.
-        !      b = 1.013e5
-        !      p = b*((rho/rho0)**gamma-1)
-        !      c = 1480.
-
-        !     artificial eos, form 2 (morris, 1997)
-        !     see equ.(4.89)
-        c = 0.01_rk
-        p = c**2*rho
+        select case (eos_form)
+        case (1)
+            ! artificial eos, form 1 (monaghan, 1994)
+            ! see equ.(4.88)
+            rho0 = 1000.0_rk
+            b = 1.013e5_rk          ! B = rho0 * c^2 / gamma
+            p = b*((rho/rho0)**gamma - 1)
+            c = 1480.0_rk
+        case (2)
+            ! artificial eos, form 2 (morris, 1997)
+            ! see equ.(4.89)
+            c = 0.01_rk
+            p = c**2*rho
+        end select
     end subroutine p_art_water
 
 end module eos_m

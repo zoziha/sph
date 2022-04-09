@@ -65,6 +65,7 @@ contains
         max_interaction = kpair*maxn
         call get_value(subtable, 'self_gravity', self_gravity, .false.)
         call get_value(subtable, 'visc', visc, .true.)
+        call get_value(subtable, 'eos_form', eos_form, 2)
         
         call get_value(sph_table, 'pre-process', subtable)
         call get_value(subtable, 'dofile', dofile, .false.) ! 默认不从 Lua 脚本中生成数据

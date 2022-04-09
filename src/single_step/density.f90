@@ -12,7 +12,7 @@ module density_m
 contains
 
     !> 通过应用密度求和法更新密度的子程序。详见第 4 章中的论述 (式4.35)。
-    subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
+    pure subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
         integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
         real(rk), intent(in) :: hsml(:)     !! 光滑长度
         real(rk), intent(in) :: mass(:)     !! 粒子质量
@@ -26,16 +26,16 @@ contains
         integer :: i, j, k
         real(rk) :: selfdens, hv(dim), wi(ntotal)
 
-        !     wi(maxn)---integration of the kernel itself
+        ! wi(maxn)---integration of the kernel itself
 
         hv(1:dim) = 0.0_rk
 
         ! 先计算粒子自身对密度的贡献值
-        !     self density of each particle: wii (kernel for distance 0)
-        !     and take contribution of particle itself:
+        ! self density of each particle: wii (kernel for distance 0)
+        ! and take contribution of particle itself:
 
         ! 修正密度加和法, 先计算分母
-        !     firstly calculate the integration of the kernel over the space
+        ! firstly calculate the integration of the kernel over the space
 
         if (nor_density) then
             do i = 1, ntotal
@@ -52,14 +52,14 @@ contains
 
         end if
         ! 修正密度加和法, 再计算分子
-        !     secondly calculate the rho integration over the space
+        ! secondly calculate the rho integration over the space
 
         do i = 1, ntotal
             call kernel(0.0_rk, hv, hsml(i), selfdens, hv)
             rho(i) = selfdens*mass(i)
         end do
 
-        !     calculate sph sum for rho:
+        ! calculate sph sum for rho:
         do k = 1, niac
             i = pair_i(k)
             j = pair_j(k)
@@ -68,7 +68,7 @@ contains
         end do
 
         ! 修正密度加和法, 正则化
-        !     thirdly, calculate the normalized rho, rho=sum(rho)/sum(w)
+        ! thirdly, calculate the normalized rho, rho=sum(rho)/sum(w)
 
         if (nor_density) then
             rho(i:ntotal) = rho(i:ntotal)/wi(i:ntotal)

@@ -1,13 +1,13 @@
 !> 输出模块
 module output_m
 
-    use easy_string_m, only: to_string
-    use swift_file_m, only: mkdir, is_exist
-    use, intrinsic :: iso_fortran_env, only: stdout => output_unit
     use config_m, only: nick, out_path, skf, nnps, print_step, rk
-    use info_m, only: operator(.c.)
+    use, intrinsic :: iso_fortran_env, only: stdout => output_unit
+    use easy_string_m, only: to_string
     use error_stop_m, only: error_stop
+    use info_m, only: operator(.c.)
     use parameter
+    use swift_file_m, only: mkdir, is_exist
     implicit none
 
     public :: set_folder, set_parameter_log
