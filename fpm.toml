@@ -21,14 +21,14 @@ master_time = { git = "https://gitee.com/zoziha/master_time.git" }
 easy_string = { git = "https://gitee.com/zoziha/easy_string.git" }
 progress_bar = { git = "https://gitee.com/zoziha/progress_bar.git" }
 stdlib_logger = { git = "https://gitee.com/zoziha/stdlib_logger.git" }
-argv-fortran = { git="https://github.com/jacobwilliams/argv-fortran.git" }
+argv-fortran = { git="https://gitee.com/fortran-base/argv-fortran.git" }
 
 ntree = { git = "https://gitee.com/zoziha/ntree.git" }
-toml-f = { git = "https://github.com/toml-f/toml-f.git" }
+toml-f = { git = "https://gitee.com/fortran-base/toml-f.git" }
 
 
 [dev-dependencies]
-test-drive = { git = "https://github.com/fortran-lang/test-drive", tag = "v0.4.0" }
+test-drive = { git = "https://gitee.com/fortran-base/test-drive", tag = "v0.4.0" }
 
 [[executable]]
 name = "sph"
