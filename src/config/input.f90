@@ -152,7 +152,7 @@ contains
         real(rk), intent(out) :: hsml(:)    !! 粒子光滑长度
         integer, intent(out) :: ntotal      !! 粒子总数
 
-        integer :: i, j, d, m, n, mp, np, k
+        integer :: i, j, m, n, mp, np, k
         real(rk) :: xl, yl, dx, dy
 
         !> giving mass and smoothing length as well as other data.

@@ -277,7 +277,11 @@ contains
         ! 计算粒子的平均速度，避免粒子渗透 @todo: 重力作用下，仍会出现穿透
         !     calculating average velocity of each partile for avoiding penetration(渗透)
 
-        if (average_velocity) call av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
+        if (average_velocity) then
+            call av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
+        else
+            av(:, 1:ntotal) = 0.0_rk
+        end if
 
         ! 转换粒子的速度，力和能量为f和dfdt
         !---  convert velocity, force, and energy to f and dfdt

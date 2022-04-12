@@ -10,7 +10,7 @@ Release/*
 *.pdb
 .vscode
 .vs**
-vs-**
+solution/**
 
 # data
 output**

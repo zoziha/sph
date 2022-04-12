@@ -10,7 +10,7 @@
 
 ### 依赖
 
-- Lua链接库
+- Lua链接库 >= 5.3
 
 如果是 visual-studio 用户，需要将[编译的 Lua 官方库](https://gitee.com/zoziha/sph/issues/I5138J#note_9613327_link)，放置在 `vs-solution` 文件夹下。
 
@@ -37,7 +37,7 @@ fpm test
 
 ### 其它构建系统
 
-除了fpm，本项目将有可能支持visual-studio进行构建。
+除了fpm，本项目将有可能支持visual-studio / code::blocks进行构建，具体的解决方案见`./solution`文件夹。
 
 ```sh
 fpm update      # 仍然需要使用fpm拉取上游依赖库!
