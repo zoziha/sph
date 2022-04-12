@@ -235,6 +235,8 @@
 		<Unit filename="../src/utils/utils.f90">
 			<Option weight="2" />
 		</Unit>
+		<Unit filename=".stdlog.log" />
+		<Unit filename="access.toml" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

@@ -28,6 +28,8 @@ module config_m
     logical :: self_gravity                 !! 是否考虑自重, 默认值 F
     logical :: visc                         !! 是否考虑粘性, 默认值 T
     integer :: eos_form                     !! 水的EOS形式, 默认值 2
+    logical :: visc_artificial              !! 是否考虑人工粘性, 默认值 F
+    logical :: heat_artificial              !! 是否考虑人工热量, 默认值 F
 
     logical :: dofile                       !! 是否使用脚本, 默认值 F
     character(:), allocatable :: lua_script !! 脚本名

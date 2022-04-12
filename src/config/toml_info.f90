@@ -4,7 +4,9 @@ module toml_info_m
     use, intrinsic :: iso_fortran_env, only: stderr => error_unit
     use arg_m, only: get_path
     use config_m
+    use easy_string_m, only: to_string
     use error_stop_m, only: error_stop
+    use stdlib_logger, only: stdlog => global_logger
     use swift_file_m, only: is_exist
     use tomlf, only: toml_table, get_value, toml_parse
     implicit none
@@ -41,6 +43,10 @@ contains
         call get_value(subtable, 'in', in_path, './data/input')  !! 默认输入路径
         call get_value(subtable, 'out', out_path, './data/output')  !! 默认输出路径
 
+        ! 日志
+        call stdlog%log_information('In  path: '//in_path)
+        call stdlog%log_information('Out path: '//out_path)
+
         nullify (subtable)
     end subroutine parse_access_toml
 
@@ -70,10 +76,29 @@ contains
         call get_value(subtable, 'self_gravity', self_gravity, .false.)
         call get_value(subtable, 'visc', visc, .true.)
         call get_value(subtable, 'eos_form', eos_form, 2)
-        
+        call get_value(subtable, 'visc_artificial', visc_artificial, .false.)
+        call get_value(subtable, 'heat_artificial', heat_artificial, .false.)
+
         call get_value(sph_table, 'pre-process', subtable)
         call get_value(subtable, 'dofile', dofile, .false.) ! 默认不从 Lua 脚本中生成数据
         call get_value(subtable, 'lua_script', lua_script, 'lua_script.lua')
+
+        ! 日志
+        call stdlog%log_information('Project name: '//nick)
+        call stdlog%log_information('dt: '//to_string(dt))
+        call stdlog%log_information('skf: '//to_string(skf))
+        call stdlog%log_information('nnps: '//to_string(nnps))
+        call stdlog%log_information('print_step: '//to_string(print_step))
+        call stdlog%log_information('save_step: '//to_string(save_step))
+        call stdlog%log_information('maxn: '//to_string(maxn))
+        call stdlog%log_information('kpair: '//to_string(kpair))
+        call stdlog%log_information('self_gravity: '//to_string(self_gravity))
+        call stdlog%log_information('visc: '//to_string(visc))
+        call stdlog%log_information('eos_form: '//to_string(eos_form))
+        call stdlog%log_information('visc_artificial: '//to_string(visc_artificial))
+        call stdlog%log_information('heat_artificial: '//to_string(heat_artificial))
+        call stdlog%log_information('dofile: '//to_string(dofile))
+        call stdlog%log_information('lua_script: '//lua_script)
 
         nullify (subtable)
     end subroutine parse_info_sph
