@@ -5,7 +5,7 @@
 program main
 
     use config_m, only: rk, stdout, stdin, tinsert, tsearch, dt, nnps, maxn, dofile, &
-        lua_script
+                        lua_script, version
     use info_m, only: operator(.c.), info
     use input_m, only: input
     use lua_call_m, only: lua_input
@@ -18,12 +18,15 @@ program main
     use toml_info_m, only: parse_toml_info
     implicit none
 
+    character(:), allocatable :: time   !! 时间
     integer :: ntotal       !! 粒子总数
     integer :: maxtimestep  !! 最大时间步数
     integer :: yesorno      !! 是否继续运行
 
     call tic()
-    call time_print()
+    call time_print(time)
+    write (stdout, '(a)') 'SPH SOLVER ('//version//') STARTED AT: '//time
+    write (stdout, '(a/)') 'Repository: https://gitee.com/zoziha/sph'
     call stdlog%add_log_file('.stdlog.log')
     call stdlog%log_information('Start logging')
 
@@ -59,8 +62,8 @@ program main
         's, particle search time: ', tsearch, 's'
 
     call stdlog%log_information('End logging')
-    call time_print()
+    call time_print(time)
     call toc()
-    write (stdout, "(a)") 'All finish!'
+    write (stdout, "(/a)") 'ALL FINISHED AT: '//time
 
 end program main

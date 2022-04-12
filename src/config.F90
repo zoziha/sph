@@ -7,6 +7,7 @@ module config_m
     implicit none
     public
 
+    character(*), parameter :: version = '0.2.0'    !! sph solver 版本
     integer, parameter :: rk = dp           !! sph预设浮点精度 @todo: not compatible with single precision at this time
 
     real, save :: tinsert = 0.0             !! 粒子记录时间
@@ -27,7 +28,7 @@ module config_m
     integer :: max_interaction              !! 粒子最大互动数
     logical :: self_gravity                 !! 是否考虑自重, 默认值 F
     logical :: visc                         !! 是否考虑粘性, 默认值 T
-    integer :: eos_form                     !! 水的EOS形式, 默认值 2
+    integer :: eos_form                     !! 水的 EOS 形式, 默认值 2
     logical :: visc_artificial              !! 是否考虑人工粘性, 默认值 F
     logical :: heat_artificial              !! 是否考虑人工热量, 默认值 F
 

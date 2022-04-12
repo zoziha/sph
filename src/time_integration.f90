@@ -194,7 +194,7 @@ contains
         integer, intent(inout) :: itype(:)      !! 粒子的类型
         real(rk), intent(out) :: av(:, :)       !! 粒子的动量的增量
 
-        integer :: i, d, nvirt
+        integer :: i, nvirt
         logical, save :: loaded_virt = .false.
         !> 相互作用对的数目
         integer :: niac
@@ -207,7 +207,6 @@ contains
             ahdudt(i) = 0.0_rk
             indvxdt(:, i) = 0.0_rk
             ardvxdt(:, i) = 0.0_rk
-            exdvxdt(:, i) = 0.0_rk
         end do
 
         !> (边界) 虚粒子的位置设定
@@ -267,7 +266,11 @@ contains
 
         !---  external forces:
 
-        if (ex_force) call ext_force(ntotal + nvirt, mass, x, niac, pair_i, pair_j, itype, hsml, exdvxdt)
+        if (ex_force) then
+            call ext_force(ntotal + nvirt, mass, x, niac, pair_i, pair_j, itype, hsml, exdvxdt)
+        else
+            exdvxdt(:, 1:ntotal + nvirt) = 0.0_rk
+        end if
 
         !     calculating the neighboring particles and undating hsml
 
