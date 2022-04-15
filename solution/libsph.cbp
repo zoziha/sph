@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="libsph" />
+		<Option pch_mode="2" />
+		<Option compiler="gfortran" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/sph" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Debug/" />
+				<Option type="2" />
+				<Option compiler="gfortran" />
+				<Option createDefFile="1" />
+				<Option projectCompilerOptionsRelation="1" />
+				<Option projectLinkerOptionsRelation="0" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/sph" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/Release/" />
+				<Option type="2" />
+				<Option compiler="gfortran" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wall" />
+				</Compiler>
+			</Target>
+		</Build>
+		<Unit filename="../build/dependencies/argv-fortran/src/argv_module.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/easy_lua/src/easy-lua.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../build/dependencies/easy_math/src/easy_math.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/easy_string/src/easy_string.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/error_stop/src/error_stop.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/fortran-lua53/src/lua.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/info/src/info.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/master_time/src/master_time.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/ntree/src/ntree.F90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../build/dependencies/ntree/src/ntree_factory.F90">
+			<Option weight="3" />
+		</Unit>
+		<Unit filename="../build/dependencies/ntree/src/shape.F90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../build/dependencies/progress_bar/src/progress_bar.F90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/queue/src/queue.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/stdlib_logger/src/stdlib_logger.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/swift_file/src/swift_file.F90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf.f90">
+			<Option weight="13" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/all.f90">
+			<Option weight="13" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/build.f90">
+			<Option weight="12" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/build/array.f90">
+			<Option weight="11" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/build/keyval.f90">
+			<Option weight="10" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/build/merge.f90">
+			<Option weight="10" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/build/table.f90">
+			<Option weight="11" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/constants.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/datetime.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/de.f90">
+			<Option weight="12" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/de/character.f90">
+			<Option weight="11" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/de/tokenizer.f90">
+			<Option weight="10" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/error.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/ser.f90">
+			<Option weight="10" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/structure.f90">
+			<Option weight="7" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/structure/base.f90">
+			<Option weight="5" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/structure/vector.f90">
+			<Option weight="6" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/type.f90">
+			<Option weight="9" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/type/array.f90">
+			<Option weight="8" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/type/keyval.f90">
+			<Option weight="5" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/type/table.f90">
+			<Option weight="8" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/type/value.f90">
+			<Option weight="4" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/utils.f90">
+			<Option weight="3" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/utils/convert.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/utils/sort.f90">
+			<Option weight="5" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/utils/verify.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../build/dependencies/toml-f/src/tomlf/version.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../src/config.F90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../src/config/arg.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../src/config/input.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../src/config/lua_call.f90">
+			<Option weight="3" />
+		</Unit>
+		<Unit filename="../src/config/toml_info.f90">
+			<Option weight="14" />
+		</Unit>
+		<Unit filename="../src/kernel/kernel.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../src/macro.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../src/result/output.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../src/result/post_processing/paraview_interface.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../src/single_step/art_heat.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../src/single_step/art_visc.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../src/single_step/av_vel.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../src/single_step/density.f90">
+			<Option weight="3" />
+		</Unit>
+		<Unit filename="../src/single_step/eos.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../src/single_step/external_force.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../src/single_step/hsml.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../src/single_step/internal_force.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../src/single_step/nnps_direct_find/direct_find.f90">
+			<Option weight="3" />
+		</Unit>
+		<Unit filename="../src/single_step/nnps_link_list/link_list.f90">
+			<Option weight="3" />
+		</Unit>
+		<Unit filename="../src/single_step/nnps_tree_search/tree_search.f90">
+			<Option weight="4" />
+		</Unit>
+		<Unit filename="../src/single_step/viscosity.f90">
+			<Option weight="2" />
+		</Unit>
+		<Unit filename="../src/time_integration.f90">
+			<Option weight="5" />
+		</Unit>
+		<Unit filename="../src/utils/parameter.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../src/utils/utils.f90">
+			<Option weight="2" />
+		</Unit>
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

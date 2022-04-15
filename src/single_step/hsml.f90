@@ -7,7 +7,7 @@ module hsml_m
     private
 
     public :: h_upgrade
-    
+
 contains
 
     !> 更新光滑长度
@@ -36,9 +36,7 @@ contains
 
             !---  dh/dt = (-1/dim)*(h/rho)*(drho/dt).
 
-            do i = 1, ntotal
-                vcc(i) = 0._rk
-            end do
+            vcc(1:ntotal) = 0.0_rk
 
             do k = 1, niac
                 i = pair_i(k)
@@ -64,7 +62,7 @@ contains
 
             fac = 2.0_rk
             do i = 1, ntotal
-                hsml(i) = fac*(mass(i)/rho(i))**(1._rk/dim)
+                hsml(i) = fac*(mass(i)/rho(i))**(1.0_rk/dim)
             end do
 
         end if

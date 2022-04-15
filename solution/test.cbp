@@ -2,17 +2,16 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="sph" />
+		<Option title="test" />
 		<Option pch_mode="2" />
 		<Option compiler="gfortran" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/sph" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/test" prefix_auto="1" extension_auto="1" />
 				<Option working_dir=".." />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gfortran" />
-				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-g" />
 				</Compiler>
@@ -23,30 +22,45 @@
 				</Linker>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/sph" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/test" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gfortran" />
-				<Option parameters="../example/water_g" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="bin/Release/libsph.a" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../app/sph.f90">
+		<Unit filename="../build/dependencies/test-drive/src/testdrive.F90">
 			<Option weight="0" />
 		</Unit>
-		<Unit filename=".stdlog.log" />
-		<Unit filename="access.toml" />
-		<Extensions>
-			<lib_finder disable_auto="1" />
-		</Extensions>
+		<Unit filename="../build/dependencies/test-drive/src/testdrive_version.f90">
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="../test/test_kernel.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../test/test_macro.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../test/test_ouput.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../test/test_toml_info.F90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../test/test_tree_search.f90">
+			<Option weight="1" />
+		</Unit>
+		<Unit filename="../test/tester.f90">
+			<Option weight="2" />
+		</Unit>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

@@ -63,7 +63,7 @@ program main
 
     call stdlog%log_information('End logging')
     call time_print(time)
-    call toc()
     write (stdout, "(/a)") 'ALL FINISHED AT: '//time
+    call toc()
 
 end program main

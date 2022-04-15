@@ -8,7 +8,7 @@ module density_m
     private
 
     public :: sum_density, con_density
-    
+
 contains
 
     !> 通过应用密度求和法更新密度的子程序。详见第 4 章中的论述 (式4.35)。
@@ -22,7 +22,7 @@ contains
         real(rk), intent(in) :: w(:)        !! 相互作用对的核函数
         integer, intent(in) :: itype(:)     !! 粒子类型
         real(rk), intent(out) :: rho(:)     !! 密度
-        
+
         integer :: i, j, k
         real(rk) :: selfdens, hv(dim), wi(ntotal)
 
@@ -92,9 +92,7 @@ contains
         integer :: i, j, k, d
         real(rk) :: vcc, dvx(dim)
 
-        do i = 1, ntotal
-            drhodt(i) = 0._rk
-        end do
+        drhodt(1:ntotal) = 0.0_rk
 
         do k = 1, niac
 
@@ -112,5 +110,5 @@ contains
 
         end do
     end subroutine con_density
-    
+
 end module density_m

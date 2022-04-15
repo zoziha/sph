@@ -9,7 +9,7 @@ module internal_force_m
     use parameter, only: dim, pa_sph
     implicit none
     private
-    
+
     public :: int_force
 
 contains
@@ -51,18 +51,16 @@ contains
         ! viscous energy, internal energy, acceleration
 
         do i = 1, ntotal
-            txx(i) = 0._rk
-            tyy(i) = 0._rk
-            tzz(i) = 0._rk
-            txy(i) = 0._rk
-            txz(i) = 0._rk
-            tyz(i) = 0._rk
-            vcc(i) = 0._rk
-            tdsdt(i) = 0._rk
-            dedt(i) = 0._rk
-            do d = 1, dim
-                dvxdt(d, i) = 0._rk
-            end do
+            txx(i) = 0.0_rk
+            tyy(i) = 0.0_rk
+            tzz(i) = 0.0_rk
+            txy(i) = 0.0_rk
+            txz(i) = 0.0_rk
+            tyz(i) = 0.0_rk
+            vcc(i) = 0.0_rk
+            tdsdt(i) = 0.0_rk
+            dedt(i) = 0.0_rk
+            dvxdt(1:dim, i) = 0.0_rk
         end do
 
         ! calculate sph sum for shear tensor tab = va,b + vb,a - 2/3 delta_ab vc,c
@@ -75,22 +73,22 @@ contains
                     dvx(d) = vx(d, j) - vx(d, i)
                 end do
                 if (dim == 1) then
-                    hxx = 2._rk*dvx(1)*dwdx(1, k)
+                    hxx = 2*dvx(1)*dwdx(1, k)
                 else if (dim == 2) then
-                    hxx = 2._rk*dvx(1)*dwdx(1, k) - dvx(2)*dwdx(2, k)
+                    hxx = 2*dvx(1)*dwdx(1, k) - dvx(2)*dwdx(2, k)
                     hxy = dvx(1)*dwdx(2, k) + dvx(2)*dwdx(1, k)
-                    hyy = 2._rk*dvx(2)*dwdx(2, k) - dvx(1)*dwdx(1, k)
+                    hyy = 2*dvx(2)*dwdx(2, k) - dvx(1)*dwdx(1, k)
                 else if (dim == 3) then
-                    hxx = 2._rk*dvx(1)*dwdx(1, k) - dvx(2)*dwdx(2, k) - dvx(3)*dwdx(3, k)
+                    hxx = 2*dvx(1)*dwdx(1, k) - dvx(2)*dwdx(2, k) - dvx(3)*dwdx(3, k)
                     hxy = dvx(1)*dwdx(2, k) + dvx(2)*dwdx(1, k)
                     hxz = dvx(1)*dwdx(3, k) + dvx(3)*dwdx(1, k)
-                    hyy = 2._rk*dvx(2)*dwdx(2, k) - dvx(1)*dwdx(1, k) - dvx(3)*dwdx(3, k)
+                    hyy = 2*dvx(2)*dwdx(2, k) - dvx(1)*dwdx(1, k) - dvx(3)*dwdx(3, k)
                     hyz = dvx(2)*dwdx(3, k) + dvx(3)*dwdx(2, k)
-                    hzz = 2._rk*dvx(3)*dwdx(3, k) - dvx(1)*dwdx(1, k) - dvx(2)*dwdx(2, k)
+                    hzz = 2*dvx(3)*dwdx(3, k) - dvx(1)*dwdx(1, k) - dvx(2)*dwdx(2, k)
                 end if
-                hxx = 2._rk/3._rk*hxx
-                hyy = 2._rk/3._rk*hyy
-                hzz = 2._rk/3._rk*hzz
+                hxx = 2/3._rk*hxx
+                hyy = 2/3._rk*hyy
+                hzz = 2/3._rk*hzz
                 if (dim == 1) then
                     txx(i) = txx(i) + mass(j)*hxx/rho(j)
                     txx(j) = txx(j) + mass(i)*hxx/rho(i)
@@ -118,7 +116,7 @@ contains
 
                 ! calculate sph sum for vc,c = dvx/dx + dvy/dy + dvz/dz:
 
-                hvcc = 0._rk
+                hvcc = 0.0_rk
                 do d = 1, dim
                     hvcc = hvcc + dvx(d)*dwdx(d, k)
                 end do
@@ -135,10 +133,10 @@ contains
                 if (dim == 1) then
                     tdsdt(i) = txx(i)*txx(i)
                 else if (dim == 2) then
-                    tdsdt(i) = txx(i)*txx(i) + 2._rk*txy(i)*txy(i) + tyy(i)*tyy(i)
+                    tdsdt(i) = txx(i)*txx(i) + 2*txy(i)*txy(i) + tyy(i)*tyy(i)
                 else if (dim == 3) then
-                    tdsdt(i) = txx(i)*txx(i) + 2._rk*txy(i)*txy(i) + 2._rk*txz(i)*txz(i) + &
-                               tyy(i)*tyy(i) + 2._rk*tyz(i)*tyz(i) + tzz(i)*tzz(i)
+                    tdsdt(i) = txx(i)*txx(i) + 2*txy(i)*txy(i) + 2*txz(i)*txz(i) + &
+                               tyy(i)*tyy(i) + 2*tyz(i)*tyz(i) + tzz(i)*tzz(i)
                 end if
                 tdsdt(i) = 0.5_rk*eta(i)/rho(i)*tdsdt(i)
             end if
@@ -150,7 +148,7 @@ contains
             case (-2, 2) ! 淡水实型、虚型 Ⅰ
                 call p_art_water(rho(i), p(i), c(i))
             case (-12)   ! 淡水虚型 Ⅱ @todo
-                
+
             end select
 
         end do
@@ -162,11 +160,11 @@ contains
         do k = 1, niac
             i = pair_i(k)
             j = pair_j(k)
-            he = 0._rk
+            he = 0.0_rk
 
             ! for sph algorithm 1
 
-            rhoij = 1._rk/(rho(i)*rho(j))
+            rhoij = 1/(rho(i)*rho(j))
             if (pa_sph == 1) then
                 do d = 1, dim
 
