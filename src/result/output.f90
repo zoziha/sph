@@ -99,7 +99,7 @@ contains
         write (stdout, '(a)') .c.'Project name: '//nick
         write (stdout, '(a,i0)') .c.'Smoothed kernel function: ', skf
         write (stdout, '(a,i0)') .c.'NNPS method: ', nnps
-        write (stdout, '(a,l0/)') .c.'Gravity: ', self_gravity
+        write (stdout, '(a,l1/)') .c.'Gravity: ', self_gravity
     end subroutine set_parameter_log
 
     !> 建立所需文件夹

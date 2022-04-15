@@ -23,15 +23,9 @@ contains
     subroutine test_parse_toml_info(error)
         type(error_type), allocatable, intent(out) :: error
         call parse_toml_info()
-#ifdef __GFORTRAN__
         call check(error, in_path, './data/demo/shearcavity')
         if (allocated(error)) return
         call check(error, out_path, './data/output')
-#elif defined __INTEL_COMPILER
-        call check(error, in_path, '../data/demo/shearcavity')
-        if (allocated(error)) return
-        call check(error, out_path, '../data/output')
-#endif
         if (allocated(error)) return
         call check(error, nick, "2 dimensional shear cavity flow")
         if (allocated(error)) return

@@ -144,6 +144,7 @@
 			<FileConfiguration Name="Release|Win32">
 				<Tool Name="VFFortranCompilerTool" ObjectFile="$(IntDir)\utils1"/></FileConfiguration></File>
 		<File RelativePath="..\build\dependencies\toml-f\src\tomlf\version.f90"/></Filter>
+		<File RelativePath="..\build\dependencies\argv-fortran\src\argv_module.f90"/>
 		<File RelativePath="..\build\dependencies\easy_string\src\easy_string.f90"/>
 		<File RelativePath="..\build\dependencies\error_stop\src\error_stop.f90"/>
 		<File RelativePath="..\build\dependencies\info\src\info.f90"/>
@@ -160,6 +161,7 @@
 			<FileConfiguration Name="Release|Win32">
 				<Tool Name="VFFortranCompilerTool" Preprocess="preprocessYes"/></FileConfiguration></File></Filter>
 		<Filter Name="src">
+		<File RelativePath="..\src\config\arg.f90"/>
 		<File RelativePath="..\src\single_step\art_heat.f90"/>
 		<File RelativePath="..\src\single_step\art_visc.f90"/>
 		<File RelativePath="..\src\single_step\av_vel.f90"/>
