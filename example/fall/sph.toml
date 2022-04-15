@@ -1,0 +1,49 @@
+# 工程名
+name = "2 dimensional fall water"
+
+# 参数
+[parameter]
+
+# 维度
+dim = 2
+# 粒子最大数目
+maxn = 3000
+# 平均粒子相互作用对的数目比例: kpair*maxn
+kpair = 20
+# 粒子近似算法指示变量
+pa_sph = 2
+virtual_part = false
+# 最近相邻粒子搜索(NNPS)算法指示变量: 1, 直接搜索法
+#                                 2, 背景网格-链表搜索法
+#                                 3, 树型搜索法
+nnps = 1
+# 光滑长度估算方法指示变量
+sle = 0
+# 光滑核函数指示变量: 1, cubic spline kernel by w4 - spline (monaghan 1985)
+#                  2, gauss kernel   (gingold and monaghan 1981)
+#                  3, quintic kernel (morris 1997)
+skf = 1
+# 监测的粒子序号
+monitor_particle = 1
+# 控制在屏幕上显示的粒子信息是第几个时间步
+print_step = 100
+# 控制保存到外部磁盘的粒子信息是第几个时间步 (PS, 3000)
+save_step = 500
+# 时间步长
+dt = 1.0e-6
+# 是否考虑重力
+self_gravity = true
+eos_form = 1
+
+[pre-process]
+
+# openmp并行线程控制
+openmp = true
+num_threads = 4
+dofile = true
+lua_script = "ini_lua_script.lua"
+
+
+[post-process]
+
+vtk = false

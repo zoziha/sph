@@ -37,7 +37,7 @@ fpm test
 
 ### 其它构建系统
 
-除了fpm，本项目将有可能支持visual-studio / code::blocks进行构建，具体的解决方案见`./solution`文件夹。
+除了fpm，本项目将有可能支持`visual-studio / code::blocks`进行构建，具体的解决方案见`./solution`文件夹。
 
 ```sh
 fpm update      # 仍然需要使用fpm拉取上游依赖库!

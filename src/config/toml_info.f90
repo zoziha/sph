@@ -73,6 +73,7 @@ contains
         call get_value(subtable, 'maxn', maxn, 5000)
         call get_value(subtable, 'kpair', kpair, 20)
         max_interaction = kpair*maxn
+        call get_value(subtable, 'virtual_part', virtual_part, .true.)
         call get_value(subtable, 'self_gravity', self_gravity, .false.)
         call get_value(subtable, 'visc', visc, .true.)
         call get_value(subtable, 'eos_form', eos_form, 2)
@@ -92,6 +93,7 @@ contains
         call stdlog%log_information('save_step: '//to_string(save_step))
         call stdlog%log_information('maxn: '//to_string(maxn))
         call stdlog%log_information('kpair: '//to_string(kpair))
+        call stdlog%log_information('virtual_part: '//to_string(virtual_part))
         call stdlog%log_information('self_gravity: '//to_string(self_gravity))
         call stdlog%log_information('visc: '//to_string(visc))
         call stdlog%log_information('eos_form: '//to_string(eos_form))

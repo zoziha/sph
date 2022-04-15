@@ -26,6 +26,7 @@ module config_m
 
     integer :: maxn                         !! 粒子总数
     integer :: max_interaction              !! 粒子最大互动数
+    logical :: virtual_part                 !! 是否使用虚拟粒子, 默认值 T
     logical :: self_gravity                 !! 是否考虑自重, 默认值 F
     logical :: visc                         !! 是否考虑粘性, 默认值 T
     integer :: eos_form                     !! 水的 EOS 形式, 默认值 2

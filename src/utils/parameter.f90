@@ -41,8 +41,6 @@ module parameter
     !                       .false. : no average treatment.
     !     config_input = .true. : load initial configuration data,
     !                   .false. : generate initial configuration.
-    !     virtual_part = .true. : use vritual particle,
-    !                   .false. : no use of vritual particle.
     !     vp_input = .true. : load virtual particle information,
     !               .false. : generate virtual particle information.
     !     ex_force =.true. : consider external force,
@@ -50,11 +48,10 @@ module parameter
     ! 密度正则化的指示变量
     !     nor_density =  .true. : density normalization by using cspm,
     !                   .false. : no normalization.
-    logical :: summation_density, average_velocity, config_input, virtual_part, vp_input, ex_force, nor_density
+    logical :: summation_density, average_velocity, config_input, vp_input, ex_force, nor_density
     parameter(summation_density=.true.)
     parameter(average_velocity=.true.)
     parameter(config_input=.false.)
-    parameter(virtual_part=.true.)
     parameter(vp_input=.false.)
     parameter(ex_force=.true.)
     parameter(nor_density=.true.)
