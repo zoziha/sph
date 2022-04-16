@@ -12,6 +12,7 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gfortran" />
+				<Option parameters="../example/fall" />
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-g" />
@@ -27,13 +28,15 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gfortran" />
-				<Option parameters="../example/water_g" />
+				<Option parameters="../example/fall" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="bin/Release/libsph.a" />
+					<Add option="-lsph" />
+					<Add option="-llua" />
+					<Add directory="bin/Release" />
 				</Linker>
 			</Target>
 		</Build>

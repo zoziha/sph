@@ -24,7 +24,8 @@ contains
         real(rk), intent(out) :: dvxdt(:, :)!! 各粒子的加速度
 
         integer :: i, j, k
-        real(rk) :: rr, f, rr0, dd, p1, p2
+        real(rk) :: rr, f, rr0, dd
+        integer :: p1, p2
 
         dvxdt(:, 1:ntotal) = 0.0_rk
 
@@ -45,7 +46,7 @@ contains
             j = pair_j(k)
             if (itype(i) > 0 .and. itype(j) < 0) then
                 associate (dx => x(:, i) - x(:, j))
-                    rr = sqrt(sum(dx*dx))
+                    rr = norm2(dx)
                     if (rr < rr0) then
                         f = ((rr0/rr)**p1 - (rr0/rr)**p2)/rr**2
                         dvxdt(:, i) = dvxdt(:, i) + dd*dx(:)*f

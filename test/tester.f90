@@ -33,6 +33,6 @@ program tester
         error stop
     end if
 
-    print *, "All tests passed. :)"
+    print '(/a)', "**** All tests passed :)"
 
 end program tester

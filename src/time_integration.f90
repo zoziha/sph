@@ -154,7 +154,9 @@ contains
             if (mod(itimestep, print_step) == 0) then
                 write (*, *)
                 write (*, 101) 'location', 'velocity', 'acc'
-                write (*, 100) x(1, moni_particle), vx(1, moni_particle), dvx(1, moni_particle)
+                do i = 1, dim
+                    write (*, 100) x(i, moni_particle), vx(i, moni_particle), dvx(i, moni_particle)
+                end do
                 !> 屏幕输出进度条
                 call pbout(itimestep, nstart + maxtimestep, .true.)
             end if
@@ -299,8 +301,10 @@ contains
         if (mod(itimestep, print_step) == 0) then
             write (stdout, 102) .c.'Information for particle, monitoring particle: ', moni_particle
             write (stdout, 101) 'internal a ', 'artifical a', 'external a =', 'total a '
-            write (stdout, 100) indvxdt(1, moni_particle), ardvxdt(1, moni_particle), &
-                exdvxdt(1, moni_particle), dvx(1, moni_particle)
+            do i = 1, dim
+                write (stdout, 100) indvxdt(i, moni_particle), ardvxdt(i, moni_particle), &
+                    exdvxdt(i, moni_particle), dvx(i, moni_particle)
+            end do
         end if
 
 102     format(/a, i0)
