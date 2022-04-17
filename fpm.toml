@@ -35,10 +35,6 @@ name = "sph"
 main = "sph.f90"
 source-dir = "app"
 
-[[executable]]
-name = "vtk"
-main = "to_vtk.f90"
-
 [[test]]
 name = "tester"
 main = "tester.f90"
