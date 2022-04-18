@@ -49,7 +49,7 @@ contains
         integer, intent(in) :: maxtimestep      !! 最大的时间步长
         real(rk), intent(in) :: dt              !! 时间步长
 
-        integer :: i, itimestep, d, nstart = 0  ! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
+        integer :: i, itimestep, d, nvirt, nstart = 0  ! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
         real(rk) :: x_min(dim, ntotal), v_min(dim, ntotal), u_min(ntotal), rho_min(ntotal), &
                     dx(dim, 2*ntotal), dvx(dim, 2*ntotal), &
                     du(2*ntotal), drho(2*ntotal), ds(2*ntotal), t(2*ntotal), tdsdt(2*ntotal)
@@ -96,7 +96,7 @@ contains
             !---  definition of variables out of the function vector:
 
             call single_step(max_interaction, itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
-                             tdsdt, dx, dvx, du, ds, drho, itype, av)
+                             tdsdt, dx, dvx, du, ds, drho, itype, av, nvirt)
 
             if (itimestep == 1) then
 
@@ -146,8 +146,8 @@ contains
 
             if (mod(itimestep, save_step) == 0) then
 
-                !> 输出每个保存时间步的求解信息（拓展）
-                call output_all(x, vx, mass, rho, p, u, c, itype, hsml, ntotal, itimestep/save_step)
+                !> 输出每个保存时间步的求解信息（拓展）, 输出实、虚粒子
+                call output_all(x, vx, mass, rho, p, u, c, itype, hsml, ntotal + nvirt, itimestep/save_step)
 
             end if
 
@@ -158,7 +158,7 @@ contains
                     write (*, 100) x(i, moni_particle), vx(i, moni_particle), dvx(i, moni_particle)
                 end do
                 !> 屏幕输出进度条
-                call pbout(itimestep, nstart + maxtimestep, .true.)
+                call pbout(itimestep, nstart + maxtimestep, isflushed=.true.)
             end if
 
         end do
@@ -173,7 +173,7 @@ contains
 
     !> 执行时间积分算法中的一个时间步的子程序
     subroutine single_step(max_interaction, itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
-                           tdsdt, dx, dvx, du, ds, drho, itype, av)
+                           tdsdt, dx, dvx, du, ds, drho, itype, av, nvirt)
         integer, intent(in) :: max_interaction  !! 最大的互动数
         integer, intent(in) :: itimestep        !! 当前的时间步数
         real(rk), intent(in) :: dt              !! 当前的时间步长
@@ -195,8 +195,9 @@ contains
         real(rk), intent(out) :: drho(:)        !! 粒子的密度的增量
         integer, intent(inout) :: itype(:)      !! 粒子的类型
         real(rk), intent(out) :: av(:, :)       !! 粒子的动量的增量
+        integer, intent(out) :: nvirt           !! 粒子的虚粒子数量
 
-        integer :: i, nvirt
+        integer :: i
         logical, save :: loaded_virt = .false.
         !> 相互作用对的数目
         integer :: niac
