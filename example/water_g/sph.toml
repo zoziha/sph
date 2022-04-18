@@ -25,14 +25,18 @@ skf = 1
 # 监测的粒子序号
 monitor_particle = 1
 # 控制在屏幕上显示的粒子信息是第几个时间步
-print_step = 100
+print_step = 200
 # 控制保存到外部磁盘的粒子信息是第几个时间步
-save_step = 500
+save_step = 100
 # 时间步长
 dt = 1.0e-6
 # 是否考虑重力
 self_gravity = true
 eos_form = 1
+moni_particle = 750
+visc = false
+CFL = 0.4   # 0.2~0.5
+
 
 [pre-process]
 

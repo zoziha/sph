@@ -5,7 +5,8 @@ module time_integration_m
     use art_visc_m, only: art_visc
     use av_vel_m, only: av_vel
     use config_m, only: rk, stdout, nnps, print_step, save_step, dofile, visc, &
-                        visc_artificial, heat_artificial, virtual_part, moni_particle
+                        visc_artificial, heat_artificial, virtual_part, moni_particle, &
+                        CFL
     use density_m, only: sum_density, con_density
     use direct_find_m, only: direct_find
     use easy_string_m, only: to_string
@@ -47,7 +48,7 @@ contains
         real(rk), intent(inout) :: hsml(:)      !! 粒子的平滑长度
         integer, intent(in) :: ntotal           !! 粒子的总数
         integer, intent(in) :: maxtimestep      !! 最大的时间步长
-        real(rk), intent(in) :: dt              !! 时间步长
+        real(rk), intent(inout) :: dt           !! 时间步长
 
         integer :: i, itimestep, d, nvirt, nstart = 0  ! 注意这里使用了Fortran的save属性，可以让程序在运行时保存这个变量
         real(rk) :: x_min(dim, ntotal), v_min(dim, ntotal), u_min(ntotal), rho_min(ntotal), &
@@ -62,7 +63,7 @@ contains
             if (mod(itimestep, print_step) == 0) then
                 call pbflush()      ! 进度条辅助程序
                 write (stdout, '(a,i0)') .c.'Current number of time step = ', itimestep
-                write (stdout, "(a,g0.3,a)") .c.'Current time = ', time, 's'
+                write (stdout, "(a,2(g0.3,a))") .c.'Current time = ', time, 's, dt = ', dt, 's'
             end if
 
             ! 如果不是第一个时间步长，则更新热能、密度和速度半步长
@@ -95,7 +96,7 @@ contains
 
             !---  definition of variables out of the function vector:
 
-            call single_step(max_interaction, itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
+            call single_step(max_interaction, itimestep, dt, ntotal, hsml, mass, x, vx, u, c, s, rho, p, t, &
                              tdsdt, dx, dvx, du, ds, drho, itype, av, nvirt)
 
             if (itimestep == 1) then
@@ -143,6 +144,9 @@ contains
             end if
 
             time = time + dt
+            
+            !@todo: move to function, self-adaptation time step
+            dt = CFL*hsml(1)/(maxval(abs(c(1:ntotal)))*10)
 
             if (mod(itimestep, save_step) == 0) then
 
@@ -172,7 +176,7 @@ contains
     end subroutine time_integration
 
     !> 执行时间积分算法中的一个时间步的子程序
-    subroutine single_step(max_interaction, itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t, &
+    subroutine single_step(max_interaction, itimestep, dt, ntotal, hsml, mass, x, vx, u, c, s, rho, p, t, &
                            tdsdt, dx, dvx, du, ds, drho, itype, av, nvirt)
         integer, intent(in) :: max_interaction  !! 最大的互动数
         integer, intent(in) :: itimestep        !! 当前的时间步数
@@ -183,6 +187,7 @@ contains
         real(rk), intent(inout) :: x(:, :)      !! 粒子的位置
         real(rk), intent(inout) :: vx(:, :)     !! 粒子的速度
         real(rk), intent(inout) :: u(:)         !! 粒子的内部能量
+        real(rk), intent(inout) :: c(:)         !! 粒子的声速
         real(rk), intent(inout) :: s(:)         !! 粒子的熵
         real(rk), intent(inout) :: rho(:)       !! 粒子的密度
         real(rk), intent(inout) :: p(:)         !! 粒子的压力
@@ -203,7 +208,7 @@ contains
         integer :: niac
         integer :: pair_i(max_interaction), pair_j(max_interaction), ns(2*ntotal) !@tofix: ntotal + nvirt, ifort, heap-array!
         real(rk) :: w(max_interaction), dwdx(dim, max_interaction), indvxdt(dim, 2*ntotal), &
-                    exdvxdt(dim, 2*ntotal), ardvxdt(dim, 2*ntotal), avdudt(2*ntotal), ahdudt(2*ntotal), c(2*ntotal), eta(2*ntotal)
+                    exdvxdt(dim, 2*ntotal), ardvxdt(dim, 2*ntotal), avdudt(2*ntotal), ahdudt(2*ntotal), eta(2*ntotal)
 
         do concurrent(i=1:ntotal)
             avdudt(i) = 0.0_rk

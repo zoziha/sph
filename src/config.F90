@@ -18,6 +18,7 @@ module config_m
 
     character(:), allocatable :: nick       !! 工程名
     real(rk) :: dt                          !! 时间步长
+    real(rk) :: CFL                         !! CFL条件数值, 默认值 0.3
     integer :: skf                          !! 光滑核函数的指示变量
     integer :: nnps                         !! 最近相邻粒子搜索算法指示变量
 

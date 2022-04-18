@@ -2,6 +2,7 @@
 !>
 !> 1. 压强;
 !> 2. 粘性力.
+!> @todo: 压力、粘性力、密度没错，溃堤加速度 dvxdt, h 不对, 涉及到 pa_sph !
 module internal_force_m
 
     use config_m, only: rk, visc
@@ -86,9 +87,9 @@ contains
                     hyz = dvx(2)*dwdx(3, k) + dvx(3)*dwdx(2, k)
                     hzz = 2*dvx(3)*dwdx(3, k) - dvx(1)*dwdx(1, k) - dvx(2)*dwdx(2, k)
                 end if
-                hxx = 2/3._rk*hxx
-                hyy = 2/3._rk*hyy
-                hzz = 2/3._rk*hzz
+                hxx = 2.0_rk/3._rk*hxx
+                hyy = 2.0_rk/3._rk*hyy
+                hzz = 2.0_rk/3._rk*hzz
                 if (dim == 1) then
                     txx(i) = txx(i) + mass(j)*hxx/rho(j)
                     txx(j) = txx(j) + mass(i)*hxx/rho(i)
@@ -212,7 +213,7 @@ contains
                 dedt(i) = dedt(i) + mass(j)*he
                 dedt(j) = dedt(j) + mass(i)*he
 
-                ! for sph algorithm 2
+                ! for sph algorithm 2 (equ 4.43)
 
             else if (pa_sph == 2) then
                 do d = 1, dim

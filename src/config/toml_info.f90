@@ -66,6 +66,7 @@ contains
         call get_value(sph_table, 'name', nick, 'untitled')  !! 默认项目名
         call get_value(sph_table, 'parameter', subtable)
         call get_value(subtable, 'dt', dt) !@todo: 设置默认值或提醒
+        call get_value(subtable, 'CFL', CFL, 0.3_rk) 
         call get_value(subtable, 'skf', skf, 1)
         call get_value(subtable, 'nnps', nnps, 1) ! 默认直接搜索
         call get_value(subtable, 'print_step', print_step, 100)
@@ -88,6 +89,7 @@ contains
         ! 日志
         call stdlog%log_information('Project name: '//nick)
         call stdlog%log_information('dt: '//to_string(dt))
+        call stdlog%log_information('CFL: '//to_string(CFL))
         call stdlog%log_information('skf: '//to_string(skf))
         call stdlog%log_information('nnps: '//to_string(nnps))
         call stdlog%log_information('print_step: '//to_string(print_step))

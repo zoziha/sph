@@ -86,6 +86,28 @@ function virt_part()
         end
     end
 
+    -- 左边界
+    for i = 1, 2 * mp - 1 do
+        for j = 1, 3, 1 do
+            nvirt = nvirt + 1
+            x[1][nvirt] = 0.0 - dx / 2 * (j - 1)
+            x[2][nvirt] = i * dx / 2
+            vx[1][nvirt] = 0.0
+            vx[2][nvirt] = 0.0
+        end
+    end
+
+    -- -- 右边界
+    -- for i = 1, 2 * mp - 1 do
+    --     for j = 1, 3, 1 do
+    --         nvirt = nvirt + 1
+    --         x[1][nvirt] = xl + dx / 2 * (j - 1)
+    --         x[2][nvirt] = i * dx / 2
+    --         vx[1][nvirt] = 0.0
+    --         vx[2][nvirt] = 0.0
+    --     end
+    -- end
+
     for i = 1, nvirt do
         rho[i] = 1000.0
         mass[i] = rho[i] * dx * dx

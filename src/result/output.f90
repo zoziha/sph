@@ -2,7 +2,7 @@
 module output_m
 
     use config_m, only: nick, out_path, skf, nnps, print_step, rk, self_gravity, &
-                        virtual_part
+                        virtual_part, save_step
     use, intrinsic :: iso_fortran_env, only: stdout => output_unit
     use easy_string_m, only: to_string
     use error_stop_m, only: error_stop
@@ -101,7 +101,8 @@ contains
         write (stdout, '(a,i0)') .c.'Smoothed kernel function: ', skf
         write (stdout, '(a,i0)') .c.'NNPS method: ', nnps
         write (stdout, '(a,l1)') .c.'Gravity: ', self_gravity
-        write (stdout, '(a,l1/)') .c.'Virtual Part: ', virtual_part
+        write (stdout, '(a,l1)') .c.'Virtual Part: ', virtual_part
+        write (stdout, '(a,i0/)') .c.'Save step: ', save_step
     end subroutine set_parameter_log
 
     !> 建立所需文件夹

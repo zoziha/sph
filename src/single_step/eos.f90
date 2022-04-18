@@ -41,10 +41,10 @@ contains
         case (1)
             ! artificial eos, form 1 (monaghan, 1994)
             ! see equ.(4.88)
-            rho0 = 1000.0_rk
-            b = 1.013e5_rk          ! B = rho0 * c^2 / gamma
+            rho0 = 1000.0_rk        ! @todo: 应该从配置文件中读取
+            b = 142.8_rk            ! B = rho0 * c^2 / gamma, to read, B: Parameter in Equation of State (Monaghan and Koss, 1999).
             p = b*((rho/rho0)**gamma - 1)
-            c = 1480.0_rk
+            c = sqrt(b*gamma/rho0)*(rho/rho0)**3
         case (2)
             ! artificial eos, form 2 (morris, 1997)
             ! see equ.(4.89)
