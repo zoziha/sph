@@ -23,6 +23,7 @@ module config_m
 
     integer :: print_step                   !! 输出到屏幕的时间步间隔
     integer :: save_step                    !! 输出到磁盘的时间步间隔
+    integer :: moni_particle                !! 监控粒子, 默认值 1600
 
     integer :: maxn                         !! 粒子总数
     integer :: max_interaction              !! 粒子最大互动数

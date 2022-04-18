@@ -70,6 +70,7 @@ contains
         call get_value(subtable, 'nnps', nnps, 1) ! 默认直接搜索
         call get_value(subtable, 'print_step', print_step, 100)
         call get_value(subtable, 'save_step', save_step, 500)
+        call get_value(subtable, 'moni_particle', moni_particle, 1600)
         call get_value(subtable, 'maxn', maxn, 5000)
         call get_value(subtable, 'kpair', kpair, 20)
         max_interaction = kpair*maxn
@@ -91,6 +92,7 @@ contains
         call stdlog%log_information('nnps: '//to_string(nnps))
         call stdlog%log_information('print_step: '//to_string(print_step))
         call stdlog%log_information('save_step: '//to_string(save_step))
+        call stdlog%log_information('moni_particle: '//to_string(moni_particle))
         call stdlog%log_information('maxn: '//to_string(maxn))
         call stdlog%log_information('kpair: '//to_string(kpair))
         call stdlog%log_information('virtual_part: '//to_string(virtual_part))

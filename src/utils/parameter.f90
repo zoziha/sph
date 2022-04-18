@@ -69,10 +69,6 @@ module parameter
     !>                    including virtual particle information.
     logical, parameter :: int_stat = .true.
 
-    !> 所要监测的粒子的序号
-    !> moni_particle: the particle number for information monitoring.
-    integer, parameter :: moni_particle = 1600
-
     real(rk), parameter :: pi = acos(-1.0_rk)
 
     !> simulation cases
