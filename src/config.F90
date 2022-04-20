@@ -32,6 +32,8 @@ module config_m
     logical :: self_gravity                 !! 是否考虑自重, 默认值 F
     logical :: visc                         !! 是否考虑粘性, 默认值 T
     integer :: eos_form                     !! 水的 EOS 形式, 默认值 2
+    real(rk) :: B                           !! 弱可压 EOS 参数, 默认值 ?
+    real(rk) :: rho0                        !! 参考密度, 默认值 1000.0
     logical :: visc_artificial              !! 是否考虑人工粘性, 默认值 F
     logical :: heat_artificial              !! 是否考虑人工热量, 默认值 F
 

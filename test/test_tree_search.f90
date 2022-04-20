@@ -17,7 +17,7 @@ contains
         type(unittest_type), allocatable, intent(out) :: test_suite(:)
 
         test_suite = [ &
-                     new_unittest("test_tree_search_func", test_tree_search_func) &
+                     new_unittest("sub: tree_search", test_tree_search_func) &
                      ]
 
     end subroutine collect_tree_search_tests

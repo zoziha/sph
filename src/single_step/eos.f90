@@ -4,7 +4,7 @@
 !> 2. 淡水
 module eos_m
 
-    use config_m, only: rk, eos_form
+    use config_m, only: rk, eos_form, B, rho0
     implicit none
     private
 
@@ -34,17 +34,14 @@ contains
         real(rk), intent(out) :: p  !! 压力
         real(rk), intent(out) :: c  !! 声速
 
-        real(rk) :: rho0, b
         integer, parameter :: gamma = 7
 
         select case (eos_form)
         case (1)
             ! artificial eos, form 1 (monaghan, 1994)
             ! see equ.(4.88)
-            rho0 = 1000.0_rk        ! @todo: 应该从配置文件中读取
-            b = 142.8_rk            ! B = rho0 * c^2 / gamma, to read, B: Parameter in Equation of State (Monaghan and Koss, 1999).
-            p = b*((rho/rho0)**gamma - 1)
-            c = sqrt(b*gamma/rho0)*(rho/rho0)**3
+            c = sqrt(B*gamma/rho0)*(rho/rho0)**3
+            p = B*((rho/rho0)**gamma - 1)
         case (2)
             ! artificial eos, form 2 (morris, 1997)
             ! see equ.(4.89)

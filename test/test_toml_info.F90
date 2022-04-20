@@ -15,7 +15,7 @@ contains
         type(unittest_type), allocatable, intent(out) :: test_suite(:)
 
         test_suite = [ &
-                     new_unittest("subroutine: parse_toml_info", test_parse_toml_info) &
+                     new_unittest("sub: parse_toml_info", test_parse_toml_info) &
                      ]
 
     end subroutine collect_toml_info

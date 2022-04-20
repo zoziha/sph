@@ -36,6 +36,10 @@ eos_form = 1
 moni_particle = 750
 visc = false
 CFL = 0.4   # 0.2~0.5
+# B = rho0 * c^2 / gamma, to read, B: Parameter in Equation of State (Monaghan and Koss, 1999).
+B = 142.8
+# 参考密度
+rho0 = 1000.0
 
 
 [pre-process]

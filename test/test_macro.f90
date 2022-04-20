@@ -15,7 +15,7 @@ contains
         type(unittest_type), allocatable, intent(out) :: test_suite(:)
 
         test_suite = [ &
-                     new_unittest("subroutine: alloc_macro_memory", test_alloc_macro_memory) &
+                     new_unittest("sub: alloc_macro_memory", test_alloc_macro_memory) &
                      ]
 
     end subroutine collect_macro

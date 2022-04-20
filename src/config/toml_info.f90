@@ -1,4 +1,4 @@
-!> 读取toml配置文件
+!> 读取 toml 配置文件
 module toml_info_m
 
     use, intrinsic :: iso_fortran_env, only: stderr => error_unit
@@ -79,6 +79,8 @@ contains
         call get_value(subtable, 'self_gravity', self_gravity, .false.)
         call get_value(subtable, 'visc', visc, .true.)
         call get_value(subtable, 'eos_form', eos_form, 2)
+        call get_value(subtable, 'B', B, 1.0_rk)
+        call get_value(subtable, 'rho0', rho0, 1000.0_rk)
         call get_value(subtable, 'visc_artificial', visc_artificial, .false.)
         call get_value(subtable, 'heat_artificial', heat_artificial, .false.)
 
@@ -101,6 +103,8 @@ contains
         call stdlog%log_information('self_gravity: '//to_string(self_gravity))
         call stdlog%log_information('visc: '//to_string(visc))
         call stdlog%log_information('eos_form: '//to_string(eos_form))
+        call stdlog%log_information('B: '//to_string(B))
+        call stdlog%log_information('rho0: '//to_string(rho0))
         call stdlog%log_information('visc_artificial: '//to_string(visc_artificial))
         call stdlog%log_information('heat_artificial: '//to_string(heat_artificial))
         call stdlog%log_information('dofile: '//to_string(dofile))

@@ -1,11 +1,11 @@
 !@todo: 添加测试
 module test_kernel_m
 
-    use testdrive, only: new_unittest, unittest_type, error_type, check
-    use kernel_m
     use config_m, only: rk, skf
-    use parameter
     use easy_math_m, only: is_close
+    use kernel_m
+    use parameter
+    use testdrive, only: new_unittest, unittest_type, error_type, check
     implicit none
     private
 
@@ -17,7 +17,7 @@ contains
         type(unittest_type), allocatable, intent(out) :: test_suite(:)
 
         test_suite = [ &
-                     new_unittest("subroutine: kernel", test_kernel) &
+                     new_unittest("sub: kernel", test_kernel) &
                      ]
 
     end subroutine collect_kernel

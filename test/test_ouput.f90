@@ -16,7 +16,7 @@ contains
         type(unittest_type), allocatable, intent(out) :: test_suite(:)
 
         test_suite = [ &
-                     new_unittest("subroutine: output", test_set_statistics_print) &
+                     new_unittest("sub: output", test_set_statistics_print) &
                      ]
 
     end subroutine collect_output
