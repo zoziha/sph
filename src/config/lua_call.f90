@@ -107,6 +107,15 @@ contains
             call get_value(l, saved_virt_part%hsml, index=-2)
             call get_value(l, saved_virt_part%nvirt, index=-1)
             call lua_close(l)
+            nvirt = saved_virt_part%nvirt
+            x(:, ntotal + 1:ntotal + nvirt) = saved_virt_part%x
+            vx(:, ntotal + 1:ntotal + nvirt) = saved_virt_part%vx
+            mass(ntotal + 1:ntotal + nvirt) = saved_virt_part%mass
+            rho(ntotal + 1:ntotal + nvirt) = saved_virt_part%rho
+            p(ntotal + 1:ntotal + nvirt) = saved_virt_part%p
+            u(ntotal + 1:ntotal + nvirt) = saved_virt_part%u
+            itype(ntotal + 1:ntotal + nvirt) = saved_virt_part%itype
+            hsml(ntotal + 1:ntotal + nvirt) = saved_virt_part%hsml
         end if
 
     end subroutine lua_virt_part
