@@ -77,24 +77,24 @@ function virt_part()
 
     -- 下边界
     for i = 1, 2 * mp + 1 do
-        for j = 1, 3, 1 do
+        -- for j = 1, 3, 1 do
             nvirt = nvirt + 1
             x[1][nvirt] = (i - 1) * dx / 2
-            x[2][nvirt] = 0.0 - dx / 2 * (j - 1)
+            x[2][nvirt] = 0.0 -- dx / 2 * (j - 1)
             vx[1][nvirt] = 0.0
             vx[2][nvirt] = 0.0
-        end
+        -- end
     end
 
     -- 左边界
     for i = 1, 2 * mp - 1 do
-        for j = 1, 3, 1 do
+        -- for j = 1, 3, 1 do
             nvirt = nvirt + 1
-            x[1][nvirt] = 0.0 - dx / 2 * (j - 1)
+            x[1][nvirt] = 0.0 -- dx / 2 * (j - 1)
             x[2][nvirt] = i * dx / 2
             vx[1][nvirt] = 0.0
             vx[2][nvirt] = 0.0
-        end
+        -- end
     end
 
     -- -- 右边界

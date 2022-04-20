@@ -12,7 +12,7 @@ module density_m
 contains
 
     !> 通过应用密度求和法更新密度的子程序。详见第 4 章中的论述 (式4.35)。
-    pure subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
+    subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
         integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
         real(rk), intent(in) :: hsml(:)     !! 光滑长度
         real(rk), intent(in) :: mass(:)     !! 粒子质量
@@ -21,7 +21,7 @@ contains
         integer, intent(in) :: pair_j(:)    !! 相互作用对的第二个粒子
         real(rk), intent(in) :: w(:)        !! 相互作用对的核函数
         integer, intent(in) :: itype(:)     !! 粒子类型
-        real(rk), intent(out) :: rho(:)     !! 密度
+        real(rk), intent(inout) :: rho(:)   !! 密度
 
         integer :: i, j, k
         real(rk) :: selfdens, hv(dim), wi(ntotal)
@@ -39,7 +39,7 @@ contains
 
         if (nor_density) then
             do i = 1, ntotal
-                call kernel(0.0_rk, hv, hsml(i), selfdens, hv)
+                call kernel(0.0_rk, hv, hsml(i), selfdens, hv) !@todo:
                 wi(i) = selfdens*mass(i)/rho(i)
             end do
 
@@ -55,7 +55,7 @@ contains
         ! secondly calculate the rho integration over the space
 
         do i = 1, ntotal
-            call kernel(0.0_rk, hv, hsml(i), selfdens, hv)
+            call kernel(0.0_rk, hv, hsml(i), selfdens, hv) !@todo: 这里如果采用固定光滑长度，可以减少计算量。
             rho(i) = selfdens*mass(i)
         end do
 
@@ -71,7 +71,7 @@ contains
         ! thirdly, calculate the normalized rho, rho=sum(rho)/sum(w)
 
         if (nor_density) then
-            rho(i:ntotal) = rho(i:ntotal)/wi(i:ntotal)
+            rho(1:ntotal) = rho(1:ntotal)/wi(1:ntotal)
         end if
 
     end subroutine sum_density
