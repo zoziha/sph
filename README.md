@@ -1,6 +1,6 @@
 # 光滑粒子流体动力学（SPH）([English](./README_EN.md))
 
-一份社区驱动的开源光滑粒子流体动力学（SPH）代码，起始代码版本源自[课本《光滑粒子流体动力学--一种无网格粒子法》](doc/books/光滑粒子流体动力学：一种无网格粒子法.pdf)。
+一份社区驱动的开源光滑粒子流体动力学（SPH）代码，定位于水动力学问题求解，起始代码版本源自[课本《光滑粒子流体动力学--一种无网格粒子法》](doc/books/光滑粒子流体动力学：一种无网格粒子法.pdf)。
 
 [![wakatime](https://wakatime.com/badge/user/ca8e3153-da86-47e8-ba89-1fac0c842c19.svg)](https://wakatime.com/@ca8e3153-da86-47e8-ba89-1fac0c842c19)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/49b0928e-4dc4-4c1c-9aa1-b3f0095fb152/deploy-status)](https://app.netlify.com/sites/zoziha-sph-api-docs/deploys)

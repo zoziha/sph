@@ -27,11 +27,14 @@ monitor_particle = 1
 # 控制在屏幕上显示的粒子信息是第几个时间步
 print_step = 100
 # 控制保存到外部磁盘的粒子信息是第几个时间步 (maxstep: 300/600/2500)
-save_step = 50
+save_step = 500
 # 时间步长
-dt = 1.0e-4             # time_step.lua, CFL: c= 0.01, d = 2.5e-5, dt = 5e-4
+dt = 1.0e-6             # time_step.lua, CFL: c= 0.01, d = 2.5e-5, dt = 5e-4
 # 是否考虑重力
 self_gravity = false
+eos_form = 2
+h_SWL = 1.0e-3
+c = 0.02
 
 
 [pre-process]

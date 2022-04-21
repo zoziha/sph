@@ -4,7 +4,7 @@
 !> 2. 淡水
 module eos_m
 
-    use config_m, only: rk, eos_form, B, rho0
+    use config_m, only: rk, eos_form, B, rho0, c0 => c
     implicit none
     private
 
@@ -38,15 +38,20 @@ contains
 
         select case (eos_form)
         case (1)
-            ! artificial eos, form 1 (monaghan, 1994)
+            ! artificial eos, form 1 (monaghan, 1994), 适用于自由面流动
             ! see equ.(4.88)
             c = sqrt(B*gamma/rho0)*(rho/rho0)**3
             p = B*((rho/rho0)**gamma - 1)
         case (2)
             ! artificial eos, form 2 (morris, 1997)
             ! see equ.(4.89)
-            c = 0.01_rk
-            p = c**2*rho
+            c = c0
+            p = c*c*rho
+        case (3)
+            ! Tait simplified equation of state, 适用于自由面流动
+            ! 孙鹏楠, 2018, 博士毕业论文, equ(2-12)
+            c = c0
+            p = c*c*(rho - rho0)
         end select
     end subroutine p_art_water
 

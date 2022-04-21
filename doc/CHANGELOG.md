@@ -1,7 +1,3 @@
----
-title: 开发者日志
----
-
 ## v0.0.1 - 0.1.2
 
 - 添加 fpm 和 visual studio 支持

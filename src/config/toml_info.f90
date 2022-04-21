@@ -9,6 +9,7 @@ module toml_info_m
     use stdlib_logger, only: stdlog => global_logger
     use swift_file_m, only: is_exist
     use tomlf, only: toml_table, get_value, toml_parse
+    use utils, only: get_speed_of_voice
     implicit none
     private
 
@@ -81,6 +82,9 @@ contains
         call get_value(subtable, 'eos_form', eos_form, 2)
         call get_value(subtable, 'B', B, 1.0_rk)
         call get_value(subtable, 'rho0', rho0, 1000.0_rk)
+        call get_value(subtable, 'h_SWL', h_SWL, 1.0_rk)
+        call get_speed_of_voice(h_SWL, rho0, c)
+        call get_value(subtable, 'c', c)     !! 若提供 c 值，则采用提供的值
         call get_value(subtable, 'visc_artificial', visc_artificial, .false.)
         call get_value(subtable, 'heat_artificial', heat_artificial, .false.)
 
@@ -105,6 +109,8 @@ contains
         call stdlog%log_information('eos_form: '//to_string(eos_form))
         call stdlog%log_information('B: '//to_string(B))
         call stdlog%log_information('rho0: '//to_string(rho0))
+        call stdlog%log_information('h_SWL: '//to_string(h_SWL))
+        call stdlog%log_information('c: '//to_string(c))
         call stdlog%log_information('visc_artificial: '//to_string(visc_artificial))
         call stdlog%log_information('heat_artificial: '//to_string(heat_artificial))
         call stdlog%log_information('dofile: '//to_string(dofile))

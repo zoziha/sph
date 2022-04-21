@@ -17,7 +17,7 @@ output**
 f_**
 
 # tmp doc
-doc/API-docs/*
+doc/API-html**
 doc/book/*
 
 # ignorance
