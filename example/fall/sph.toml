@@ -24,7 +24,7 @@ sle = 0
 #                  3, quintic kernel (morris 1997)
 skf = 1
 # 监测的粒子序号
-monitor_particle = 1
+moni_particle = 750
 # 控制在屏幕上显示的粒子信息是第几个时间步
 print_step = 100
 # 控制保存到外部磁盘的粒子信息是第几个时间步 (PS, 3000)
@@ -33,7 +33,9 @@ save_step = 500
 dt = 1.0e-6
 # 是否考虑重力
 self_gravity = true
-eos_form = 1
+eos_form = 3
+rho0 = 1000.0
+h_SWL = 1.0e-3
 
 [pre-process]
 

@@ -43,6 +43,9 @@
 		<Unit filename="../build/dependencies/test-drive/src/testdrive_version.f90">
 			<Option weight="0" />
 		</Unit>
+		<Unit filename="../test/test_eos.f90">
+			<Option weight="1" />
+		</Unit>
 		<Unit filename="../test/test_kernel.f90">
 			<Option weight="1" />
 		</Unit>

@@ -29,7 +29,7 @@ contains
         if (allocated(error)) return
         call check(error, nick, "2 dimensional shear cavity flow")
         if (allocated(error)) return
-        call check(error, dt, 5.0e-5_rk)
+        call check(error, dt, 1.0e-5_rk)
         if (allocated(error)) return
         call check(error, skf, 1)
         if (allocated(error)) return

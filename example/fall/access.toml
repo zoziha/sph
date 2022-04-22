@@ -1,0 +1,8 @@
+# 路径文件
+[access]
+
+# 输入路径
+in = './example/fall'
+
+# 输出路径
+out = './data/output'

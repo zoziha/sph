@@ -31,12 +31,12 @@ contains
         integer, intent(in) :: itimestep    !! 当前时间步
         integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
         real(rk), intent(in) :: hsml        !! 平滑函子的长度
-        real(rk), intent(in) :: x(:, :)      !! 粒子的坐标
+        real(rk), intent(in) :: x(:, :)     !! 粒子的坐标
         integer, intent(out) :: niac        !! 相互作用对的数目
         integer, intent(out) :: pair_i(:)   !! 第一个相互作用对的粒子编号
         integer, intent(out) :: pair_j(:)   !! 第二个相互作用对的粒子编号
         real(rk), intent(out) :: w(:)       !! 平滑函子
-        real(rk), intent(out) :: dwdx(:, :)  !! 平滑函子的导数
+        real(rk), intent(out) :: dwdx(:, :) !! 平滑函子的导数
         integer, intent(out) :: countiac(:) !! 在模拟中所使用的相互作用对的数目
 
         integer :: i, j, d, scale_k
@@ -150,14 +150,13 @@ contains
         !> averaged number of particles per grid cell
         real(rk), parameter :: nppg = 3.0_rk
 
-        !     initialize parameters: maximum number of grid cells
+        ! initialize parameters: maximum number of grid cells
 
         maxng(1) = maxngx
-        if (dim >= 2) then
+        if (dim == 2) then
             maxng(2) = maxngy
-            if (dim == 3) then
-                maxng(3) = maxngz
-            end if
+        else if (dim == 3) then
+            maxng(3) = maxngz
         end if
 
         do d = 1, 3

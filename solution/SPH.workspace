@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="SPH">
-		<Project filename="vtk.cbp">
-			<Depends filename="libsph.cbp" />
-		</Project>
 		<Project filename="libsph.cbp" />
 		<Project filename="sph.cbp">
 			<Depends filename="libsph.cbp" />
