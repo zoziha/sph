@@ -21,6 +21,8 @@ git clone https://gitee.com/zoziha/SPH.git
 cd SPH
 ```
 
+备注：`main` 分支为成熟分支，`dev` 分支为开发分支，`trunk` 分支为最新分支。
+
 ### 使用[fortran-lang/fpm](https://github.com/fortran-lang/fpm)构建代码
 
 FPM是社区驱动的Fortran语言的包管理器和代码构建工具，适用于C/C++/Fortran代码的构建。  

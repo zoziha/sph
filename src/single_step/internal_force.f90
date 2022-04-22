@@ -71,7 +71,7 @@ contains
                 i = pair_i(k)
                 j = pair_j(k)
                 do d = 1, dim
-                    dvx(d) = vx(d, j) - vx(d, i)
+                    dvx(d) = vx(d, j) - vx(d, i) !@note: 实虚粒子速度差的粘性交互
                 end do
                 if (dim == 1) then
                     hxx = 2*dvx(1)*dwdx(1, k)
@@ -217,7 +217,7 @@ contains
 
             else if (pa_sph == 2) then
                 do d = 1, dim
-                    h = -(p(i)/rho(i)**2 + p(j)/rho(j)**2)*dwdx(d, k)
+                    h = -(p(i)/rho(i)**2 + p(j)/rho(j)**2)*dwdx(d, k) !@todo: 虚粒子的压强 bug
                     he = he + (vx(d, j) - vx(d, i))*h
 
                     ! viscous force

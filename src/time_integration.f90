@@ -150,8 +150,8 @@ contains
 
             if (mod(itimestep, save_step) == 0) then
 
-                !> 输出每个保存时间步的求解信息（拓展）, 输出实、虚粒子
-                call output_all(x, vx, mass, rho, p, u, c, itype, hsml, ntotal + nvirt, itimestep/save_step)
+                ! 输出每个保存时间步的求解信息
+                call output_all(x, vx, mass, rho, p, u, c, itype, hsml, dvx, ntotal + nvirt, itimestep/save_step)
 
             end if
 
@@ -288,7 +288,6 @@ contains
 
         ! 计算粒子的平均速度，避免粒子渗透 @todo: 重力作用下，仍会出现穿透
         !     calculating average velocity of each partile for avoiding penetration(渗透)
-
         if (average_velocity) then
             call av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)
         else

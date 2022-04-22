@@ -2,7 +2,7 @@
 module output_m
 
     use config_m, only: nick, out_path, skf, nnps, print_step, rk, self_gravity, &
-                        virtual_part, save_step
+                        virtual_part, save_step, visc
     use, intrinsic :: iso_fortran_env, only: stdout => output_unit
     use easy_string_m, only: to_string
     use error_stop_m, only: error_stop
@@ -16,7 +16,7 @@ module output_m
 contains
 
     !> 输出每个保存时间步的求解信息（拓展）
-    subroutine output_all(x, vx, mass, rho, p, u, c, itype, hsml, ntotal, n)
+    subroutine output_all(x, vx, mass, rho, p, u, c, itype, hsml, dvx, ntotal, n)
         real(rk), intent(in) :: x(:, :)     !! 粒子的坐标
         real(rk), intent(in) :: vx(:, :)    !! 粒子的速度
         real(rk), intent(in) :: mass(:)     !! 粒子的质量
@@ -26,6 +26,7 @@ contains
         real(rk), intent(in) :: c(:)        !! 粒子的声速
         integer, intent(in) :: itype(:)     !! 粒子的类型 (1: ideal gas; 2: water; 3: TNT)
         real(rk), intent(in) :: hsml(:)     !! 粒子的光滑长度
+        real(rk), intent(in) :: dvx(:, :)   !! 粒子的加速度 / 力
         integer, intent(in) :: ntotal       !! 在模拟中所使用的粒子总数
         integer, intent(in) :: n            !! 第几个时间步
 
@@ -43,7 +44,7 @@ contains
 
         write (xv_unit, *) ntotal
         do i = 1, ntotal
-            write (xv_unit, 1001) i, (x(d, i), d=1, dim), (vx(d, i), d=1, dim)
+            write (xv_unit, 1001) i, (x(d, i), d=1, dim), (vx(d, i), d=1, dim), (dvx(d, i), d=1, dim)
             write (state_unit, 1002) i, mass(i), rho(i), p(i), u(i)
             write (other_unit, 1003) i, itype(i), hsml(i)
         end do
@@ -52,7 +53,7 @@ contains
         close (state_unit)
         close (other_unit)
 
-1001    format(1x, i6, 6(2x, e14.8))
+1001    format(1x, i6, *(2x, e14.8))
 1002    format(1x, i6, 7(2x, e14.8))
 1003    format(1x, i6, 2x, i4, 2x, e14.8)
 
@@ -102,6 +103,7 @@ contains
         write (stdout, '(a,i0)') .c.'NNPS method: ', nnps
         write (stdout, '(a,l1)') .c.'Gravity: ', self_gravity
         write (stdout, '(a,l1)') .c.'Virtual Part: ', virtual_part
+        write (stdout, '(a,l1)') .c.'Visc: ', visc
         write (stdout, '(a,i0/)') .c.'Save step: ', save_step
     end subroutine set_parameter_log
 

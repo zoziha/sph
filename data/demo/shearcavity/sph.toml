@@ -29,9 +29,11 @@ print_step = 100
 # 控制保存到外部磁盘的粒子信息是第几个时间步
 save_step = 500
 # 时间步长
-dt = 5.0e-5
+dt = 1.0e-5
 # 是否考虑重力
 self_gravity = false
+# 人工声速
+c = 0.02
 
 
 [pre-process]

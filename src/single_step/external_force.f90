@@ -35,7 +35,8 @@ contains
             dvxdt(dim, 1:ntotal) = -9.8_rk
         end if
 
-        !     boundary particle force and penalty anti-penetration force.
+        ! boundary particle force and penalty anti-penetration force.
+        ! 多余的切向力，导致边界粗糙！
         rr0 = 1.25e-5_rk
         dd = 1.e-2_rk
         p1 = 12
