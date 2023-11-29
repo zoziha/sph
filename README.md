@@ -26,6 +26,7 @@ FPM is a community-driven Fortran language package manager and code build system
 You can build the code with the provided `fpm.toml`:
 
 ```sh
+cd data && mkdir all && mkdir paraview
 fpm build
 # SPH main program
 fpm run sph --profile release

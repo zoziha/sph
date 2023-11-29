@@ -16,11 +16,11 @@ contains
     subroutine output_to_paraview_vtk()
         integer :: steps, i
 
-        print *, "请输入时间步数："
+        print "(a)", "Please enter the number of time steps:"
         read (*, *) steps
 
         do i = 1, steps
-            print "(a, i0, a)", "正在输出第", i, "个时间步。"
+            print "(a, i0, a)", "Exporting ", i, " step..."
             call output_to_paraview_vtk_one_step(i)
         end do
 

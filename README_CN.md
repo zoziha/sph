@@ -26,6 +26,7 @@ FPM是社区驱动的Fortran语言的包管理器和代码构建工具，适用�
 你可以通过提供的`fpm.toml`构建代码：
 
 ```sh
+cd data && mkdir all && mkdir paraview
 fpm build
 # 运行SPH主程序
 fpm run sph --profile release

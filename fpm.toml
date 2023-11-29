@@ -7,6 +7,9 @@ auto-executables = false
 auto-tests = false
 auto-examples = false
 
+[fortran]
+implicit-external = true
+
 [library]
 include-dir = "src"
 
