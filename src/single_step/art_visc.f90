@@ -45,7 +45,7 @@ subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, 
     !> 相互作用对的加速度
     !> acceleration with respect to x, y and z
     real(rk), intent(out) :: dvxdt(dim, maxn)
-    !> 改变特定内部能量
+    !> 改变特定内部能量(我认为应该是能量改变率)
     !> change of specific internal energy
     real(rk), intent(out) :: dedt(maxn)
 
@@ -74,18 +74,18 @@ subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, 
     do k = 1, niac
         i = pair_i(k)
         j = pair_j(k)
-        mhsml = (hsml(i) + hsml(j))/2._rk
+        mhsml = (hsml(i) + hsml(j))/2._rk !公式(4.70)
         vr = 0._rk
         rr = 0._rk
         do d = 1, dim
-            dvx(d) = vx(d, i) - vx(d, j)
-            dx = x(d, i) - x(d, j)
+            dvx(d) = vx(d, i) - vx(d, j) !公式(4.71)
+            dx = x(d, i) - x(d, j) !公式(4.71)
             vr = vr + dvx(d)*dx
             rr = rr + dx*dx
         end do
 
         !     artificial viscous force only if v_ij * r_ij < 0
-
+        !只有当速度差分或距离差分小于零时才出现
         if (vr < 0._rk) then
 
             !     calculate muv_ij = hsml v_ij * r_ij / ( r_ij^2 + hsml^2 etq^2 )
@@ -94,18 +94,19 @@ subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, 
 
             !     calculate piv_ij = (-alpha muv_ij c_ij + beta muv_ij^2) / rho_ij
 
-            mc = 0.5_rk*(c(i) + c(j))
-            mrho = 0.5_rk*(rho(i) + rho(j))
-            piv = (beta*muv - alpha*mc)*muv/mrho
+            mc = 0.5_rk*(c(i) + c(j)) !公式(4.68)
+            mrho = 0.5_rk*(rho(i) + rho(j)) !公式(4.69)
+            piv = (beta*muv - alpha*mc)*muv/mrho !公式(4.66)，计算人工粘度
 
             !     calculate sph sum for artificial viscous force
+            !公式(4.66)，计算人工粘度
 
             do d = 1, dim
                 h = -piv*dwdx(d, k)
                 dvxdt(d, i) = dvxdt(d, i) + mass(j)*h
-                dvxdt(d, j) = dvxdt(d, j) - mass(i)*h
-                dedt(i) = dedt(i) - mass(j)*dvx(d)*h
-                dedt(j) = dedt(j) - mass(i)*dvx(d)*h
+                dvxdt(d, j) = dvxdt(d, j) - mass(i)*h !作用力与反作用力！
+                dedt(i) = dedt(i) - mass(j)*dvx(d)*h  !这里的负号是因为冲击导致热量产生，导致能量耗散，故为负号
+                dedt(j) = dedt(j) - mass(i)*dvx(d)*h  !同理 
             end do
         end if
     end do

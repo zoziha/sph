@@ -281,7 +281,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
                 end if
                 h = h*rhoij
                 dvxdt(d, i) = dvxdt(d, i) + mass(j)*h
-                dvxdt(d, j) = dvxdt(d, j) - mass(i)*h
+                dvxdt(d, j) = dvxdt(d, j) - mass(i)*h !作用力与反作用力！！！！！！
             end do
             he = he*rhoij
             dedt(i) = dedt(i) + mass(j)*he

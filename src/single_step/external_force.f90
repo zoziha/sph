@@ -52,6 +52,14 @@ subroutine ext_force(ntotal, mass, x, niac, pair_i, pair_j, itype, hsml, dvxdt)
         do i = 1, ntotal
             dvxdt(dim, i) = -9.8_rk
         end do
+    !没有必要在赋值两遍啊～anyway,这样写也不是很对，如果每个粒子每个方向的加速度都要初始化的话，应该
+    !在第二层循环内判断是否需要将z方向(数组的第三个元素)赋值。
+    !else 
+    !   do i = 1, ntotal
+    !       do d = 1, dim
+    !           dvxdt(d, i) = 0._rk
+    !       end do
+    !   end do
     end if
 
     !     boundary particle force and penalty anti-penetration force.
@@ -74,6 +82,7 @@ subroutine ext_force(ntotal, mass, x, niac, pair_i, pair_j, itype, hsml, dvxdt)
                 f = ((rr0/rr)**p1 - (rr0/rr)**p2)/rr**2
                 do d = 1, dim
                     dvxdt(d, i) = dvxdt(d, i) + dd*dx(d)*f
+                !公式(4.93)的实现
                 end do
             end if
         end if
