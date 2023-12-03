@@ -27,9 +27,13 @@ subroutine art_visc(ntotal, hsml, mass, x, vx, niac, rho, c, pair_i, pair_j, w, 
     !> 密度
     !> density
     real(rk), intent(in) :: rho(maxn)
-    !> 温度
-    !> temperature
+
+    !> 温度 ?
+    !> temperature ?
+    !> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!教材中说c是声速!!!!!!!!!!!!!!!!!!!!!!!!!
     real(rk), intent(in) :: c(maxn)
+    !> !-----------------------------------------------------------------!
+
     !> 相互作用对的第一个粒子
     !> first partner of interaction pair
     integer, intent(in) :: pair_i(max_interaction)

@@ -55,8 +55,8 @@ subroutine art_heat(ntotal, hsml, mass, x, vx, niac, rho, u, c, pair_i, pair_j, 
 
     !---  parameter for the artificial heat conduction:
 
-    g1 = 0.1_rk
-    g2 = 1.0_rk
+    g1 = 0.1_rk !公式（4.75）中的\alpha_{\pi}
+    g2 = 1.0_rk !公式(4.75)中的\beta_{\pi}
     do i = 1, ntotal
         vcc(i) = 0._rk
         dedt(i) = 0._rk
@@ -75,6 +75,7 @@ subroutine art_heat(ntotal, hsml, mass, x, vx, niac, rho, u, c, pair_i, pair_j, 
         end do
         vcc(i) = vcc(i) + mass(j)*hvcc/rho(j)
         vcc(j) = vcc(j) + mass(i)*hvcc/rho(i)
+        !vcc计算的是速度的散度
 
     end do
 
@@ -83,18 +84,21 @@ subroutine art_heat(ntotal, hsml, mass, x, vx, niac, rho, u, c, pair_i, pair_j, 
         i = pair_i(k)
         j = pair_j(k)
         mhsml = (hsml(i) + hsml(j))/2._rk
-        mrho = 0.5_rk*(rho(i) + rho(j))
+        mrho = 0.5_rk*(rho(i) + rho(j)) !公式（4.74）项:\bar{\rho_{ij}}
         rr = 0._rk
         rdwdx = 0._rk
         do d = 1, dim
             dx = x(d, i) - x(d, j)
-            rr = rr + dx*dx
-            rdwdx = rdwdx + dx*dwdx(d, k)
+            rr = rr + dx*dx !公式（4.74）项中: |x_{ij}|^2
+            rdwdx = rdwdx + dx*dwdx(d, k) !公式(4.74)项:x_{ij} \times \Delta_i W_{ij}
         end do
-        mui = g1*hsml(i)*c(i) + g2*hsml(i)**2*(abs(vcc(i)) - vcc(i))
+        mui = g1*hsml(i)*c(i) + g2*hsml(i)**2*(abs(vcc(i)) - vcc(i)) !和式（4.75)中相比是不是少了一项？
         muj = g1*hsml(j)*c(j) + g2*hsml(j)**2*(abs(vcc(j)) - vcc(j))
-        muij = 0.5_rk*(mui + muj)
-        h = muij/(mrho*(rr + 0.01_rk*mhsml**2))*rdwdx
+        !我认为应该这么写啊！！！
+        !mui = g1*hsml(i)*rho(i)*c(i)*abs(vcc(i))+g2*hsml(i)**2*rho(i)*(abs(vcc(i))**2)
+        !muj = g1*hsml(j)*rho(j)*c(j)*abs(vcc(j))+g2*hsml(j)**2*rho(j)*(abs(vcc(j))**2)
+        muij = 0.5_rk*(mui + muj) !式(4.77)中没有除以2这一项！
+        h = muij/(mrho*(rr + 0.01_rk*mhsml**2))*rdwdx !公式(4.74);其中0.01_rk*mhsml**2是\phi^2
         dedt(i) = dedt(i) + mass(j)*h*(u(i) - u(j))
         dedt(j) = dedt(j) + mass(i)*h*(u(j) - u(i))
 
