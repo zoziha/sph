@@ -31,7 +31,7 @@ subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, rho, p, t
     !> 粒子的速度
     !> particle velocities
     real(rk), intent(inout) :: vx(dim, maxn)
-    !> 粒子的内部能量
+    !> 粒子的内能
     !> particle internal energy
     real(rk), intent(inout) :: u(maxn)
     !> 粒子的熵

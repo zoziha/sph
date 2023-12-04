@@ -108,13 +108,13 @@ subroutine time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal
 
             do i = 1, ntotal
                 temp_u = 0.0_rk
-                if (dim == 1) temp_u = -nsym*p(i)*vx(1, i)/x(1, i)/rho(i)
+                if (dim == 1) temp_u = -nsym*p(i)*vx(1, i)/x(1, i)/rho(i) !temp_u=0
                 u(i) = u(i) + (dt/2.0_rk)*(du(i) + temp_u)
                 if (u(i) < 0) u(i) = 0.0_rk
 
                 if (.not. summation_density) then
                     temp_rho = 0.0_rk
-                    if (dim == 1) temp_rho = -nsym*rho(i)*vx(1, i)/x(1, i)
+                    if (dim == 1) temp_rho = -nsym*rho(i)*vx(1, i)/x(1, i) !temp_rho=0
                     rho(i) = rho(i) + (dt/2.0_rk)*(drho(i) + temp_rho)
                 end if
 
