@@ -19,6 +19,7 @@ program sph
 
     use sph_kind, only: rk
     use parameter
+    use output_m, only: mkdirs
     implicit none
 
     !> 在模拟中所使用的粒子总数
@@ -41,13 +42,14 @@ program sph
     if (shocktube) dt = 0.005_rk
     if (shearcavity) dt = 5.e-5_rk
     call input(x, vx, mass, rho, p, u, itype, hsml, ntotal)
+    call mkdirs()
 1   write (*, *) '  ***************************************************'
     write (*, *) '          please input the maximal time steps '
     write (*, *) '  ***************************************************'
     read (*, *) maxtimestep
     call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, hsml, ntotal, maxtimestep, dt)
 
-    !> 输出最后一个时间布的求解信息
+    !> 输出最后一个时间步的求解信息
     call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal)
 
     write (*, *) '  ***************************************************'
