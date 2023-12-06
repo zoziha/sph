@@ -1,4 +1,5 @@
-!> 计算校正平均速度的子程序。详见 Monaghan(1992) (XSPH) 和第 4 章中的论述。请问这在书中的多少页啊，找不到！希望能注释一下。
+!> 计算校正平均速度的子程序。详见 Monaghan(1992) (XSPH) 和第 4 章中的论述。
+!>请问这在书中的多少页啊，找不到！希望能注释一下。
 !> subroutine to calculate the average velocity to correct velocity
 !> for preventing.penetration (Monaghan, 1992)
 subroutine av_vel(ntotal, mass, niac, pair_i, pair_j, w, vx, rho, av)

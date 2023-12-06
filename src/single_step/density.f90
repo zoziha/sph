@@ -80,7 +80,7 @@ subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
             rho(i) = rho(i)/wi(i)
         end do
     end if
-    !？归一化，不太理解？
+    !？归一化，不太理解？-->修正密度求和公式。
 
 end subroutine sum_density
 

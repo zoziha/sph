@@ -183,7 +183,9 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
     !                             tyy(i)*tyy(j) + 2._rk*tyz(i)*tyz(j) + tzz(i)*tzz(j)
     !          end if
     !       end do 
-    !       tdsdt(i) = 0.5_rk*eta(i)/rho(i)*tdsdt(i)
+    !       do i = 1, ntotal
+    !            tdsdt(i) = 0.5_rk*eta(i)/rho(i)*tdsdt(i)
+    !        end do
     !   end if
     do i = 1, ntotal
         !计算粘性力功率
