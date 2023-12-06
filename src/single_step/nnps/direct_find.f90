@@ -82,6 +82,7 @@ subroutine direct_find(itimestep, ntotal, hsml, x, niac, pair_i, pair_j, w, dwdx
                     !> kernel and derivations of kernel
 
                     call kernel(r, dxiac, mhsml, w(niac), tdwdx)
+                    !kernel(r, dx, hsml, w, dwdx)
                     do d = 1, dim
                         dwdx(d, niac) = tdwdx(d)
                     end do

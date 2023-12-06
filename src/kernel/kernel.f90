@@ -1,4 +1,4 @@
-!> 计算光滑函数 Wij 及其倒数 dWdxij 的子例程
+!> 计算光滑函数 Wij 及其导数 dWdxij 的子例程
 !> subroutine to calculate the smoothing kernel wij and its
 !> derivatives dwdxij.
 subroutine kernel(r, dx, hsml, w, dwdx)
@@ -53,6 +53,7 @@ subroutine kernel(r, dx, hsml, w, dwdx)
             w = factor*1._rk/6._rk*(2._rk - q)**3
             do d = 1, dim
                 dwdx(d) = -factor*1._rk/6._rk*3.*(2._rk - q)**2/hsml*(dx(d)/r)
+                !dwda(d) =-factor*(2._rk - q)**2/2*hsml*(dx(d)/r)
             end do
         else
             w = 0._rk

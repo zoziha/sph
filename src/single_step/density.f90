@@ -44,6 +44,7 @@ subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
 
     do i = 1, ntotal
         call kernel(r, hv, hsml(i), selfdens, hv)
+        !subroutine kernel(r, dx, hsml, w, dwdx)
         wi(i) = selfdens*mass(i)/rho(i)
     end do
 
@@ -60,6 +61,7 @@ subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
         call kernel(r, hv, hsml(i), selfdens, hv)
         rho(i) = selfdens*mass(i)
     end do
+    !计算wii,因为任何一个wij都无法包括粒子其本身
 
     !     calculate sph sum for rho:
     do k = 1, niac
@@ -72,10 +74,13 @@ subroutine sum_density(ntotal, hsml, mass, niac, pair_i, pair_j, w, itype, rho)
     !     thirdly, calculate the normalized rho, rho=sum(rho)/sum(w)
 
     if (nor_density) then
+    !nor_density =  .true. : density normalization by using cspm,
+    !               .false.: no normalization.
         do i = 1, ntotal
             rho(i) = rho(i)/wi(i)
         end do
     end if
+    !？归一化，不太理解？-->修正密度求和公式。
 
 end subroutine sum_density
 
@@ -95,6 +100,7 @@ end subroutine sum_density
 !>     rho    : density                                              [in]
 !>     drhodt : density change rate of each particle                [out]
 
+!*这个好理解一点*
 subroutine con_density(ntotal, mass, niac, pair_i, pair_j, dwdx, vx, itype, x, rho, drhodt)
 
     use sph_kind, only: rk

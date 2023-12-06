@@ -101,7 +101,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
     end do
 
     !     calculate sph sum for shear tensor tab = va,b + vb,a - 2/3 delta_ab vc,c
-
+    !式(4.44)中的应变张量
     if (visc) then
         do k = 1, niac
             i = pair_i(k)
@@ -156,17 +156,46 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
             hvcc = 0._rk
             do d = 1, dim
                 hvcc = hvcc + dvx(d)*dwdx(d, k)
+                !看不懂hvcc&vcc到底是在计算什么东西
             end do
             vcc(i) = vcc(i) + mass(j)*hvcc/rho(j)
             vcc(j) = vcc(j) + mass(i)*hvcc/rho(i)
         end do
     end if
 
-    do i = 1, ntotal
+    !粒子粘性力的功率和本身已经影响域内的粒子有关，而不是只和本身有关。且上述的写法和公式(4.59)也有出入。
+    !我认为应该这么实现粘性力功率的计算
+    !  if (visc) then
+    !       do k=1,niac
+    !          i = pair_i(k)
+    !          j = pair_j(k)
 
+    !          if (dim == 1) then
+    !              tdsdt(i) = tdsdt(i) + txx(i)*txx(j)
+    !              tdsdt(j) = tdsdt(j) + txx(j)*txx(i)
+    !          else if (dim == 2) then
+    !              tdsdt(i) = tdsdt(i) + txx(i)*txx(j) + 2._rk*txy(i)*txy(j) + tyy(i)*tyy(j)
+    !              tdsdt(j) = tdsdt(j) + txx(i)*txx(j) + 2._rk*txy(i)*txy(j) + tyy(i)*tyy(j)
+    !          else if (dim == 3) then
+    !                  tdsdt(i) = tdsdt(i) + txx(i)*txx(j) + 2._rk*txy(i)*txy(j) + 2._rk*txz(i)*txz(j) + &
+    !                             tyy(i)*tyy(j) + 2._rk*tyz(i)*tyz(j) + tzz(i)*tzz(j)
+    !                  tdsdt(j) = tdsdt(j) + txx(i)*txx(j) + 2._rk*txy(i)*txy(j) + 2._rk*txz(i)*txz(j) + &
+    !                             tyy(i)*tyy(j) + 2._rk*tyz(i)*tyz(j) + tzz(i)*tzz(j)
+    !          end if
+    !       end do 
+    !       do i = 1, ntotal
+    !            tdsdt(i) = 0.5_rk*eta(i)/rho(i)*tdsdt(i)
+    !        end do
+    !   end if
+    do i = 1, ntotal
+        !计算粘性力功率
         !     viscous entropy tds/dt = 1/2 eta/rho tab tab
 
         if (visc) then
+        !visc = .true. : consider viscosity,
+        !       .false.: no viscosity.
+        !visc即是否考虑粘性
+    !这里计算是否不正确，和公式(4.59)也不相同************！！！！！！！！！！！！！！！！！！！！！！！！
             if (dim == 1) then
                 tdsdt(i) = txx(i)*txx(i)
             else if (dim == 2) then
@@ -174,14 +203,17 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
             else if (dim == 3) then
                 tdsdt(i) = txx(i)*txx(i) + 2._rk*txy(i)*txy(i) + 2._rk*txz(i)*txz(i) + &
                            tyy(i)*tyy(i) + 2._rk*tyz(i)*tyz(i) + tzz(i)*tzz(i)
+                !
             end if
             tdsdt(i) = 0.5_rk*eta(i)/rho(i)*tdsdt(i)
         end if
+
 
         !     pressure from equation of state
 
         if (abs(itype(i)) == 1) then
             call p_gas(rho(i), u(i), p(i), c(i))
+            !p_gas来自/src/single_step/eos.f90中声明的
         else if (abs(itype(i)) == 2) then
             call p_art_water(rho(i), p(i), c(i))
         end if
@@ -200,17 +232,24 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
         !     for sph algorithm 1
 
         rhoij = 1._rk/(rho(i)*rho(j))
+        !rhoij离散的动量方程和能量方程中的算子
         if (pa_sph == 1) then
+        !pa_sph粒子近似算法的指示变量，应该没有什么区别，掌握一种就行了。
             do d = 1, dim
 
                 !     pressure part
 
                 h = -(p(i) + p(j))*dwdx(d, k)
+                !h是计算加速度(动量方程)的算子
                 he = he + (vx(d, j) - vx(d, i))*h
+                !he是计算能量的(能量方程)的算子
 
                 !     viscous force
 
                 if (visc) then
+                !visc = .true. : consider viscosity,
+                !       .false.: no viscosity.
+                !visc即是否考虑粘性
 
                     if (d == 1) then
 
@@ -221,6 +260,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
                             h = h + (eta(i)*txy(i) + eta(j)*txy(j))*dwdx(2, k)
                             if (dim == 3) then
                                 h = h + (eta(i)*txz(i) + eta(j)*txz(j))*dwdx(3, k)
+                                !方程(4.42)中的形式
                             end if
                         end if
                     else if (d == 2) then
@@ -230,6 +270,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
                         h = h + (eta(i)*txy(i) + eta(j)*txy(j))*dwdx(1, k) + (eta(i)*tyy(i) + eta(j)*tyy(j))*dwdx(2, k)
                         if (dim == 3) then
                             h = h + (eta(i)*tyz(i) + eta(j)*tyz(j))*dwdx(3, k)
+                            !方程(4.42)中的形式
                         end if
                     else if (d == 3) then
 
@@ -237,15 +278,17 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
 
                         h = h + (eta(i)*txz(i) + eta(j)*txz(j))*dwdx(1, k) + (eta(i)*tyz(i) + eta(j)*tyz(j))*dwdx(2, k) &
                             + (eta(i)*tzz(i) + eta(j)*tzz(j))*dwdx(3, k)
+                        !方程(4.42)中的形式
                     end if
                 end if
                 h = h*rhoij
                 dvxdt(d, i) = dvxdt(d, i) + mass(j)*h
-                dvxdt(d, j) = dvxdt(d, j) - mass(i)*h
+                dvxdt(d, j) = dvxdt(d, j) - mass(i)*h !作用力与反作用力！！！！！！
             end do
             he = he*rhoij
             dedt(i) = dedt(i) + mass(j)*he
             dedt(j) = dedt(j) + mass(i)*he
+            !方程(4.59)的形式，但是这个只计算了其中的压力功率
 
             !     for sph algorithm 2
 
@@ -291,6 +334,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
             end do
             dedt(i) = dedt(i) + mass(j)*he
             dedt(j) = dedt(j) + mass(i)*he
+            !计算压力功率
         end if
     end do
 
@@ -298,6 +342,7 @@ subroutine int_force(itimestep, dt, ntotal, hsml, mass, vx, niac, rho, eta, pair
 
     do i = 1, ntotal
         dedt(i) = tdsdt(i) + 0.5_rk*dedt(i)
+        !计算总粘性功率
     end do
 
 end subroutine int_force

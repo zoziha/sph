@@ -74,6 +74,7 @@ subroutine ext_force(ntotal, mass, x, niac, pair_i, pair_j, itype, hsml, dvxdt)
                 f = ((rr0/rr)**p1 - (rr0/rr)**p2)/rr**2
                 do d = 1, dim
                     dvxdt(d, i) = dvxdt(d, i) + dd*dx(d)*f
+                !公式(4.93)的实现
                 end do
             end if
         end if

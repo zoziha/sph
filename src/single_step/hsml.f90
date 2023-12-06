@@ -40,13 +40,19 @@ subroutine h_upgrade(dt, ntotal, mass, vx, rho, niac, pair_i, pair_j, dwdx, hsml
     integer :: i, j, k, d
     real(rk) :: fac, dvx(dim), hvcc, vcc(maxn), dhsml(maxn)
 
+    !> 光滑长度估算方法的指示变量
+    !> smoothing length evolution (sle) algorithm
+    !> sle = 0 : keep unchanged,
+    !>       1 : h = fac * (m/rho)^(1/dim)
+    !>       2 : dh/dt = (-1/dim)*(h/rho)*(drho/dt)
+    !>       3 : other approaches (e.g. h = h_0 * (rho_0/rho)**(1/dim) )
     if (sle == 0) then
 
         !---  keep smoothing length unchanged.
 
         return
 
-    else if (sle == 2) then
+    else if (sle == 2) then !公式（4.81）
 
         !---  dh/dt = (-1/dim)*(h/rho)*(drho/dt).
 
@@ -74,7 +80,7 @@ subroutine h_upgrade(dt, ntotal, mass, vx, rho, niac, pair_i, pair_j, dwdx, hsml
             if (hsml(i) <= 0) hsml(i) = hsml(i) - dt*dhsml(i)
         end do
 
-    else if (sle == 1) then
+    else if (sle == 1) then !公式（4.80）
 
         fac = 2.0_rk
         do i = 1, ntotal
