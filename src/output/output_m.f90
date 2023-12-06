@@ -2,6 +2,7 @@
 module output_m
 
     use utils, only: to_string
+    use filesystem, only: exists, mkdir
     implicit none
 
 contains
@@ -76,5 +77,17 @@ contains
 1003    format(1x, i6, 2x, i4, 2x, e14.8)
 
     end subroutine output_all
+
+    !> 创建文件夹
+    subroutine mkdirs()
+
+        if (.not. exists("data\\all", is_directory=.true.)) then
+            call mkdir('data\\all')
+        end if
+        if (.not. exists("data\\paraview", is_directory=.true.)) then
+            call mkdir('data\\paraview')
+        end if
+
+    end subroutine mkdirs
 
 end module output_m

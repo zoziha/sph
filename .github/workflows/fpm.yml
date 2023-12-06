@@ -57,7 +57,7 @@ jobs:
     - name: Install fpm
       uses: fortran-lang/setup-fpm@v3
       with:
-        fpm-version: 'v0.4.0'
+        fpm-version: 'v0.9.0'
 
     - name: Build & Test ⚔
       run: |
